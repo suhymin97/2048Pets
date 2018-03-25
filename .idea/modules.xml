@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/2048Pets.iml" filepath="$PROJECT_DIR$/2048Pets.iml" />
       <module fileurl="file://D:\AndroidLesson\2048check\2048Pets\2048Pets.iml" filepath="D:\AndroidLesson\2048check\2048Pets\2048Pets.iml" />
+      <module fileurl="file://D:\AndroidLesson\Test\2048Pets\2048Pets.iml" filepath="D:\AndroidLesson\Test\2048Pets\2048Pets.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\AndroidLesson\Test\2048Pets\app\app.iml" filepath="D:\AndroidLesson\Test\2048Pets\app\app.iml" />
       <module fileurl="file://D:\AndroidLesson\2048check\2048Pets\app\app.iml" filepath="D:\AndroidLesson\2048check\2048Pets\app\app.iml" />
     </modules>
   </component>
