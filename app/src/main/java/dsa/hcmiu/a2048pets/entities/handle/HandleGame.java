@@ -109,7 +109,7 @@ public class HandleGame{
             {
                 if(Board.getInstance().getElement(row,col) == Board.getInstance().getElement(row+1,col))
                 {
-                    int t = Board.getInstance().getElement(row+1,col) + Board.getInstance().getElement(row,col)
+                    int t = Board.getInstance().getElement(row+1,col) + Board.getInstance().getElement(row,col);
                     Board.getInstance().setElement(row,col,t) ;
                     Board.getInstance().setElement(row+1,col,0);
                     Board.score = Board.score + Board.getInstance().getElement(row,col);

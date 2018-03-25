@@ -55,6 +55,7 @@ public class PlayActivity extends Activity {
         arrPet = getResources().getStringArray(R.array.arrNo);
         arrImage = new int[5];
         arrId = new int[5];
+        //int count =2;
         for (int i = 0; i < 5; i++) {
             arrImage[i] = images.getResourceId(i, -1);
             arrId[i] = i;
