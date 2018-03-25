@@ -19,6 +19,7 @@ public class PlayActivity extends Activity {
     private int[] arrImage;
     private String[] arrPet;
     private ArrayList<Pets> arrPets;
+    private int max = 13;
 
     @Override
     public void onBackPressed() {
@@ -53,19 +54,19 @@ public class PlayActivity extends Activity {
 
         //get resources
         arrPet = getResources().getStringArray(R.array.arrNo);
-        arrImage = new int[5];
-        arrId = new int[5];
-        //int count =2;
-        for (int i = 0; i < 5; i++) {
+        arrImage = new int[max];
+        arrId = new int[max];
+        int countNo =2;
+        for (int i = 0; i < max; i++) {
             arrImage[i] = images.getResourceId(i, -1);
-            arrId[i] = i;
+            arrId[i] = countNo;
+            countNo *=countNo;
         }
 
         //set item for layout
         if (arrPets == null) arrPets = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            int count = 0;
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 int pos = Board.getInstance().getElement(i, j);
                 Pets temp = new Pets(arrId[pos]);
                 temp.setPic(arrImage[pos]);
