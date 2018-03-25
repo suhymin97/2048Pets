@@ -5,5 +5,4 @@ package dsa.hcmiu.a2048pets.entities.model;
  */
 
 public interface Pet {
-    public void init();
 }
