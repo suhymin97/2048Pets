@@ -1,6 +1,8 @@
 package dsa.hcmiu.a2048pets.entities.handle;
 
 import java.util.ArrayList;
+import java.util.Stack;
+
 import dsa.hcmiu.a2048pets.entities.model.Board;
 
 
@@ -8,388 +10,250 @@ import dsa.hcmiu.a2048pets.entities.model.Board;
  * Created by Admin on 3/25/2018.
  */
 
-public class HandleGame{
-    ArrayList<Integer> List1,List2,List3,ListUndo;
+public class HandleGame {
+    ArrayList<Integer> List, ListUndo, ListHighScore;
+    ArrayList<Integer> List1, List2;
     public static int highScore = 0;
     public static int best = 0;
+    private Stack<int[][]> move = new Stack<>();
     int row;
     int col;
+    int countMove;
 
-    public HandleGame (){
+    public HandleGame() {
         Board.getInstance();
         getBest();
     }
 
-    public void Undo(){
+    public void saveBoard() {
+        List = new ArrayList<Integer>();
+        for (row = 0; row < Board.max; row++) {
+            for (col = 0; col < Board.max; col++) {
+                List.add(Board.getInstance().getElement(row, col));
+            }
+        }
+    }
+
+    public void Undo() {
         List1 = new ArrayList<Integer>();
         List2 = new ArrayList<Integer>();
         int countChange = 0;
 
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List1.add(Board.getInstance().getElement(row,col));
+        for (row = 0; row < Board.max; row++) {
+            for (col = 0; col < Board.max; col++) {
+                List1.add(Board.getInstance().getElement(row, col));
             }
         }
-        if(Board.countUndo < 3 && Board.score > 100)
-        {
-            for (int row = 0 ; row < 4; row++)
-            {
-                for (int col = 0; col < 4; col ++)
-                {
-                    Board.getInstance().setElement(row,col,ListUndo.get(col*4+row));
+        if (Board.countUndo < 3 && Board.score > 100) {
+            for (int row = 0; row < Board.max; row++) {
+                for (int col = 0; col < Board.max; col++) {
+                    Board.getInstance().setElement(row, col, ListUndo.get(row * Board.max + col));
                 }
             }
             Board.score = Board.scoreUndo;
         }
 
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List2.add(Board.getInstance().getElement(row,col));
+        for (row = 0; row < Board.max; row++) {
+            for (col = 0; col < Board.max; col++) {
+                List2.add(Board.getInstance().getElement(row, col));
             }
         }
 
-        for (int i = 0; i < List1.size(); i++)
-        {
-            if(List1.get(i).equals(List2.get(i)))
-            {
+        for (int i = 0; i < List1.size(); i++) {
+            if (List1.get(i).equals(List2.get(i))) {
                 countChange++;
             }
         }
 
-        if(countChange == List1.size())
-        {
-            countChange=0;
-        }
-        else
-        {
+        if (countChange == List1.size()) {
+            countChange = 0;
+        } else {
             Board.countUndo++;
         }
 
     }
 
-    public void pushUp(){
-        for (col =0; col <4; col++)
-        {
-            for (int loop = 0; loop <3; loop++)
-            {
-                for( row = 3; row > 0; row--)
-                {
-                    if(Board.getInstance().getElement(row-1,col) == 0)
-                    {
+    public void pushUp() {
+        for (col = 0; col < Board.max; col++) {
+            int count0 = 0;
+            for (row = 0; row < Board.max; row++) {
+                if (Board.getInstance().getElement(row, col) == 0) count0++;
+                else {
+                    int t = Board.getInstance().getElement(row, col);
+                    Board.getInstance().setElement(row + count0, col, t);
+                    Board.getInstance().setElement(row, col, 0);
+                    countMove++;
+                }
+            }
+        }
+    }
+
+    public void moveUp() { //3-1
+        countMove=0;
+        saveBoard();
+        pushUp();
+        for (col = 0; col < Board.max; col++) {
+            for (row = 1; row < Board.max; row++) {
+                if (Board.getInstance().getElement(row, col) == Board.getInstance().getElement(row - 1, col)) {
+                    int t = Board.getInstance().getElement(row, col);
+                    Board.getInstance().setElement(row - 1, col, t*t);
+                    Board.getInstance().setElement(row, col, 0);
+                    Board.score += Board.getInstance().getElement(row-1, col);
+                }
+            }
+        }
+        pushUp();
+        if (countMove>0){
+            countMove = 0;
+            Board.getInstance().addRandomNumber();
+            ListUndo.clear();
+            ListUndo.addAll(List);
+            Board.scoreUndo = Board.score - 100;
+        }
+    }
+
+    public void pushDown() { //row
+        int count0;
+        for (col = 0; col < Board.max; col++) {
+            count0 = 0;
+            for (row = Board.max - 1; row >= 0; row--) {
+                if (Board.getInstance().getElement(row, col) == 0) count0++;
+                else {
+                    int t = Board.getInstance().getElement(row, col);
+                    Board.getInstance().setElement(row + count0, col, t);
+                    Board.getInstance().setElement(row, col, 0);
+                    countMove++;
+                }
+            }
+        }
+    }
+
+    public void moveDown() { //0-3
+        countMove=0;
+        saveBoard();
+        pushUp();
+
+        for (col = 0; col < Board.max; col++) {
+            for (row = Board.max - 2; row >= 0; row--) {
+                if (Board.getInstance().getElement(row, col) == Board.getInstance().getElement(row + 1, col)) {
+                    int t = Board.getInstance().getElement(row + 1, col);
+                    Board.getInstance().setElement(row + 1, col, t*t);
+                    Board.getInstance().setElement(row, col, 0);
+                    Board.score += Board.getInstance().getElement(row + 1, col);
+                }
+            }
+        }
+        pushDown();
+        if (countMove >0 ) {
+            Board.getInstance().addRandomNumber();
+            ListUndo.clear();
+            ListUndo.addAll(List);
+            countMove = 0;
+            Board.scoreUndo = Board.score - 100;
+        }
+    }
+
+    public void pushRight() {
+            for (row = 0; row < Board.max; row++) {
+                int count0 = 0;
+                for (col = Board.max-2; col >=0; col--) {
+                    if (Board.getInstance().getElement(row, col) == 0) count0++;
+                    else {
                         int t = Board.getInstance().getElement(row, col);
-                        Board.getInstance().setElement(row-1,col,t);
-                        Board.getInstance().setElement(row,col,0);
+                        Board.getInstance().setElement(row, col + count0, t);
+                        Board.getInstance().setElement(row, col, 0);
+                        countMove++;
                     }
                 }
             }
         }
-    }
 
-    public void moveUp(){
-        List1 = new ArrayList<Integer>();
-        List2 = new ArrayList<Integer>();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List1.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        pushUp();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <3;col++)
-            {
-                if(Board.getInstance().getElement(row,col) == Board.getInstance().getElement(row+1,col))
-                {
-                    int t = Board.getInstance().getElement(row+1,col) + Board.getInstance().getElement(row,col);
-                    Board.getInstance().setElement(row,col,t) ;
-                    Board.getInstance().setElement(row+1,col,0);
-                    Board.score = Board.score + Board.getInstance().getElement(row,col);
-                }
-            }
-        }
-
-        pushUp();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List2.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        for (int i = 0; i < List1.size(); i++)
-        {
-            if(List1.get(i).equals(List2.get(i)))
-            {
-                Board.countMove = Board.countMove +1;
-            }
-        }
-
-        if(Board.countMove == List1.size()){Board.countMove = 0;}
-        else
-        {
-            Board.getInstance().addRandomNumber();
-            Board.countMove = 0;
-            ListUndo = List1;
-            Board.scoreUndo = Board.score - 100;
-        }
-    }
-
-    public void pushDown(){
-        for (col =0; col <4; col++)
-        {
-            for (int loop = 0; loop <3; loop++)
-            {
-                for(row = 0; row < 3; row++)
-                {
-                    if(Board.getInstance().getElement(row+1,col) == 0)
-                    {
-                        int t = Board.getInstance().getElement(row,col);
-                        Board.getInstance().setElement(row+1,col,t);
-                        Board.getInstance().setElement(row,col,0);
-                    }
-                }
-            }
-        }
-    }
-
-    public void moveDown(){
-        List1 = new ArrayList<Integer>();
-        List2 = new ArrayList<Integer>();
-
-        for(col= 0; col <4;col++)
-        {
-            for(row=0; row<4; row++)
-            {
-                List1.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        pushDown();
-
-        for(row=3; row>=0; row--)
-        {
-            for(col= 0; col <4;col++)
-            {
-                if(Board.getInstance().getElement(row,col) == Board.getInstance().getElement(row-1,col))
-                {
-                    int t = Board.getInstance().getElement(row-1,col) + Board.getInstance().getElement(row,col);
-                    Board.getInstance().setElement(row,col,t);
-                    Board.getInstance().setElement(row-1,col,0);
-                    Board.score = Board.score + Board.getInstance().getElement(row,col);
-                }
-            }
-        }
-
-        pushDown();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List2.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        for (int i = 0; i < List1.size(); i++)
-        {
-            if(List1.get(i).equals(List2.get(i)))
-            {
-                Board.countMove = Board.countMove +1;
-            }
-        }
-
-        if(Board.countMove == List1.size()){Board.countMove = 0;}
-        else
-        {
-            Board.getInstance().addRandomNumber();
-            Board.countMove = 0;
-            ListUndo = List1;
-            Board.scoreUndo = Board.score - 100;
-        }
-    }
-
-    public void pushRight(){
-        for (int loop = 0; loop <2; loop++)
-        {
-            for (row =0; row <4; row++)
-            {
-                for(col = 0; col < 3; col++)
-                {
-                    if(Board.getInstance().getElement(row,col+1) == 0)
-                    {
-                        int t =Board.getInstance().getElement(row,col);
-                        Board.getInstance().setElement(row,col+1,t);
-                        Board.getInstance().setElement(row,col,0);
-                    }
-                }
-            }
-        }
-    }
-
-    public void moveRight(){
-        List1 = new ArrayList<Integer>();
-        List2 = new ArrayList<Integer>();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List1.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
+    public void moveRight() { //0-3
+        countMove=0;
+        saveBoard();
         pushRight();
 
-        for (row =0; row <4; row ++)
-        {
-            for(col = 3; col > 0 ; col--)
-            {
-                if(Board.getInstance().getElement(row,col) == Board.getInstance().getElement(row,col-1))
-                {
-                    int t = Board.getInstance().getElement(row,col-1) + Board.getInstance().getElement(row,col);
-                    Board.getInstance().setElement(row,col,t);
-                    Board.getInstance().setElement(row,col-1,0);
-                    Board.score = Board.score + Board.getInstance().getElement(row,col);
+        for (row = 0; row < Board.max; row++) {
+            for (col = Board.max - 2; col >= 0; col--) {
+                if (Board.getInstance().getElement(row, col) == Board.getInstance().getElement(row, col + 1)) {
+                    int t = Board.getInstance().getElement(row, col + 1);
+                    Board.getInstance().setElement(row, col + 1, t*t);
+                    Board.getInstance().setElement(row, col, 0);
+                    Board.score += Board.getInstance().getElement(row, col + 1);
                 }
             }
         }
-
         pushRight();
-
-        for(row=0; row<4; row++)
-        {
-            for(col= 0; col <4;col++)
-            {
-                List2.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        for (int i = 0; i < List1.size(); i++)
-        {
-            if(List1.get(i).equals(List2.get(i)))
-            {
-                Board.countMove++;
-            }
-        }
-
-        if(Board.countMove == List1.size()){Board.countMove = 0;}
-        else
-        {
+        if (countMove >0 ) {
             Board.getInstance().addRandomNumber();
-            Board.countMove = 0;
-            ListUndo = List1;
+            ListUndo.clear();
+            ListUndo.addAll(List);
+            countMove = 0;
             Board.scoreUndo = Board.score - 100;
         }
     }
 
-    public void pushLeft(){
-        for (int loop = 0; loop <2; loop++)
-        {
-            for (row =0; row <4; row++)
-            {
-                for(col = 3; col > 0; col--)
-                {
-                    if(Board.getInstance().getElement(row,col-1) == 0)
-                    {
-                        Board.getInstance().setElement(row,col-1, Board.getInstance().getElement(row,col));
-                        Board.getInstance().setElement(row,col,0);
-                    }
+    public void pushLeft() {
+        for (row = 0; row < Board.max; row++) {
+            int count0 = 0;
+            for (col = 0; col <Board.max; col++) {
+                if (Board.getInstance().getElement(row, col) == 0) count0++;
+                else {
+                    int t = Board.getInstance().getElement(row, col);
+                    Board.getInstance().setElement(row, col - count0, t);
+                    Board.getInstance().setElement(row, col, 0);
+                    countMove++;
                 }
             }
         }
     }
 
-    public void moveLeft(){
-        List1 = new ArrayList<Integer>();
-        List2 = new ArrayList<Integer>();
-
-        for(col= 0; col <4;col++)
-        {
-            for(row=0; row<4; row++)
-            {
-                List1.add(Board.getInstance().getElement(row,col));
-            }
-        }
-
-        pushLeft();
-
-        for (row =0; row <4;row++)
-        {
-            for(col = 0; col <3 ; col++)
-            {
-                if(Board.getInstance().getElement(row,col) == Board.getInstance().getElement(row,col+1))
-                {
-                    int t = Board.getInstance().getElement(row,col+1) + Board.getInstance().getElement(row,col);
-                    Board.getInstance().setElement(row,col, t);
-                    Board.getInstance().setElement(row,col+1,0);
-                    Board.score = Board.score + Board.getInstance().getElement(row,col);
+    public void moveLeft() { //3-0
+        countMove=0;
+        saveBoard();
+        pushUp();
+        for (row = 0; row < Board.max; row++) {
+            for (col = 1; col < Board.max; col++) {
+                if (Board.getInstance().getElement(row, col) == Board.getInstance().getElement(row, col - 1)) {
+                    int t = Board.getInstance().getElement(row, col);
+                    Board.getInstance().setElement(row, col - 1, t*t);
+                    Board.getInstance().setElement(row, col, 0);
+                    Board.score += Board.getInstance().getElement(row, col-1);
                 }
-
             }
         }
-        pushLeft();
-        for(col= 0; col <4;col++)
-        {
-            for(row=0; row<4; row++)
-            {
-                List2.add(Board.getInstance().getElement(row,col));
-            }
-        }
-        for (int i = 0; i < List1.size(); i++)
-        {
-            if(List1.get(i).equals(List2.get(i)))
-            {
-                Board.countMove ++;
-            }
-        }
-        if(Board.countMove == List1.size()){Board.countMove = 0;}
-        else
-        {
+        pushUp();
+        if (countMove>0){
+            countMove = 0;
             Board.getInstance().addRandomNumber();
-            Board.countMove = 0;
-            ListUndo = List1;
+            ListUndo.clear();
+            ListUndo.addAll(List);
             Board.scoreUndo = Board.score - 100;
         }
     }
 
-    public boolean gameOver(){
+    public boolean gameOver() {
         return Board.getInstance().fullCol() && Board.getInstance().fullRow() && Board.getInstance().fullSpecial();
     }
 
-    public void saveBest(){
-        List3 = new ArrayList<Integer>();
-        if(Board.score > best)
-        {
+    public void saveBest() {
+        ListHighScore = new ArrayList<Integer>();
+        if (Board.score > best) {
             highScore = Board.score;
             best = Board.score;
-        }
-        else
-        {
+        } else {
             highScore = best;
         }
-        List3.add(highScore);
-        HandleFile.writeFile(List3);
+        ListHighScore.add(highScore);
+        HandleFile.writeFile(ListHighScore);
 
     }
 
-    public int getBest(){
-        List3 = HandleFile.readFile();
-        for (int i = 0; i < List3.size(); i++)
-        {
-            if(List3.get(i) > best)
-            {
-                best = List3.get(i);
+    public int getBest() {
+        ListHighScore = HandleFile.readFile();
+        for (int i = 0; i < ListHighScore.size(); i++) {
+            if (ListHighScore.get(i) > best) {
+                best = ListHighScore.get(i);
             }
         }
         return best;

@@ -14,8 +14,8 @@ public class Board {
     public static int score;
     public static int countUndo;
     public static int scoreUndo;
-    public static int countMove = 0;
-    private static int[][] board = new int[4][4];
+    public static int max = 4;
+    private static int[][] board = new int[max][max];
     private Random random = new Random();
     private ArrayList<Integer> List1, List2;
 
@@ -52,14 +52,13 @@ public class Board {
         score = 0;
         countUndo = 0;
         scoreUndo = 0;
-        countMove = 0;
-        int rCol1 = random.nextInt(4);
-        int rRow1 = random.nextInt(4);
-        int rCol2 = random.nextInt(4-rCol1);
-        int rRow2 = random.nextInt(4-rRow1);
-        for (row =0; row <4; row++)
+        int rCol1 = random.nextInt(max);
+        int rRow1 = random.nextInt(max);
+        int rCol2 = random.nextInt(max-rCol1);
+        int rRow2 = random.nextInt(max-rRow1);
+        for (row =0; row <max; row++)
         {
-            for(col = 0; col <4; col++)
+            for(col = 0; col <max; col++)
             {
                 board[rCol1][rRow1] = 2;
                 board[rCol2][rRow2] = (random.nextInt(2)+1)*2;
@@ -68,10 +67,8 @@ public class Board {
     }
 
     public void newGame() {
-        score = 0;
-        countUndo = 0;
-        for (col = 0; col < 4; col++) {
-            for (row = 0; row < 4; row++) {
+        for (col = 0; col < max; col++) {
+            for (row = 0; row < max; row++) {
                 board[col][row] = 0;
             }
         }
@@ -80,9 +77,9 @@ public class Board {
 
     public void addRandomNumber(){
         int countEmpty = 0;
-        for (row = 0; row < 4; row++)
+        for (row = 0; row < max; row++)
         {
-            for (col = 0; col < 4; col++)
+            for (col = 0; col < max; col++)
             {
                 if (board[col][row] == 0)
                 {
@@ -95,9 +92,9 @@ public class Board {
         {
             int addedPosition = random.nextInt(countEmpty);
             int countPosition = 0 ;
-            for (row = 0 ; row < 4; row++)
+            for (row = 0 ; row < max; row++)
             {
-                for (col = 0; col < 4; col ++)
+                for (col = 0; col < max; col ++)
                 {
                     if (board[col][row] == 0)
                     {
@@ -116,8 +113,8 @@ public class Board {
 
     public boolean fullRow(){
         int count = 0;
-        for(row= 0; row <3;row++) {
-            for (col = 0; col < 4; col++) {
+        for(row= 0; row <max-1;row++) {
+            for (col = 0; col < max; col++) {
                 if(board[row][col] == 0 || board[row][col] == board[row+1][col] )
                 {
                     count++;
@@ -130,8 +127,8 @@ public class Board {
 
     public boolean fullCol(){
         int count=0;
-        for(row= 0; row <4;row++) {
-            for (col = 0; col < 3; col++) {
+        for(row= 0; row <max;row++) {
+            for (col = 0; col < max-1; col++) {
                 if (board[row][col] == 0 || board[row][col] == board[row][col + 1]) {
                     count++;
                 }

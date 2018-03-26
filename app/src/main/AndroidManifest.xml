@@ -22,8 +22,12 @@
         <activity
             android:name=".MenuActivity"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".RulesActivity" />
-        <activity android:name=".PlayActivity" />
+        <activity
+            android:name=".RulesActivity"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".PlayActivity"
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>
