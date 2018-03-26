@@ -3,9 +3,16 @@ package dsa.hcmiu.a2048pets;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -20,7 +27,35 @@ public class PlayActivity extends Activity {
     private String[] arrPet;
     private ArrayList<Pets> arrPets;
     private int max = 13;
+    Dialog MyDialog;
 
+    @Override
+    public void onBackPressed() {
+        Typeface thufap= Typeface.createFromAsset(this.getAssets(),"mvboli.ttf");
+        MyDialog = new Dialog(PlayActivity.this,R.style.FullHeightDialog);
+        LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
+        MyDialog.setContentView(R.layout.dialog_quit);
+        Button btnyes = (Button) MyDialog.findViewById(R.id.btnyes);
+        Button btnno = (Button) MyDialog.findViewById(R.id.btnno);
+        btnyes.setEnabled(true);
+        btnno.setEnabled(true);
+        btnyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        btnno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyDialog.cancel();
+            }
+        });
+        MyDialog.show();
+    }
+
+
+/*
     @Override
     public void onBackPressed() {
         AlertDialog.Builder a_builder = new AlertDialog.Builder(PlayActivity.this);
@@ -41,8 +76,7 @@ public class PlayActivity extends Activity {
         AlertDialog alert = a_builder.create();
         alert.setTitle("Quit game");
         alert.show();
-
-    }
+    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
