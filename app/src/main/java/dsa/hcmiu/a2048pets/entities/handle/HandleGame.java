@@ -16,7 +16,6 @@ public class HandleGame {
     ArrayList<Integer> ListHighScore;
     private static HandleGame instance;
     public static int highScore = 0;
-    public static int countUndo;
     public static int best = 0;
     private static int score =0;
     private int countEmpty=0;
@@ -41,7 +40,6 @@ public class HandleGame {
 
     private void init() {
         score = 0;
-        countUndo = 0;
         boardStack = new Stack<>();
         int rCol1 = random.nextInt(Board.max-1);
         int rRow1 = random.nextInt(Board.max-1);
