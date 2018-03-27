@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFF"
-    android:padding="40dp"
     android:orientation="vertical">
 
-    <ImageView
-        android:src="@drawable/pikachu2"
-        android:layout_width="900dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleType="center"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <ImageView
+            android:src="@drawable/header"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            />
+        <ImageView
+            android:id="@+id/icon_github"
+            android:src="@drawable/icon_cat"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 
     <TextView
-
+        android:id="@+id/tvMessage"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:layout_marginBottom="30dp"
         android:fontFamily="@font/comicz"
-        android:text="Are you sure want to quit?"
+        android:text="The game will be unsaved. Are you sure want to quit?"
         android:textColor="#999999"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textSize="20dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="400dp">
+        android:paddingLeft="300dp"
+        android:layout_margin="20dp">
         <Button
             android:id="@+id/btnyes"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="YES"
-            android:textSize="40dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:fontFamily="@font/mvboli"
-            android:textColor="#36E000"
+            android:textColor="@color/pinkAcent"
             android:gravity="center"
             android:background="#FFFFFF"/>
         <Button
@@ -48,10 +58,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="NO"
-            android:textSize="40dp"
+            android:textSize="20dp"
             android:textStyle="bold"
             android:fontFamily="@font/mvboli"
-            android:textColor="#36E000"
+            android:textColor="@color/pinkAcent"
             android:gravity="center"
             android:background="#FFFFFF"/>
     </LinearLayout>

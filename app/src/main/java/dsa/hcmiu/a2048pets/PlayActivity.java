@@ -2,24 +2,19 @@ package dsa.hcmiu.a2048pets;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dsa.hcmiu.a2048pets.entities.adapter.PetAdapter;
 import dsa.hcmiu.a2048pets.entities.model.Board;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
@@ -36,9 +31,17 @@ public class PlayActivity extends Activity {
     public void onBackPressed() {
         MyDialog = new Dialog(PlayActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
-        MyDialog.setContentView(R.layout.dialog_quit);
+        MyDialog.setContentView(R.layout.dialog);
         Button btnyes = (Button) MyDialog.findViewById(R.id.btnyes);
         Button btnno = (Button) MyDialog.findViewById(R.id.btnno);
+        TextView tvMess = (TextView) MyDialog.findViewById(R.id.tvMessage) ;
+        tvMess.setText("The game will be unsaved. Are you sure want to quit?");
+        Animation zoomin= AnimationUtils.loadAnimation(this,R.anim.zoom_in);
+        Animation zoomout = AnimationUtils.loadAnimation(this,R.anim.zoom_out);
+        ImageView imgIcon = (ImageView) MyDialog.findViewById(R.id.icon_github);
+        imgIcon.setAnimation(zoomin);
+        imgIcon.setAnimation(zoomout);
+
         btnyes.setEnabled(true);
         btnno.setEnabled(true);
         btnyes.setOnClickListener(new View.OnClickListener() {
