@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +34,6 @@ public class PlayActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        Typeface thufap= Typeface.createFromAsset(this.getAssets(),"mvboli.ttf");
         MyDialog = new Dialog(PlayActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
         MyDialog.setContentView(R.layout.dialog_quit);
@@ -53,7 +55,6 @@ public class PlayActivity extends Activity {
         });
         MyDialog.show();
     }
-
 
 /*
     @Override

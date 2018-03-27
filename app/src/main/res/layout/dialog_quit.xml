@@ -2,58 +2,58 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="#FFFFFF"
+    android:background="#FFFF"
+    android:padding="40dp"
     android:orientation="vertical">
 
     <ImageView
         android:src="@drawable/pikachu2"
-        android:layout_width="match_parent"
+        android:layout_width="900dp"
         android:layout_height="wrap_content"
-        android:scaleType="center" />
+        android:layout_gravity="center"
+        android:scaleType="center"
+        />
+
     <TextView
-        android:layout_width="match_parent"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
         android:layout_marginBottom="30dp"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/comicz"
+        android:text="Are you sure want to quit?"
         android:textColor="#999999"
-        android:gravity="center"
-        android:text="Do you want to quit game?"
-        android:layout_marginRight="60dp"
-        android:layout_marginLeft="60dp"/>
+        android:textSize="40dp"
+        android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:paddingLeft="400dp">
         <Button
             android:id="@+id/btnyes"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="YES"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            android:textColor="#000"
+            android:fontFamily="@font/mvboli"
+            android:textColor="#36E000"
             android:gravity="center"
-            android:background="#FFFFFF"
-            android:padding="40dp"/>
+            android:background="#FFFFFF"/>
         <Button
             android:id="@+id/btnno"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="NO"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif"
-            android:textColor="#000"
+            android:fontFamily="@font/mvboli"
+            android:textColor="#36E000"
             android:gravity="center"
-            android:background="#FFFFFF"
-            android:padding="40dp"/>
+            android:background="#FFFFFF"/>
     </LinearLayout>
 
 </LinearLayout>

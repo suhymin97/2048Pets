@@ -3,9 +3,25 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="" />
+        android:font="@font/mvboli" />
     <font
-        android:fontStyle="italic"
+        android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="" />
+        android:font="@font/vnthfap3" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/comic" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/comicbd" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/comici" />
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/comicz" />
 </font-family>
