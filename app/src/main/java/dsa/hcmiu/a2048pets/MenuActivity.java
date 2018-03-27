@@ -101,7 +101,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 a_builder.setMessage("Coming Soon!!!")
                         .setCancelable(true);
                 AlertDialog alert = a_builder.create();
-                alert.setTitle("2048 Pets Store");
+                alert.setTitle("2048 Pets Features");
                 alert.show();
                 break;
             case R.id.bRule:

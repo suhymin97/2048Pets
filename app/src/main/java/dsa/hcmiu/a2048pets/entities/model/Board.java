@@ -13,7 +13,7 @@ public class Board {
     int row,col;
 
     private ArrayList<Integer> initBoard() {
-        ArrayList<Integer> init = new ArrayList<>();
+        ArrayList<Integer> init = new ArrayList<>(max*max -1);
         for(int i = 0; i<max*max; i++) {
             init.add(0);
         }
@@ -29,6 +29,12 @@ public class Board {
     public Board(int scoreBoard) {
         if (matrix.isEmpty()) matrix.addAll(initBoard());
         this.scoreBoard = scoreBoard;
+    }
+
+    public Board(Board temp) {
+        matrix.clear();
+        matrix.addAll(temp.matrix);
+        scoreBoard = temp.scoreBoard;
     }
 
     public int getElement(int rowi, int col) {
@@ -47,38 +53,17 @@ public class Board {
         this.scoreBoard = scoreBoard;
     }
 
-    public boolean fullRow(){
-        int count = 0;
-        for(row= 0; row <max-1;row++) {
-            for (col = 0; col < max; col++) {
-                if(matrix[row][col] == 0 || matrix[row][col] == matrix[row+1][col] )
-                {
-                    count++;
-                }
+    public boolean fullBoard(){
+        int pass = 3;
+        for(int i=0; i<matrix.size()-1;i++) {
+            if (matrix.get(i) == matrix.get(i+4)) return false;
+            if (i==pass) {
+                pass+=max;
+                continue;
             }
+            if (matrix.get(i) == matrix.get(i+1)) return false;
         }
-        if(count == 0) return true;
-        return false;
-    }
-
-    public boolean fullCol(){
-        int count=0;
-        for(row= 0; row <max;row++) {
-            for (col = 0; col < max-1; col++) {
-                if (matrix[row][col] == 0 || matrix[row][col] == matrix[row][col + 1]) {
-                    count++;
-                }
-            }
-        }
-        if(count == 0) return true;
-        return false;
-    }
-
-    public boolean fullSpecial()
-    {
-        boolean check = false;
-        if(matrix[3][3] == 0 || matrix[3][3] == matrix[3][2]|| matrix[3][3] == matrix[2][3] ) return false;
-        else return true;
+        return true;
     }
 
 }

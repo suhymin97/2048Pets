@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import dsa.hcmiu.a2048pets.entities.model.Board;
+import dsa.hcmiu.a2048pets.entities.model.Features;
 
 
 /**
@@ -12,16 +13,15 @@ import dsa.hcmiu.a2048pets.entities.model.Board;
  */
 
 public class HandleGame {
-    ArrayList<Integer> List, ListUndo, ListHighScore;
-    ArrayList<Integer> List1, List2;
-    public static int highScore = 0;
+    ArrayList<Integer> ListHighScore;
     private static HandleGame instance;
+    public static int highScore = 0;
     public static int countUndo;
     public static int best = 0;
     private static int score =0;
     private int countEmpty=0;
     public Board curBoard;
-    private Stack<Board> boardStack = new Stack<>();
+    private Stack<Board> boardStack;
     int row;
     int col;
     int countMove;
@@ -42,6 +42,7 @@ public class HandleGame {
     private void init() {
         score = 0;
         countUndo = 0;
+        boardStack = new Stack<>();
         int rCol1 = random.nextInt(Board.max-1);
         int rRow1 = random.nextInt(Board.max-1);
         int rCol2 = random.nextInt(Board.max-1);
@@ -52,12 +53,16 @@ public class HandleGame {
     }
 
     public void newGame() {
-        boardStack.clear();
         init();
     }
 
     public void saveHis() {
-        boardStack.push(curBoard);
+        Board boardTemp = new Board(curBoard);
+        boardStack.push(boardTemp);
+    }
+
+    public Board undoSaveHis(){
+        return boardStack.pop();
     }
 
     public void addRandomNumber(){
@@ -80,36 +85,12 @@ public class HandleGame {
     }
 
     public boolean Undo() {
-        List1 = new ArrayList<Integer>();
-        List2 = new ArrayList<Integer>();
-        int countChange = 0;
-
-        if (countUndo==5) return false;
-        saveBoard();
-        for (int row = 0; row < Board.max; row++) {
-            for (int col = 0; col < Board.max; col++) {
-                curBoard.setElement(row, col, ListUndo.get(row * Board.max + col));
-                }
-            }
-            curBoard.score = curBoard.scoreUndo;
-
-        for (row = 0; row < Board.max; row++) {
-            for (col = 0; col < Board.max; col++) {
-                List2.add(curBoard.getElement(row, col));
-            }
-        }
-
-        for (int i = 0; i < List1.size(); i++) {
-            if (List1.get(i).equals(List2.get(i))) {
-                countChange++;
-            }
-        }
-
-        if (countChange == List1.size()) {
-            countChange = 0;
-        } else {
-            countUndo++;
-        }
+        int u = Features.getMaxUndo();
+        if (u==0) return false;
+        Board boardTemp = new Board(undoSaveHis());
+        curBoard = new Board(boardTemp);
+        Features.setMaxUndo(--u);
+        return true;
     }
 
     public void pushUp() {
@@ -133,13 +114,15 @@ public class HandleGame {
         countMove=0;
         saveHis();
         pushUp();
+
         for (col = 0; col < Board.max; col++) {
             for (row = 1; row < Board.max; row++) {
                 if (curBoard.getElement(row, col) == curBoard.getElement(row - 1, col)) {
                     int t = curBoard.getElement(row, col);
                     curBoard.setElement(row - 1, col, t*t);
                     curBoard.setElement(row, col, 0);
-                    curBoard.score += curBoard.getElement(row-1, col);
+                    t= curBoard.getScoreBoard() + curBoard.getElement(row-1, col);
+                    curBoard.setScoreBoard(t);
                 }
             }
         }
@@ -148,6 +131,7 @@ public class HandleGame {
             countMove = 0;
             addRandomNumber();
         }
+        else undoSaveHis();
     }
 
     public void pushDown() { //row
@@ -178,7 +162,8 @@ public class HandleGame {
                     int t = curBoard.getElement(row + 1, col);
                     curBoard.setElement(row + 1, col, t*t);
                     curBoard.setElement(row, col, 0);
-                    curBoard.score += curBoard.getElement(row + 1, col);
+                    t = curBoard.getScoreBoard()+curBoard.getElement(row + 1, col);
+                    curBoard.setScoreBoard(t);
                 }
             }
         }
@@ -187,6 +172,7 @@ public class HandleGame {
             countMove=0;
             addRandomNumber();
         }
+        else undoSaveHis();
     }
 
     public void pushRight() {
@@ -208,7 +194,7 @@ public class HandleGame {
 
     public void moveRight() { //0-3
         countMove=0;
-        saveBoard();
+        saveHis();
         pushRight();
 
         for (row = 0; row < Board.max; row++) {
@@ -217,7 +203,8 @@ public class HandleGame {
                     int t = curBoard.getElement(row, col + 1);
                     curBoard.setElement(row, col + 1, t*t);
                     curBoard.setElement(row, col, 0);
-                    curBoard.score += curBoard.getElement(row, col + 1);
+                    t = curBoard.getScoreBoard() + curBoard.getElement(row, col + 1);
+                    curBoard.setScoreBoard(t);
                 }
             }
         }
@@ -226,6 +213,7 @@ public class HandleGame {
             countMove=0;
             addRandomNumber();
         }
+        else undoSaveHis();
     }
 
     public void pushLeft() {
@@ -247,7 +235,7 @@ public class HandleGame {
 
     public void moveLeft() { //3-0
         countMove=0;
-        saveBoard();
+        saveHis();
         pushLeft();
         for (row = 0; row < Board.max; row++) {
             for (col = 1; col < Board.max; col++) {
@@ -255,7 +243,8 @@ public class HandleGame {
                     int t = curBoard.getElement(row, col);
                     curBoard.setElement(row, col - 1, t*t);
                     curBoard.setElement(row, col, 0);
-                    curBoard.score += curBoard.getElement(row, col-1);
+                    t = curBoard.getScoreBoard() + curBoard.getElement(row, col-1);
+                    curBoard.setScoreBoard(t);
                 }
             }
         }
@@ -264,17 +253,18 @@ public class HandleGame {
             countMove = 0;
             addRandomNumber();
         }
+        else undoSaveHis();
     }
 
     public boolean gameOver() {
-        return curBoard.fullCol() && curBoard.fullRow() && curBoard.fullSpecial();
+        return curBoard.fullBoard();
     }
 
     public void saveBest() {
         ListHighScore = new ArrayList<Integer>();
-        if (curBoard.score > best) {
-            highScore = curBoard.score;
-            best = curBoard.score;
+        if (curBoard.getScoreBoard() > best) {
+            highScore = curBoard.getScoreBoard();
+            best = curBoard.getScoreBoard();
         } else {
             highScore = best;
         }
