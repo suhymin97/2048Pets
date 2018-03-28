@@ -41,8 +41,16 @@ public class Board {
         return matrix.get(rowi*4+col);
     }
 
+    public int getElement(int index) {
+        return matrix.get(index);
+    }
+
     public void setElement(int rowi, int col, int value) {
         matrix.set(rowi*4+col,value);
+    }
+
+    public void setElement(int index, int value) {
+        matrix.set(index,value);
     }
 
     public int getScoreBoard() {

@@ -5,9 +5,9 @@ package dsa.hcmiu.a2048pets.entities.model;
  */
 
 public class Features {
-    public static int totalScore;
-    public static int maxUndo;
-    public static int maxKey;
+    public static int totalScore=0;
+    public static int maxUndo=5;
+    public static int maxKey=0;
 
     public static int getTotalScore() {
         return totalScore;
