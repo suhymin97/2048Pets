@@ -66,21 +66,24 @@ public class HandleGame {
     }
 
     public void addRandomNumber() {
+        int addPosition;
         if (countEmpty > 0) {
-            int addPosition = random.nextInt(countEmpty-1)+1;
+            if (countEmpty==1){
+                addPosition=0;
+            }
+            else addPosition = random.nextInt(countEmpty-1);
             int count0 = 0;
-            for (int i = 0; i < max * max - 1; i++) {
+            for (int i = 0; i < Board.max * Board.max - 1; i++) {
                 if (curBoard.getElement(i)==0) {
                     if (count0 == addPosition) {
                         curBoard.setElement(i, (random.nextInt(1) + 1) * 2);
-                        break;
+                        return;
                     }
                     count0++;
                 }
             }
         }
     }
-
 
     public boolean Undo() {
         int u = Features.getMaxUndo();

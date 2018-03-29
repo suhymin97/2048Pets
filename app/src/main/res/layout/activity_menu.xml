@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/menu_background"
-    android:paddingRight="40dp"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
+
     <LinearLayout
+        android:id="@+id/layMenu"
         android:layout_width="600px"
         android:layout_height="600px"
+        android:paddingRight="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="false"
         android:layout_alignParentRight="true"

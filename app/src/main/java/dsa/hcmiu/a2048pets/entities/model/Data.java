@@ -1,6 +1,5 @@
 package dsa.hcmiu.a2048pets.entities.model;
 
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -10,9 +9,12 @@ import java.util.Random;
 
 import dsa.hcmiu.a2048pets.R;
 
-// Design pattern //
-public class data {
-    public static data datagame;
+/** ??? NEED???
+ * Created by Admin on 3/30/2018.
+ */
+
+public class Data {
+    public static Data datagame;
 
     //Array1D: color for squares //
     private int[] Array1D_color;
@@ -30,9 +32,9 @@ public class data {
 
     // Constructor //
     static{
-        datagame = new data();
+        datagame = new Data();
     }
-    public static data getDatagame(){
+    public static Data getDatagame(){
         return datagame;
     }
 
@@ -119,4 +121,3 @@ public class data {
         return nItems;
     }
 }
-

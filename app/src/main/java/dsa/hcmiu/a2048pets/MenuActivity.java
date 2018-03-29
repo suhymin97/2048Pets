@@ -3,18 +3,17 @@ package dsa.hcmiu.a2048pets;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
@@ -22,14 +21,15 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     Button bMenuPlay, bStore, bMenuSetting;
     MediaPlayer myClick;
     public static MediaPlayer mySong;
-    Button button1,button2,button3;
+    Button btnPlay, btnStore, btnRule;
     Animation uptodown,downtoup;
+    ImageView imgLoading;
+    LinearLayout layMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         bMenuPlay = (Button) findViewById(R.id.bMenuPlay);
         bMenuSetting = (Button) findViewById(R.id.bRule);
         bStore = (Button) findViewById(R.id.bStore);
@@ -43,17 +43,17 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         myClick= MediaPlayer.create(MenuActivity.this,R.raw.click);
 
         //callButton
-        button1 = (Button) findViewById(R.id.bMenuPlay);
-        button2 = (Button) findViewById(R.id.bStore);
-        button3 = (Button) findViewById(R.id.bRule);
+        btnPlay = (Button) findViewById(R.id.bMenuPlay);
+        btnStore = (Button) findViewById(R.id.bStore);
+        btnRule = (Button) findViewById(R.id.bRule);
         //callAnimation
 
         uptodown= AnimationUtils.loadAnimation(this,R.anim.uptodown);
         downtoup= AnimationUtils.loadAnimation(this,R.anim.downtoup);
 
-        button1.setAnimation(uptodown);
-        button2.setAnimation(uptodown);
-        button3.setAnimation(downtoup);
+        btnPlay.setAnimation(uptodown);
+        btnStore.setAnimation(uptodown);
+        btnRule.setAnimation(downtoup);
 
         //loopSound
         mySong.setLooping(true);
@@ -70,8 +70,27 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     public void settingIT(View view){
         myClick.start();
     }
+    /*
+    public void loadingScreen(){
+        imgLoading = (ImageView) findViewById(R.id.imgLoading);
+        layMenu = (LinearLayout) findViewById(R.id.layMenu);
+        layMenu.setVisibility(View.GONE);
+        for (int i =0; i<20000;i++);
+        imgLoading.setVisibility(View.GONE);
+        layMenu.setVisibility(View.VISIBLE);
+    } */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mySong.pause();
+    }
 
-    //diaglog
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mySong.start();
+    }
+
     @Override
     public void onBackPressed() {
         final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
@@ -105,18 +124,6 @@ public class MenuActivity extends Activity implements View.OnClickListener {
             }
         });
         MyDialog.show();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mySong.pause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mySong.start();
     }
 
     @Override

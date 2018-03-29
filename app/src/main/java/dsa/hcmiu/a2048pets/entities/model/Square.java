@@ -1,28 +1,28 @@
 package dsa.hcmiu.a2048pets.entities.model;
 
-
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-//import android.support.annotation.Nullable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
+/**
+ * Created by Admin on 3/30/2018.
+ */
 
-public class square extends TextView {
-
+public class Square extends android.support.v7.widget.AppCompatTextView {
     //CONSTRUCTOR//
 
-    public square(Context context) {
+    public Square(Context context) {
         super(context);
     }
 
-    public square(Context context, AttributeSet attrs) {
+    public Square(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public square(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Square(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -36,6 +36,7 @@ public class square extends TextView {
         setMeasuredDimension(a,a);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void textFormat(int n) {
         if (n < 100) {
             setTextSize(40);
@@ -51,7 +52,7 @@ public class square extends TextView {
         }
 
         GradientDrawable draw = (GradientDrawable) this.getBackground();
-        draw.setColor(data.getDatagame().color(n));
+        draw.setColor(Data.getDatagame().color(n));
         setBackground(draw);
 
 
@@ -63,4 +64,3 @@ public class square extends TextView {
         }
     }
 }
-
