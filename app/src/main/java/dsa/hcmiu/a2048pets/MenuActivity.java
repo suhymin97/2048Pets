@@ -2,19 +2,26 @@ package dsa.hcmiu.a2048pets;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
 
     Button bMenuPlay, bStore, bMenuSetting;
-    MediaPlayer mySong,myClick;
+    MediaPlayer myClick;
+    public static MediaPlayer mySong;
     Button button1,button2,button3;
     Animation uptodown,downtoup;
 
@@ -67,27 +74,50 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     //diaglog
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder a_builder = new AlertDialog.Builder(MenuActivity.this);
-        a_builder.setMessage("Do you want to quit the game?")
-                .setCancelable(false)
-                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }) ;
-        AlertDialog alert = a_builder.create();
-        alert.setTitle("Quit game");
-        alert.show();
-        super.onBackPressed();
+        final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
+        LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
+        MyDialog.setContentView(R.layout.dialog);
+        Button btnyes = (Button) MyDialog.findViewById(R.id.btnyes);
+        Button btnno = (Button) MyDialog.findViewById(R.id.btnno);
+        TextView tvMess = (TextView) MyDialog.findViewById(R.id.tvMessage) ;
+        tvMess.setText("Do you like this game? Let's take a visit to our open source app.");
+        btnyes.setText("Github");
+        btnno.setText("Not now");
+        Animation zoomin= AnimationUtils.loadAnimation(this,R.anim.zoom_in);
+        Animation zoomout = AnimationUtils.loadAnimation(this,R.anim.zoom_out);
+        ImageView imgIcon = (ImageView) MyDialog.findViewById(R.id.icon_github);
+        imgIcon.setAnimation(zoomin);
+        imgIcon.setAnimation(zoomout);
+
+        //btnyes.setEnabled(true);
+        //btnno.setEnabled(true);
+        btnyes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/suhymin97/2048Pets")));
+                System.exit(0);
+            }
+        });
+        btnno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
+            }
+        });
+        MyDialog.show();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mySong.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mySong.start();
+    }
 
     @Override
     public void onClick(View view) {

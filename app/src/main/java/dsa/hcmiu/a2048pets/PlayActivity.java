@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
 import dsa.hcmiu.a2048pets.entities.model.Board;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
+
+import static dsa.hcmiu.a2048pets.MenuActivity.mySong;
 
 
 public class PlayActivity extends Activity {
@@ -25,11 +28,23 @@ public class PlayActivity extends Activity {
     private String[] arrPet;
     private ArrayList<Pets> arrPets;
     private int max = 13;
-    Dialog MyDialog;
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mySong.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mySong.start();
+    }
 
     @Override
     public void onBackPressed() {
-        MyDialog = new Dialog(PlayActivity.this,R.style.FullHeightDialog);
+        final Dialog MyDialog = new Dialog(PlayActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
         MyDialog.setContentView(R.layout.dialog);
         Button btnyes = (Button) MyDialog.findViewById(R.id.btnyes);
@@ -100,17 +115,18 @@ public class PlayActivity extends Activity {
             arrId[i] = countNo;
             countNo *=countNo;
         }
-
+        /*
         //set item for layout
         if (arrPets == null) arrPets = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                int pos = Board.getInstance().getElement(i, j);
+                int pos = HandleGame.getInstance().curBoard.getElement(i, j);
                 Pets temp = new Pets(arrId[pos]);
                 temp.setPic(arrImage[pos]);
                 arrPets.add(temp);
             }
         }
+        */
 
         //PetAdapter adapter = new PetAdapter();
         /*gvMatrix.setAdapter(adapter);

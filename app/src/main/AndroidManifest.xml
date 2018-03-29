@@ -28,6 +28,11 @@
         <activity
             android:name=".PlayActivity"
             android:screenOrientation="sensorLandscape"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

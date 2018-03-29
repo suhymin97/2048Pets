@@ -36,7 +36,7 @@ public class HandleGame {
     }
 
     private HandleGame() {
-        newGame();
+        init();
     }
 
     private void init() {
@@ -121,6 +121,7 @@ public class HandleGame {
                     curBoard.setElement(row, col, 0);
                     t = curBoard.getScoreBoard() + curBoard.getElement(row - 1, col);
                     curBoard.setScoreBoard(t);
+                    countMove++;
                     if (row>1) merge++;
                 }
             }
@@ -154,7 +155,7 @@ public class HandleGame {
     public void moveDown() { //0-3
         countMove = 0;
         saveHis();
-        pushUp();
+        pushDown();
         int merge=0;
         for (col = 0; col < Board.max; col++) {
             for (row = Board.max - 2; row >= 0; row--) {
@@ -164,6 +165,7 @@ public class HandleGame {
                     curBoard.setElement(row, col, 0);
                     t = curBoard.getScoreBoard() + curBoard.getElement(row + 1, col);
                     curBoard.setScoreBoard(t);
+                    countMove++;
                     if (row<Board.max - 2) merge++;
                 }
             }
@@ -179,7 +181,7 @@ public class HandleGame {
         countEmpty = 0;
         for (row = 0; row < Board.max; row++) {
             int count0 = 0;
-            for (col = Board.max - 2; col >= 0; col--) {
+            for (col = Board.max - 1; col >= 0; col--) {
                 if (curBoard.getElement(row, col) == 0) count0++;
                 else if (count0!=0) {
                     int t = curBoard.getElement(row, col);
@@ -205,6 +207,7 @@ public class HandleGame {
                     curBoard.setElement(row, col, 0);
                     t = curBoard.getScoreBoard() + curBoard.getElement(row, col + 1);
                     curBoard.setScoreBoard(t);
+                    countMove++;
                     if (col<Board.max - 2) merge++;
                 }
             }
@@ -246,6 +249,7 @@ public class HandleGame {
                     curBoard.setElement(row, col, 0);
                     t = curBoard.getScoreBoard() + curBoard.getElement(row, col - 1);
                     curBoard.setScoreBoard(t);
+                    countMove++;
                     if (col>1) merge++;
                 }
             }

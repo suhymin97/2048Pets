@@ -33,4 +33,7 @@
         <item>@raw/no8192</item>
     </array>
 
+    <string name="facebook_app_id">219749715275024</string>
+    <string name="fb_login_protocol_scheme">fb219749715275024</string>
+
 </resources>
