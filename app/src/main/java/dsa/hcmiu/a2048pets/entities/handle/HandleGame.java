@@ -47,7 +47,6 @@ public class HandleGame {
         while (pos1 == pos2) {
             pos2 = random.nextInt(max*max - 1);
         }
-        curBoard = new Board(0);
         curBoard.setElement(pos1, 2);
         curBoard.setElement(pos2, (random.nextInt(1) + 1) * 2);
     }
@@ -115,7 +114,6 @@ public class HandleGame {
         countMove = 0;
         saveHis();
         pushUp();
-        int merge=0;
         for (col = 0; col < Board.max; col++) {
             for (row = 1; row < Board.max; row++) {
                 int t = curBoard.getElement(row, col);
@@ -125,13 +123,12 @@ public class HandleGame {
                     t = curBoard.getScoreBoard() + curBoard.getElement(row - 1, col);
                     curBoard.setScoreBoard(t);
                     countMove++;
-                    if (row>1) merge++;
                 }
             }
         }
-        if (merge>0) pushUp();
         if (countMove > 0) {
             countMove = 0;
+            pushUp();
             addRandomNumber();
         } else {
             undoSaveHis();
@@ -159,7 +156,6 @@ public class HandleGame {
         countMove = 0;
         saveHis();
         pushDown();
-        int merge=0;
         for (col = 0; col < Board.max; col++) {
             for (row = Board.max - 2; row >= 0; row--) {
                 int t = curBoard.getElement(row, col);
@@ -169,13 +165,12 @@ public class HandleGame {
                     t = curBoard.getScoreBoard() + curBoard.getElement(row + 1, col);
                     curBoard.setScoreBoard(t);
                     countMove++;
-                    if (row<Board.max - 2) merge++;
                 }
             }
         }
-        if (merge>0) pushDown();
         if (countMove > 0) {
             countMove = 0;
+            pushDown();
             addRandomNumber();
         } else undoSaveHis();
     }
@@ -201,7 +196,6 @@ public class HandleGame {
         countMove = 0;
         saveHis();
         pushRight();
-        int merge=0;
         for (row = 0; row < Board.max; row++) {
             for (col = Board.max - 2; col >= 0; col--) {
                 int t = curBoard.getElement(row, col);
@@ -211,13 +205,12 @@ public class HandleGame {
                     t = curBoard.getScoreBoard() + curBoard.getElement(row, col + 1);
                     curBoard.setScoreBoard(t);
                     countMove++;
-                    if (col<Board.max - 2) merge++;
                 }
             }
         }
-        if (merge>0) pushRight();
         if (countMove > 0) {
             countMove = 0;
+            pushRight();
             addRandomNumber();
         } else undoSaveHis();
     }
@@ -243,7 +236,6 @@ public class HandleGame {
         countMove = 0;
         saveHis();
         pushLeft();
-        int merge=0;
         for (row = 0; row < Board.max; row++) {
             for (col = 1; col < Board.max; col++) {
                 int t = curBoard.getElement(row, col);
@@ -253,13 +245,12 @@ public class HandleGame {
                     t = curBoard.getScoreBoard() + curBoard.getElement(row, col - 1);
                     curBoard.setScoreBoard(t);
                     countMove++;
-                    if (col>1) merge++;
                 }
             }
         }
-        if (merge>0) pushLeft();
         if (countMove > 0) {
             countMove = 0;
+            pushLeft();
             addRandomNumber();
         } else undoSaveHis();
     }

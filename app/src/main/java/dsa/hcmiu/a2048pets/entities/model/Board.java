@@ -64,7 +64,9 @@ public class Board {
     public boolean fullBoard(){
         int pass = 3;
         for(int i=0; i<matrix.size()-1;i++) {
-            if (matrix.get(i) == matrix.get(i+4)) return false;
+            if (matrix.get(i)==0) return false;
+            if (pass<max*(max-1))
+                if (matrix.get(i) == matrix.get(i+4)) return false;
             if (i==pass) {
                 pass+=max;
                 continue;
