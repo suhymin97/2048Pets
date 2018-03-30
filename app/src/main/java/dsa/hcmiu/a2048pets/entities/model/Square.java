@@ -51,9 +51,9 @@ public class Square extends android.support.v7.widget.AppCompatTextView {
             setTextColor(Color.BLACK);
         }
 
-        GradientDrawable draw = (GradientDrawable) this.getBackground();
+ /*       GradientDrawable draw = (GradientDrawable) this.getBackground();
         draw.setColor(Data.getDatagame().color(n));
-        setBackground(draw);
+        setBackground(draw); */
 
 
         if (n==0){
