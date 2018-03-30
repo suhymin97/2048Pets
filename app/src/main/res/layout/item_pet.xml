@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <dsa.hcmiu.a2048pets.entities.model.customview.square
+    <dsa.hcmiu.a2048pets.entities.model.Square
         android:id="@+id/square"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="3dp"
         android:background="@drawable/brown_maxscore"
-        android:gravity="center"></dsa.hcmiu.a2048pets.entities.model.customview.square>
+        android:gravity="center">
+
+    </dsa.hcmiu.a2048pets.entities.model.Square>
 </LinearLayout>

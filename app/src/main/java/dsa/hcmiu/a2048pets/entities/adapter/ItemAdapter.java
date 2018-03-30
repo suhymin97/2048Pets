@@ -20,8 +20,10 @@ public class ItemAdapter extends ArrayAdapter<Integer> {
     private ArrayList<Integer> array;
 
 
-    public ItemAdapter(Context context, int resource, List<Integer> objects) {
+    public ItemAdapter(Context context, int resource, ArrayList<Integer> objects) {
         super(context, resource, objects);
+        this.context = context;
+        this.array = objects;
     }
 
     @Override

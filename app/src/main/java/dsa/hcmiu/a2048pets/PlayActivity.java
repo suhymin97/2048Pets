@@ -81,11 +81,10 @@ public class PlayActivity extends Activity {
             arrId[i] = countNo;
             countNo *= 2;
         }
-        /*
+
         create();
         show();
         setData();
-        */
     }
 
     private void create(){
