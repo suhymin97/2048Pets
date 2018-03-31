@@ -5,24 +5,27 @@ package dsa.hcmiu.a2048pets.entities.model;
  */
 
 public class Pets {
-
-    private int id;
+    private int value;
     private int pic;
-    private static int score = 0;
-
-    public Pets(int id) {
-        super();
-        this.id = id;
+    private int id;
+    public Pets(int value) {
+        this.value = value;
     }
-
 
     public int getId() {
         return id;
     }
 
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public int getPic() {
@@ -34,7 +37,7 @@ public class Pets {
     }
 
     public void assign(Pets p) {
-        id = p.getId();
+        value = p.getValue();
         pic = p.getPic();
     }
 

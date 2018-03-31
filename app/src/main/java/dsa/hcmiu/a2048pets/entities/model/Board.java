@@ -22,8 +22,8 @@ public class Board {
 
     public Board(int scoreBoard, ArrayList<Integer> boardi) {
         this.scoreBoard = scoreBoard;
-        if (!matrix.isEmpty()) matrix.clear();
-        this.matrix.addAll(matrix);
+        matrix = new ArrayList<>();
+        this.matrix.addAll(boardi);
     }
 
     public Board(int scoreBoard) {
@@ -63,7 +63,7 @@ public class Board {
 
     public boolean fullBoard(){
         int pass = 3;
-        for(int i=0; i<matrix.size()-1;i++) {
+        for(int i=0; i<max*max-1;i++) {
             if (matrix.get(i)==0) return false;
             if (pass<max*(max-1))
                 if (matrix.get(i) == matrix.get(i+4)) return false;

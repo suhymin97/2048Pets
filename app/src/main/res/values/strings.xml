@@ -2,6 +2,7 @@
     <string name="app_name">2048 Pets</string>
 
     <array name="arrNo">
+        <item>no0</item>
         <item>no2</item>
         <item>no4</item>
         <item>no8</item>

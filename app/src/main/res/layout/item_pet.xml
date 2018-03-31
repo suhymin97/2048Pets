@@ -3,13 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <dsa.hcmiu.a2048pets.entities.model.Square
-        android:id="@+id/square"
+    <ImageView
+        android:id="@+id/ivItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:background="@drawable/brown_maxscore"
+        android:src="@drawable/pikachu2"
         android:gravity="center">
 
-    </dsa.hcmiu.a2048pets.entities.model.Square>
+    </ImageView>
 </LinearLayout>
