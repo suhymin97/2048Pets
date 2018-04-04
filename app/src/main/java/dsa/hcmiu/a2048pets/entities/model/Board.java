@@ -27,6 +27,7 @@ public class Board {
     }
 
     public Board(int scoreBoard) {
+        if (matrix == null) matrix = new ArrayList<>();
         if (matrix.isEmpty()) matrix.addAll(initBoard());
         this.scoreBoard = scoreBoard;
     }

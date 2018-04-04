@@ -8,8 +8,14 @@ public class Pets {
     private int value;
     private int pic;
     private int id;
+
     public Pets(int value) {
         this.value = value;
+    }
+    public Pets(Pets p) {
+        id = p.id;
+        value = p.getValue();
+        pic = p.getPic();
     }
 
     public int getId() {
@@ -34,11 +40,6 @@ public class Pets {
 
     public void setPic(int pic) {
         this.pic = pic;
-    }
-
-    public void assign(Pets p) {
-        value = p.getValue();
-        pic = p.getPic();
     }
 
 }

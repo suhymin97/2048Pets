@@ -32,6 +32,8 @@ public class PlayActivity extends Activity {
     private ItemAdapter adapter;
     private static int maxValue = 8192;
     private static int numCount = 13;
+    public static final Pets[] typePet = new Pets[numCount + 1];
+    public static final int[] arrId = new int[maxValue + 1];
 
     @Override
     public void onBackPressed() {
@@ -74,7 +76,7 @@ public class PlayActivity extends Activity {
         create();
         show();
         setData();
-
+/*
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeUp() {
                HandleGame.getInstance().moveUp();
@@ -92,20 +94,26 @@ public class PlayActivity extends Activity {
                 HandleGame.getInstance().moveUp();
             }
         });
+        */
     }
+
 
     private void create() {
         TypedArray images = getResources().obtainTypedArray(R.array.arrImage);
 
         //get resources
-        arrImage = new int[numCount+1];
-        arrValue = new int[numCount+1];
-        int[] arrId = new int[maxValue+1];
         int countNo = 2;
+        typePet[0] = new Pets(0);
+        typePet[0].setId(0);
+        typePet[0].setPic(R.drawable.pikachu2);
         arrId[0] = 0;
         for (int i = 1; i < 14; i++) {
-            arrImage[i] = images.getResourceId(i - 1, -1);
-            arrValue[i] = countNo;
+            typePet[i] = new Pets(countNo);
+            typePet[i].setId(i);
+            typePet[i].setPic(images.getResourceId(i - 1, -1));
+            //arrImage[i] = images.getResourceId(i - 1, -1);
+            //arrValue[i] = countNo;
+            //arrId[countNo] = i;
             arrId[countNo] = i;
             countNo *= 2;
         }
@@ -114,10 +122,13 @@ public class PlayActivity extends Activity {
         if (matrixPet == null) matrixPet = new ArrayList<>();
         for (int i = 0; i < max * max; i++) {
             int value = HandleGame.getInstance().curBoard.getElement(i);
+            /*
             Pets temp = new Pets(value);
             if (value > 0) temp.setPic(arrImage[arrId[value]]);
             temp.setId(arrId[value]);
             matrixPet.add(temp);
+            */
+            matrixPet.add(new Pets(typePet[arrId[value]]));
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,24 @@ public class ItemAdapter extends ArrayAdapter<Pets> {
         array = objects;
         layout = resource;
     }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if (convertView == null) {
+            LayoutInflater view = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = view.inflate(layout, null);
+        }
+        if (array.size() > 0) {
+            Pets currentPet = new Pets(array.get(position));
+            ImageView ivItem = (ImageView) convertView.findViewById(R.id.ivItem);
+            ivItem.setImageResource(currentPet.getPic());
+            TextView tvValue = (TextView) convertView.findViewById(R.id.tvValue);
+            tvValue.setText(currentPet.getValue());
+        }
+        return convertView;
+    }
+}
  /*
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,36 +65,3 @@ public class ItemAdapter extends ArrayAdapter<Pets> {
         return convertView;
     }
     */
-
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            LayoutInflater view = LayoutInflater.from(context);
-            convertView = view.inflate(R.layout.item_pet,null);
-            ImageView ivItem = (ImageView) convertView.findViewById(R.id.ivItem);
-            holder = new ViewHolder(convertView);
-            convertView.setTag(holder);
-            //convertView.setOnHoverListener(); //motion drag
-        }
-        else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        holder.build(array.get(position).getPic());
-        return convertView;
-    }
-
-    private class ViewHolder {
-        private ImageView ivItem;
-
-        private ViewHolder(View view) {
-            ivItem = (ImageView) view.findViewById(R.id.ivItem);
-        }
-
-        void build(int pic) {
-            ivItem.setImageResource(pic);
-        }
-
-    }
-}

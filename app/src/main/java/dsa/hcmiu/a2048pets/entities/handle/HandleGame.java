@@ -20,7 +20,7 @@ public class HandleGame {
     public static int highScore = 0;
     public static int best = 0;
     private int countEmpty = 0;
-    public Board curBoard;
+    public static Board curBoard;
     private Stack<Board> boardStack;
     int row;
     int col;
