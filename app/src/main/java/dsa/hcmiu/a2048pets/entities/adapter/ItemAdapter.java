@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dsa.hcmiu.a2048pets.entities.model.Pets;
-import dsa.hcmiu.a2048pets.entities.model.Square;
 import dsa.hcmiu.a2048pets.R;
 
 /**
@@ -45,8 +43,6 @@ public class ItemAdapter extends ArrayAdapter<Pets> {
             Pets currentPet = new Pets(array.get(position));
             ImageView ivItem = (ImageView) convertView.findViewById(R.id.ivItem);
             ivItem.setImageResource(currentPet.getPic());
-            TextView tvValue = (TextView) convertView.findViewById(R.id.tvValue);
-            tvValue.setText(currentPet.getValue());
         }
         return convertView;
     }

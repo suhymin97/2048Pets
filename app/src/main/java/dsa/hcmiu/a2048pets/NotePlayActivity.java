@@ -10,7 +10,7 @@ public class NotePlayActivity {
         if (arrPets == null) arrPets = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                int pos = HandleGame.getInstance().curBoard.getElement(i, j);
+                int pos = HandleGame.getInstance().curBoard.getEValue(i, j);
                 Pets temp = new Pets(arrId[pos]);
                 temp.setPic(arrImage[pos]);
                 arrPets.add(temp);

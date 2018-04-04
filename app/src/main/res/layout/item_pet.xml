@@ -2,22 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/ivItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/pikachu2">
+        </ImageView>
 
-    <ImageView
-        android:id="@+id/ivItem"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/pikachu2"
-        android:gravity="center">
-    </ImageView>
-
-    <TextView
-        android:id="@+id/tvValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="2048"
-        android:textColor="@color/black"
-        android:textSize="60dp"
-        android:textStyle="bold"/>
 </RelativeLayout>

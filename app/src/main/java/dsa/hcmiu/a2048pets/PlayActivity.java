@@ -3,7 +3,6 @@ package dsa.hcmiu.a2048pets;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,22 +17,18 @@ import java.util.ArrayList;
 
 import dsa.hcmiu.a2048pets.entities.adapter.ItemAdapter;
 import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
-import dsa.hcmiu.a2048pets.entities.handle.OnSwipeTouchListener;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
+import static dsa.hcmiu.a2048pets.MenuActivity.mySong;
+import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
+import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
 import static dsa.hcmiu.a2048pets.entities.model.Board.max;
 
 
 public class PlayActivity extends Activity {
-    private int[] arrValue;
-    private int[] arrImage;
     private ArrayList<Pets> matrixPet;
     private GridView gvMatrix;
     private ItemAdapter adapter;
-    private static int maxValue = 8192;
-    private static int numCount = 13;
-    public static final Pets[] typePet = new Pets[numCount + 1];
-    public static final int[] arrId = new int[maxValue + 1];
 
     @Override
     public void onBackPressed() {
@@ -72,9 +67,8 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-
+        mySong.start();
         create();
-        show();
         setData();
 /*
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(this) {
@@ -99,45 +93,18 @@ public class PlayActivity extends Activity {
 
 
     private void create() {
-        TypedArray images = getResources().obtainTypedArray(R.array.arrImage);
-
-        //get resources
-        int countNo = 2;
-        typePet[0] = new Pets(0);
-        typePet[0].setId(0);
-        typePet[0].setPic(R.drawable.pikachu2);
-        arrId[0] = 0;
-        for (int i = 1; i < 14; i++) {
-            typePet[i] = new Pets(countNo);
-            typePet[i].setId(i);
-            typePet[i].setPic(images.getResourceId(i - 1, -1));
-            //arrImage[i] = images.getResourceId(i - 1, -1);
-            //arrValue[i] = countNo;
-            //arrId[countNo] = i;
-            arrId[countNo] = i;
-            countNo *= 2;
-        }
-
         //set item for layout
         if (matrixPet == null) matrixPet = new ArrayList<>();
         for (int i = 0; i < max * max; i++) {
-            int value = HandleGame.getInstance().curBoard.getElement(i);
-            /*
-            Pets temp = new Pets(value);
-            if (value > 0) temp.setPic(arrImage[arrId[value]]);
-            temp.setId(arrId[value]);
-            matrixPet.add(temp);
-            */
+            int value = HandleGame.getInstance(PlayActivity.this).curBoard.getEValue(i);
             matrixPet.add(new Pets(typePet[arrId[value]]));
         }
-    }
-
-    private void show() {
         gvMatrix = (GridView) findViewById(R.id.gvMatrix);
     }
 
     private void setData() {
         adapter = new ItemAdapter(this, R.layout.item_pet, matrixPet);
+        gvMatrix.setAdapter(adapter);
     }
 
 /*

@@ -2,6 +2,10 @@ package dsa.hcmiu.a2048pets.entities.model;
 
 import java.util.ArrayList;
 
+import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
+import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
+
+
 /**
  * Created by Admin on 3/25/2018.
  */
@@ -9,18 +13,18 @@ import java.util.ArrayList;
 public class Board {
     private int scoreBoard;
     public static int max = 4;
-    private ArrayList<Integer> matrix;
+    private ArrayList<Pets> matrix;
     int row,col;
 
-    private ArrayList<Integer> initBoard() {
-        ArrayList<Integer> init = new ArrayList<>(max*max -1);
+    private ArrayList<Pets> initBoard() {
+        ArrayList<Pets> init = new ArrayList<>(max*max -1);
         for(int i = 0; i<max*max; i++) {
-            init.add(0);
+            init.add(typePet[0]);
         }
         return init;
     }
 
-    public Board(int scoreBoard, ArrayList<Integer> boardi) {
+    public Board(int scoreBoard, ArrayList<Pets> boardi) {
         this.scoreBoard = scoreBoard;
         matrix = new ArrayList<>();
         this.matrix.addAll(boardi);
@@ -38,20 +42,28 @@ public class Board {
         scoreBoard = temp.scoreBoard;
     }
 
-    public int getElement(int rowi, int col) {
+    public int getEValue(int rowi, int col) {
+        return matrix.get(rowi*4+col).getValue();
+    }
+
+    public int getEValue(int index) {
+        return matrix.get(index).getValue();
+    }
+
+    public Pets getElement(int rowi, int col) {
         return matrix.get(rowi*4+col);
     }
 
-    public int getElement(int index) {
+    public Pets getEValement(int index) {
         return matrix.get(index);
     }
 
     public void setElement(int rowi, int col, int value) {
-        matrix.set(rowi*4+col,value);
+        matrix.set(rowi*4+col,typePet[arrId[value]]);
     }
 
     public void setElement(int index, int value) {
-        matrix.set(index,value);
+        matrix.set(index,typePet[arrId[value]]);
     }
 
     public int getScoreBoard() {
@@ -65,7 +77,7 @@ public class Board {
     public boolean fullBoard(){
         int pass = 3;
         for(int i=0; i<max*max-1;i++) {
-            if (matrix.get(i)==0) return false;
+            if (matrix.get(i).getValue()==0) return false;
             if (pass<max*(max-1))
                 if (matrix.get(i) == matrix.get(i+4)) return false;
             if (i==pass) {
