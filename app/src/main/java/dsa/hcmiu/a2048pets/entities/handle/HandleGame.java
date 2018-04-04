@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+import dsa.hcmiu.a2048pets.PlayActivity;
 import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.entities.model.Board;
 import dsa.hcmiu.a2048pets.entities.model.Features;
@@ -41,6 +42,13 @@ public class HandleGame {
 
 
     private Random random = new Random();
+
+    public static HandleGame getInstance() {
+        if (instance == null) {
+            instance = new HandleGame();
+        }
+        return instance;
+    }
 
     public static HandleGame getInstance(Context ct) {
         context = ct;

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import dsa.hcmiu.a2048pets.entities.adapter.ItemAdapter;
 import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
+import dsa.hcmiu.a2048pets.entities.handle.OnSwipeTouchListener;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
 import static dsa.hcmiu.a2048pets.MenuActivity.mySong;
@@ -70,40 +71,37 @@ public class PlayActivity extends Activity {
         mySong.start();
         create();
         setData();
-/*
+
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(this) {
             public void onSwipeUp() {
-               HandleGame.getInstance().moveUp();
+                System.out.print("Up");
+                HandleGame.getInstance().moveUp();
             }
 
             public void onSwipeRight() {
-                HandleGame.getInstance().moveUp();
+                HandleGame.getInstance().moveRight();
+                System.out.print("Right");
             }
 
             public void onSwipeLeft() {
-                HandleGame.getInstance().moveUp();
+                HandleGame.getInstance().moveLeft();
+                System.out.print("Left");
             }
 
             public void onSwipeDown() {
-                HandleGame.getInstance().moveUp();
+                HandleGame.getInstance().moveDown();
+                System.out.print("Down");
             }
         });
-        */
     }
 
 
     private void create() {
-        //set item for layout
-        if (matrixPet == null) matrixPet = new ArrayList<>();
-        for (int i = 0; i < max * max; i++) {
-            int value = HandleGame.getInstance(PlayActivity.this).curBoard.getEValue(i);
-            matrixPet.add(new Pets(typePet[arrId[value]]));
-        }
         gvMatrix = (GridView) findViewById(R.id.gvMatrix);
     }
 
     private void setData() {
-        adapter = new ItemAdapter(this, R.layout.item_pet, matrixPet);
+        adapter = new ItemAdapter(this, R.layout.item_pet, HandleGame.getInstance(PlayActivity.this).curBoard.getMatrix());
         gvMatrix.setAdapter(adapter);
     }
 

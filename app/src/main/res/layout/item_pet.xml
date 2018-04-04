@@ -4,12 +4,12 @@
     android:layout_height="match_parent">
         <ImageView
             android:id="@+id/ivItem"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:src="@drawable/pikachu2">
+            android:gravity="center">
         </ImageView>
 
 </RelativeLayout>

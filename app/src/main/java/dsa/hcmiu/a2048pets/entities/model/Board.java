@@ -89,4 +89,7 @@ public class Board {
         return true;
     }
 
+    public ArrayList<Pets> getMatrix() {
+        return matrix;
+    }
 }
