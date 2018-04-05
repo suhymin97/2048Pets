@@ -9,9 +9,6 @@ import java.util.Random;
 
 import dsa.hcmiu.a2048pets.R;
 
-/** ??? NEED???
- * Created by Admin on 3/30/2018.
- */
 
 public class Data {
     public static Data datagame;

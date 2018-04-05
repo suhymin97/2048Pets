@@ -1,8 +1,8 @@
 package dsa.hcmiu.a2048pets.entities.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+//import android.support.annotation.NonNull;
+//import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +32,8 @@ public class ItemAdapter extends ArrayAdapter<Pets> {
         layout = resource;
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater view = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = view.inflate(layout, null);
