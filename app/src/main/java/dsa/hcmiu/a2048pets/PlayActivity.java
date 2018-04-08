@@ -30,6 +30,7 @@ public class PlayActivity extends Activity {
     private ArrayList<Pets> matrixPet;
     private GridView gvMatrix;
     private ItemAdapter adapter;
+    private View layout;
 
     @Override
     public void onBackPressed() {
@@ -45,9 +46,6 @@ public class PlayActivity extends Activity {
         ImageView imgIcon = (ImageView) MyDialog.findViewById(R.id.icon_github);
         imgIcon.setAnimation(zoomin);
         imgIcon.setAnimation(zoomout);
-
-        //btnyes.setEnabled(true);
-        //btnno.setEnabled(true);
         btnyes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,37 +70,67 @@ public class PlayActivity extends Activity {
         create();
         setData();
 
-        gvMatrix.setOnTouchListener(new OnSwipeTouchListener(this) {
+        gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) {
             public void onSwipeUp() {
-                System.out.print("Up");
-                HandleGame.getInstance().moveUp();
+                HandleGame.getInstance(PlayActivity.this).moveUp();
+                check();
             }
 
             public void onSwipeRight() {
-                HandleGame.getInstance().moveRight();
-                System.out.print("Right");
+                HandleGame.getInstance(PlayActivity.this).moveRight();
+                check();
             }
 
             public void onSwipeLeft() {
-                HandleGame.getInstance().moveLeft();
-                System.out.print("Left");
+                HandleGame.getInstance(PlayActivity.this).moveLeft();
+                check();
             }
 
             public void onSwipeDown() {
-                HandleGame.getInstance().moveDown();
-                System.out.print("Down");
+                HandleGame.getInstance(PlayActivity.this).moveDown();
+                check();
             }
         });
+
     }
 
 
     private void create() {
+        //set item for layout
+        if (matrixPet == null) matrixPet = new ArrayList<>();
+        for (int i = 0; i < max * max; i++) {
+            int value = HandleGame.getInstance(PlayActivity.this).curBoard.getEValue(i);
+            matrixPet.add(new Pets(typePet[arrId[value]]));
+        }
         gvMatrix = (GridView) findViewById(R.id.gvMatrix);
     }
 
     private void setData() {
-        adapter = new ItemAdapter(this, R.layout.item_pet, HandleGame.getInstance(PlayActivity.this).curBoard.getMatrix());
+        adapter = new ItemAdapter(this, R.layout.item_pet,
+                HandleGame.getInstance(PlayActivity.this).curBoard.getMatrix());
         gvMatrix.setAdapter(adapter);
+    }
+
+    private void check() {
+        adapter.notifyDataSetChanged();
+        if (HandleGame.getInstance(PlayActivity.this).gameOver()) {
+            final Dialog MyDialog = new Dialog(PlayActivity.this, R.style.FullHeightDialog);
+            LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
+            MyDialog.setContentView(R.layout.dialog_gameover);
+            Button btnyes = (Button) MyDialog.findViewById(R.id.btnok);
+            TextView tvMess = (TextView) MyDialog.findViewById(R.id.tvMessage);
+            tvMess.setText("One more time?");
+            btnyes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HandleGame.getInstance(PlayActivity.this).newGame();
+                    MyDialog.cancel();
+                }
+            });
+            MyDialog.setCanceledOnTouchOutside(false);
+            MyDialog.show();
+        }
+        adapter.notifyDataSetChanged();
     }
 
 /*

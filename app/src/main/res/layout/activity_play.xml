@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,11 +71,15 @@
 
         <GridView
             android:id="@+id/gvMatrix"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/d_grid"
+            android:layout_height="@dimen/d_grid"
             android:numColumns="4"
+            android:padding="10dp"
+            android:scrollbars="none"
             android:background="@color/white"
-            android:layout_margin="50dp">
+            android:layout_margin="90dp"
+            android:layout_gravity="end|bottom"
+            android:layout_alignParentEnd="true">
         </GridView>
 
-</LinearLayout>
+</RelativeLayout>

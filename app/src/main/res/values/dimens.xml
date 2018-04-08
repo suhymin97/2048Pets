@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="d_item">190dp</dimen>
+    <dimen name="d_grid">900dp</dimen>
+    <dimen name="d_over">500dp</dimen>
+    <dimen name="d_textDialog">30dp</dimen>
+</resources>

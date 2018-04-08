@@ -37,7 +37,7 @@ public class Board {
     }
 
     public Board(Board temp) {
-        matrix.clear();
+        matrix = new ArrayList<>();
         matrix.addAll(temp.matrix);
         scoreBoard = temp.scoreBoard;
     }
@@ -72,6 +72,10 @@ public class Board {
 
     public void setScoreBoard(int scoreBoard) {
         this.scoreBoard = scoreBoard;
+    }
+
+    public ArrayList<Pets> getMatrix() {
+        return matrix;
     }
 
     public boolean fullBoard(){
