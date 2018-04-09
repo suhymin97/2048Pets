@@ -3,5 +3,7 @@
     <dimen name="d_item">190dp</dimen>
     <dimen name="d_grid">900dp</dimen>
     <dimen name="d_over">500dp</dimen>
-    <dimen name="d_textDialog">30dp</dimen>
+    <dimen name="d_textDialog">25dp</dimen>
+    <dimen name="d_fbicon">70dp</dimen>
+
 </resources>

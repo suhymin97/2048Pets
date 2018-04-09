@@ -11,15 +11,20 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import dsa.hcmiu.a2048pets.entities.model.Features;
+
 public class WelcomeActivity extends Activity {
 
     private  int WelcomeInteval = 2000;
+
 
     @Override
     public void onBackPressed() {
@@ -31,19 +36,13 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "dsa.hcmiu.a2048pets",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
+        Features.callbackManager = CallbackManager.Factory.create();
 
-        } catch (NoSuchAlgorithmException e) {
+    }
 
-        }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Features.callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

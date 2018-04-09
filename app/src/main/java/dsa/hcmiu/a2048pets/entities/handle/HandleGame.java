@@ -3,6 +3,7 @@ package dsa.hcmiu.a2048pets.entities.handle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class HandleGame {
     public static int highScore = 0;
     public static int best = 0;
     private int countEmpty = 0;
-    public static Board curBoard;
+    public static Board curBoard = new Board(0);
     private Stack<Board> boardStack;
     int row;
     int col;
@@ -64,7 +65,7 @@ public class HandleGame {
     }
 
     private void init() {
-        curBoard = new Board(0);
+        curBoard.setNewBoard();
         boardStack = new Stack<>();
         int pos1 = random.nextInt(max*max - 1);
         int pos2 = random.nextInt(max*max - 1);
@@ -127,9 +128,8 @@ public class HandleGame {
 
     public boolean Undo() {
         int u = Features.getMaxUndo();
-        if (u == 0) return false;
-        Board boardTemp = new Board(undoSaveHis());
-        curBoard = new Board(boardTemp);
+        if (u == 0||boardStack.isEmpty()) return false;
+        curBoard.setBoard(undoSaveHis());
         Features.setMaxUndo(--u);
         return true;
     }

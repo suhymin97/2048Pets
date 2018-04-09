@@ -32,16 +32,27 @@ public class Board {
 
     public Board(int scoreBoard) {
         if (matrix == null) matrix = new ArrayList<>();
-        if (matrix.isEmpty()) matrix.addAll(initBoard());
+        matrix.clear();
+        matrix.addAll(initBoard());
         this.scoreBoard = scoreBoard;
     }
 
     public Board(Board temp) {
-        matrix = new ArrayList<>();
+        setBoard(temp);
+    }
+
+    public void setNewBoard() {
+        if (matrix == null) matrix = new ArrayList<>();
+        matrix.clear();
+        matrix.addAll(initBoard());
+        scoreBoard = 0;
+    }
+    public void setBoard(Board temp) {
+        if (matrix == null) matrix = new ArrayList<>();
+        matrix.clear();
         matrix.addAll(temp.matrix);
         scoreBoard = temp.scoreBoard;
     }
-
     public int getEValue(int rowi, int col) {
         return matrix.get(rowi*4+col).getValue();
     }
@@ -93,7 +104,4 @@ public class Board {
         return true;
     }
 
-    public ArrayList<Pets> getMatrix() {
-        return matrix;
-    }
 }

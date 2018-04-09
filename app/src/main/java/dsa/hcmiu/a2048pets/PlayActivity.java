@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import dsa.hcmiu.a2048pets.entities.adapter.ItemAdapter;
 import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
 import dsa.hcmiu.a2048pets.entities.handle.OnSwipeTouchListener;
+import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
-import static dsa.hcmiu.a2048pets.MenuActivity.mySong;
+import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
 import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
 import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
 import static dsa.hcmiu.a2048pets.entities.model.Board.max;
@@ -31,6 +32,8 @@ public class PlayActivity extends Activity {
     private GridView gvMatrix;
     private ItemAdapter adapter;
     private View layout;
+    private TextView tvScore, tvUndo, tvKey;
+    private Button btnUndo, btnNew;
 
     @Override
     public void onBackPressed() {
@@ -67,8 +70,30 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         mySong.start();
+        tvScore = (TextView) findViewById(R.id.tvScore);
+        tvUndo = (TextView) findViewById(R.id.tvUndo);
+        tvKey = (TextView) findViewById(R.id.tvKey);
+
+        btnUndo = (Button) findViewById(R.id.btnUndo);
+        btnNew = (Button) findViewById(R.id.btnNewGame);
         create();
         setData();
+
+        btnUndo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HandleGame.getInstance(PlayActivity.this).Undo();
+                update();
+            }
+        });
+
+        btnNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HandleGame.getInstance(PlayActivity.this).newGame();
+                update();
+            }
+        });
 
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) {
             public void onSwipeUp() {
@@ -94,7 +119,6 @@ public class PlayActivity extends Activity {
 
     }
 
-
     private void create() {
         //set item for layout
         if (matrixPet == null) matrixPet = new ArrayList<>();
@@ -112,7 +136,7 @@ public class PlayActivity extends Activity {
     }
 
     private void check() {
-        adapter.notifyDataSetChanged();
+        update();
         if (HandleGame.getInstance(PlayActivity.this).gameOver()) {
             final Dialog MyDialog = new Dialog(PlayActivity.this, R.style.FullHeightDialog);
             LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
@@ -130,7 +154,14 @@ public class PlayActivity extends Activity {
             MyDialog.setCanceledOnTouchOutside(false);
             MyDialog.show();
         }
+        update();
+    }
+
+    private void update() {
         adapter.notifyDataSetChanged();
+        tvScore.setText(String.valueOf(HandleGame.getInstance(this).curBoard.getScoreBoard()));
+        tvUndo.setText(String.valueOf(Features.getMaxUndo()));
+        tvKey.setText(String.valueOf(Features.getMaxKey()));
     }
 
 /*

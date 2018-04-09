@@ -7,6 +7,15 @@
     android:background="@drawable/menu_background"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivAvaFb"
+        android:src="@drawable/fbicom"
+        android:layout_width="@dimen/d_fbicon"
+        android:layout_height="@dimen/d_fbicon"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="2dp"/>
 
     <LinearLayout
         android:id="@+id/layMenu"
