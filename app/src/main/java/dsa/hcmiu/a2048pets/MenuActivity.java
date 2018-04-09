@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,16 +30,19 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
 import dsa.hcmiu.a2048pets.entities.model.Features;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static dsa.hcmiu.a2048pets.entities.model.Features.callbackManager;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
@@ -57,6 +60,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         bMenuPlay = (Button) findViewById(R.id.bMenuPlay);
         bMenuSetting = (Button) findViewById(R.id.bRule);
         bStore = (Button) findViewById(R.id.bStore);
@@ -73,6 +77,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
             imgFb.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(MenuActivity.this,"Login facebook!",LENGTH_SHORT).show();
                     final Dialog MyDialog = new Dialog(MenuActivity.this, R.style.FullHeightDialog);
                     LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
                     MyDialog.setContentView(R.layout.login_facebook);
@@ -108,9 +113,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                                                 String userID = Profile.getCurrentProfile().getId();
                                                 ivAva.setProfileId(userID);
                                                 URL profilePicUrl = new URL("https://graph.facebook.com/"+ userID +"/picture?type=square");
-                                                Features.FB_AVA = BitmapFactory.decodeStream(profilePicUrl.openConnection().getInputStream());
+                                                Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
                                             } catch (JSONException e) {
-                                                Toast.makeText(MenuActivity.this, "Error JSON",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
                                                 e.printStackTrace();
                                             } catch (IOException e) {
                                                 e.printStackTrace();
@@ -119,7 +124,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                                         }
                                     });
                             Bundle parameters = new Bundle();
-                            parameters.putString("fields", "name,email,first_name");
+                            parameters.putString("fields", "name,email,first_name,picture");
                             graphRequest.setParameters(parameters);
                             graphRequest.executeAsync();
                         }

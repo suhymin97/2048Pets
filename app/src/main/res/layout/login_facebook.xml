@@ -17,8 +17,8 @@
 
         <com.facebook.login.widget.ProfilePictureView
             android:id="@+id/ivAvaFb"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/d_item"
+            android:layout_height="@dimen/d_item"
             android:layout_gravity="center">
         </com.facebook.login.widget.ProfilePictureView>
 
