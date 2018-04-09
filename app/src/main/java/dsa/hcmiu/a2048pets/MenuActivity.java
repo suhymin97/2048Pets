@@ -52,7 +52,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
     Button bMenuPlay, bStore, bMenuSetting;
     MediaPlayer myClick;
-    Button btnPlay, btnStore, btnRule, btnSound;
+    Button btnPlay, btnStore, btnRule, btnSound, btnProfile;
     Animation uptodown,downtoup;
     ImageView imgFb;
     LinearLayout layMenu;
@@ -68,6 +68,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         bMenuSetting = (Button) findViewById(R.id.bRule);
         bStore = (Button) findViewById(R.id.bStore);
         btnSound = (Button) findViewById(R.id.btnSound);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
         imgFb = (ImageView) findViewById(R.id.ivAvaFb);
         tvTotalScore = (TextView) findViewById(R.id.tvTotalScore);
 
@@ -89,7 +90,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
         //login Fb - Dialog
         if (Features.Loggedfb = (AccessToken.getCurrentAccessToken() == null)) {
-            imgFb.setOnClickListener(new View.OnClickListener() {
+            btnProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(MenuActivity.this,"Login facebook!",LENGTH_SHORT).show();
