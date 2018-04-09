@@ -25,6 +25,7 @@ import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
 import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
 import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
 import static dsa.hcmiu.a2048pets.entities.model.Board.max;
+import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
 
 
 public class PlayActivity extends Activity {
@@ -33,7 +34,7 @@ public class PlayActivity extends Activity {
     private ItemAdapter adapter;
     private View layout;
     private TextView tvScore, tvUndo, tvKey;
-    private Button btnUndo, btnNew;
+    private Button btnUndo, btnNew,btnSoundPlay;
 
     @Override
     public void onBackPressed() {
@@ -69,13 +70,14 @@ public class PlayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        mySong.start();
+        if (sound) mySong.start();
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvUndo = (TextView) findViewById(R.id.tvUndo);
         tvKey = (TextView) findViewById(R.id.tvKey);
 
         btnUndo = (Button) findViewById(R.id.btnUndo);
         btnNew = (Button) findViewById(R.id.btnNewGame);
+        btnSoundPlay = (Button) findViewById(R.id.btnSoundPlay);
         create();
         setData();
 
@@ -95,7 +97,15 @@ public class PlayActivity extends Activity {
             }
         });
 
-        gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) {
+        btnSoundPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sound) mySong.pause();
+                else mySong.start();
+                sound= !(sound || sound);
+            }
+        });
+        gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) { //extend class OnswipeTouch
             public void onSwipeUp() {
                 HandleGame.getInstance(PlayActivity.this).moveUp();
                 check();
@@ -120,12 +130,6 @@ public class PlayActivity extends Activity {
     }
 
     private void create() {
-        //set item for layout
-        if (matrixPet == null) matrixPet = new ArrayList<>();
-        for (int i = 0; i < max * max; i++) {
-            int value = HandleGame.getInstance(PlayActivity.this).curBoard.getEValue(i);
-            matrixPet.add(new Pets(typePet[arrId[value]]));
-        }
         gvMatrix = (GridView) findViewById(R.id.gvMatrix);
     }
 
@@ -149,13 +153,13 @@ public class PlayActivity extends Activity {
                 @Override
                 public void onClick(View view) {
                     HandleGame.getInstance(PlayActivity.this).newGame();
+                    update();
                     MyDialog.cancel();
                 }
             });
             MyDialog.setCanceledOnTouchOutside(false);
             MyDialog.show();
         }
-        update();
     }
 
     private void update() {
@@ -165,4 +169,10 @@ public class PlayActivity extends Activity {
         tvKey.setText(String.valueOf(Features.getMaxKey()));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        HandleGame.getInstance(this).newGame();
+        update();
+    }
 }

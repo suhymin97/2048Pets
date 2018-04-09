@@ -7,6 +7,13 @@
     android:background="@drawable/menu_background"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
+    <Button
+        android:id="@+id/btnSound"
+        android:background="@drawable/sound"
+        android:layout_margin="@dimen/d_textDialog"
+        android:layout_width="@dimen/d_fbicon"
+        android:layout_height="@dimen/d_fbicon" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,24 +55,24 @@
             android:onClick="playIT"
             android:id="@+id/bMenuPlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginBottom="13dp"
             android:background="@drawable/b_play"
             android:layout_weight="1"/>
 
         <Button
-            android:onClick="settingIT"
             android:id="@+id/bStore"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/b_store"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="13dp"/>
+            android:layout_marginBottom="13dp"
+            android:background="@drawable/b_store"
+            android:onClick="settingIT" />
 
         <Button
             android:id="@+id/bRule"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginBottom="13dp"
             android:layout_weight="1"
             android:background="@drawable/b_rule"

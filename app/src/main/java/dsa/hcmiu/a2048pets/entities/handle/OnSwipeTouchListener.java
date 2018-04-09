@@ -25,11 +25,11 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_DOWN: //nhấn vô
                x1 = event.getX();
                y1 = event.getY();
                break;
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_UP: //thả ra
                 float x2 = event.getX();
                 float y2 = event.getY();
                 if (Math.abs(x2-x1) > Math.abs(y2-y1)) { //horizontal
@@ -46,9 +46,11 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     public void onSwipeRight() {
+        //make text qua phải
     }
 
     public void onSwipeLeft() {
+
     }
 
     public void onSwipeUp() {

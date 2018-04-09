@@ -22,7 +22,7 @@ import static dsa.hcmiu.a2048pets.entities.model.Board.max;
  * Created by Admin on 3/25/2018.
  */
 
-public class HandleGame {
+public class HandleGame { //singleton
 
     private static int maxValue = 8192;
     private static int numCount = 13;
@@ -96,6 +96,10 @@ public class HandleGame {
             arrId[countNo] = i;
             countNo *= 2;
         }
+        /*
+        i=1: countNo = 2; arrID[2]=1;
+        i=2: countNo = 4; arrID[4]=2
+        */
     }
 
     public void saveHis() {

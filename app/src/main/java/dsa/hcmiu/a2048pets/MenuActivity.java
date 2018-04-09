@@ -40,16 +40,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
+import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
 import dsa.hcmiu.a2048pets.entities.model.Features;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static dsa.hcmiu.a2048pets.entities.model.Features.callbackManager;
+import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
+import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
 
     Button bMenuPlay, bStore, bMenuSetting;
     MediaPlayer myClick;
-    Button btnPlay, btnStore, btnRule;
+    Button btnPlay, btnStore, btnRule, btnSound;
     Animation uptodown,downtoup;
     ImageView imgFb;
     LinearLayout layMenu;
@@ -64,6 +67,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         bMenuPlay = (Button) findViewById(R.id.bMenuPlay);
         bMenuSetting = (Button) findViewById(R.id.bRule);
         bStore = (Button) findViewById(R.id.bStore);
+        btnSound = (Button) findViewById(R.id.btnSound);
         imgFb = (ImageView) findViewById(R.id.ivAvaFb);
         tvTotalScore = (TextView) findViewById(R.id.tvTotalScore);
 
@@ -72,7 +76,18 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         bMenuPlay.setOnClickListener(this);
         bStore.setOnClickListener(this);
 
+        btnSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sound) mySong.pause();
+                else mySong.start();
+                sound= !(sound || sound);
+            }
+        });
+
         soundSetup();
+
+        //login Fb - Dialog
         if (Features.Loggedfb = (AccessToken.getCurrentAccessToken() == null)) {
             imgFb.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,6 +101,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                     final ProfilePictureView ivAva = (ProfilePictureView) MyDialog.findViewById(R.id.ivAvaFb);
                     final Button btnLogout = (Button) MyDialog.findViewById(R.id.btnLogout);
 
+                    //VISIBLE = Hiện; INVISIBLE = Tàng hình; GONE = Mất tích
                     btnlogin.setReadPermissions(Arrays.asList("public_profile", "email"));
                     ivAva.setVisibility(View.VISIBLE);
                     btnlogin.setVisibility(View.VISIBLE);
@@ -112,15 +128,11 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                                                 tvNick.setText(name);
                                                 String userID = Profile.getCurrentProfile().getId();
                                                 ivAva.setProfileId(userID);
-                                                URL profilePicUrl = new URL("https://graph.facebook.com/"+ userID +"/picture?type=square");
                                                 Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
                                             } catch (JSONException e) {
                                                 Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
                                                 e.printStackTrace();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
                                             }
-
                                         }
                                     });
                             Bundle parameters = new Bundle();
@@ -144,7 +156,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 }
             });
         }
-        if (Features.FB_AVA!= null) imgFb.setImageBitmap(Features.FB_AVA);
+        //if (Features.AVA!= null) imgFb.setImageBitmap(Features.AVA);
     }
 
 
@@ -159,16 +171,16 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         myClick.start();
     }
 
-    @Override
+    @Override //Activity pause
     protected void onPause() {
         super.onPause();
         Features.mySong.pause();
     }
 
-    @Override
+    @Override //Activity resume
     protected void onResume() {
         super.onResume();
-        Features.mySong.start();
+        if (Features.sound) Features.mySong.start();
         update();
     }
 
@@ -180,14 +192,17 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         Button btnyes = (Button) MyDialog.findViewById(R.id.btnyes);
         Button btnno = (Button) MyDialog.findViewById(R.id.btnno);
         TextView tvMess = (TextView) MyDialog.findViewById(R.id.tvMessage) ;
+
         tvMess.setText("Do you like this game? Let's take a visit to our open source app.");
         btnyes.setText("Github");
         btnno.setText("Not now");
+        //set Anim for icon github
         Animation zoomin= AnimationUtils.loadAnimation(this,R.anim.zoom_in);
         Animation zoomout = AnimationUtils.loadAnimation(this,R.anim.zoom_out);
         ImageView imgIcon = (ImageView) MyDialog.findViewById(R.id.icon_github);
         imgIcon.setAnimation(zoomin);
         imgIcon.setAnimation(zoomout);
+
         btnyes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,8 +249,8 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         btnPlay = (Button) findViewById(R.id.bMenuPlay);
         btnStore = (Button) findViewById(R.id.bStore);
         btnRule = (Button) findViewById(R.id.bRule);
-        //callAnimation
 
+        //callAnimation
         uptodown= AnimationUtils.loadAnimation(this,R.anim.uptodown);
         downtoup= AnimationUtils.loadAnimation(this,R.anim.downtoup);
 
@@ -244,17 +259,17 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         btnRule.setAnimation(downtoup);
 
         //loopSound
-        Features.mySong.setLooping(true);
-        Features.mySong.start();
+        mySong.setLooping(true);
+        if (sound) mySong.start();
     }
 
-    @Override
+    @Override //Xin response từ fb: gửi 3 dữ liệu dưới cho fb
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Features.callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
+    @Override //acti được bắt đầu
     protected void onStart() {
         super.onStart();
         LoginManager.getInstance().logOut();

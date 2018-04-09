@@ -108,6 +108,13 @@
             android:background="@drawable/newgame"
             android:layout_toRightOf="@id/btnUndo"
             android:layout_below="@+id/tvContainer"/>
+        <Button
+            android:id="@+id/btnSoundPlay"
+            android:background="@drawable/sound"
+            android:layout_width="@dimen/d_fbicon"
+            android:layout_height="@dimen/d_fbicon"
+            android:layout_toRightOf="@id/btnNewGame"
+            android:layout_below="@+id/tvContainer"/>
     </RelativeLayout>
 
         <GridView

@@ -34,7 +34,7 @@ public class ItemAdapter extends ArrayAdapter<Pets> {
         if (array.size() > 0) {
             Pets currentPet = new Pets(array.get(position));
             ImageView ivItem = (ImageView) convertView.findViewById(R.id.ivItem);
-            ivItem.setImageResource(currentPet.getPic());
+            ivItem.setImageResource(currentPet.getPic()); //no2.jpg = 123 => ivItem.setImageResource(123);
         }
         return convertView;
     }

@@ -3,17 +3,20 @@ package dsa.hcmiu.a2048pets.entities.model;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.telecom.RemoteConnection;
+import android.widget.ImageView;
 
 import com.facebook.CallbackManager;
 
-public class Features {
+public class Features { //store biến static
+    public static long uidCount = 0;
     public static int totalScore=0;
     public static int maxUndo=5;
     public static int maxKey=1;
     public static CallbackManager callbackManager;
     public static boolean Loggedfb;
     public static MediaPlayer mySong;
-    public static Bitmap FB_AVA = null;
+    public static boolean sound = true;
+    public static ImageView AVA;
 
     public static int getMaxUndo() {
         return maxUndo;
