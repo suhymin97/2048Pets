@@ -15,14 +15,6 @@ public class Features {
     public static MediaPlayer mySong;
     public static Bitmap FB_AVA = null;
 
-    public static int getTotalScore() {
-        return totalScore;
-    }
-
-    public static void setTotalScore(int totalScore) {
-        Features.totalScore = totalScore;
-    }
-
     public static int getMaxUndo() {
         return maxUndo;
     }

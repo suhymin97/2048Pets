@@ -51,6 +51,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     ImageView imgFb;
     LinearLayout layMenu;
     String email,name,fname;
+    private TextView tvTotalScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         bMenuSetting = (Button) findViewById(R.id.bRule);
         bStore = (Button) findViewById(R.id.bStore);
         imgFb = (ImageView) findViewById(R.id.ivAvaFb);
+        tvTotalScore = (TextView) findViewById(R.id.tvTotalScore);
 
+        update();
         bMenuSetting.setOnClickListener(this);
         bMenuPlay.setOnClickListener(this);
         bStore.setOnClickListener(this);
@@ -104,8 +107,8 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                                                 tvNick.setText(name);
                                                 String userID = Profile.getCurrentProfile().getId();
                                                 ivAva.setProfileId(userID);
-                                                URL profilePicUrl = new URL("https://graph.facebook.com/"+ userID +"/picture?type=large");
-                                                //Features.FB_AVA = BitmapFactory.decodeStream(profilePicUrl.openConnection().getInputStream());
+                                                URL profilePicUrl = new URL("https://graph.facebook.com/"+ userID +"/picture?type=square");
+                                                Features.FB_AVA = BitmapFactory.decodeStream(profilePicUrl.openConnection().getInputStream());
                                             } catch (JSONException e) {
                                                 Toast.makeText(MenuActivity.this, "Error JSON",Toast.LENGTH_SHORT).show();
                                                 e.printStackTrace();
@@ -161,6 +164,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         Features.mySong.start();
+        update();
     }
 
     @Override
@@ -250,4 +254,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         super.onStart();
         LoginManager.getInstance().logOut();
     }
+
+    private void update() {
+        tvTotalScore.setText(String.valueOf(Features.totalScore));
+    }
+
 }

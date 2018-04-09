@@ -5,5 +5,6 @@
     <dimen name="d_over">500dp</dimen>
     <dimen name="d_textDialog">25dp</dimen>
     <dimen name="d_fbicon">70dp</dimen>
+    <dimen name="d_textScore">40dp</dimen>
 
 </resources>

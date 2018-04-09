@@ -7,15 +7,30 @@
     android:background="@drawable/menu_background"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivAvaFb"
-        android:src="@drawable/fbicom"
-        android:layout_width="@dimen/d_fbicon"
-        android:layout_height="@dimen/d_fbicon"
-        android:layout_alignParentRight="true"
-        android:layout_margin="20dp"
-        app:civ_border_color="@color/white"
-        app:civ_border_width="2dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvaFb"
+            android:src="@drawable/fbicom"
+            android:layout_width="@dimen/d_fbicon"
+            android:layout_height="@dimen/d_fbicon"
+            android:layout_margin="20dp"
+            app:civ_border_color="#fff"
+            app:civ_border_width="2dp"/>
+        <TextView
+            android:id="@+id/tvTotalScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAvaFb"
+            android:fontFamily="@font/comicbd"
+            android:textColor="#000"
+            android:textSize="@dimen/d_textScore"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/layMenu"

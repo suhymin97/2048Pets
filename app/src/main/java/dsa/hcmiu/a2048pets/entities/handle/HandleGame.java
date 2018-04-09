@@ -77,6 +77,7 @@ public class HandleGame {
     }
 
     public void newGame() {
+        Features.totalScore+=curBoard.getScoreBoard();
         init();
     }
 

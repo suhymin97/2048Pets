@@ -133,6 +133,7 @@ public class PlayActivity extends Activity {
         adapter = new ItemAdapter(this, R.layout.item_pet,
                 HandleGame.getInstance(PlayActivity.this).curBoard.getMatrix());
         gvMatrix.setAdapter(adapter);
+        update();
     }
 
     private void check() {
@@ -163,19 +164,5 @@ public class PlayActivity extends Activity {
         tvUndo.setText(String.valueOf(Features.getMaxUndo()));
         tvKey.setText(String.valueOf(Features.getMaxKey()));
     }
-
-/*
-    private void create(){
-        Data.getDatagame().value16(PlayActivity.this);
-        adapter = new ItemAdapter(PlayActivity.this,0, Data.getDatagame().getnItems());
-    }
-    private void show(){
-        gvMatrix = (GridView)findViewById(R.id.gvMatrix);
-    }
-
-    private void setData(){
-        gvMatrix.setAdapter(adapter);
-    }
-    */
 
 }
