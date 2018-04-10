@@ -87,12 +87,12 @@ public class HandleGame { //singleton
         int countNo = 2;
         typePet[0] = new Pets(0);
         typePet[0].setId(0);
-        typePet[0].setPic(R.drawable.pikachu2);
+        typePet[0].setPic(images.getResourceId(0, -1));
         arrId[0] = 0;
         for (int i = 1; i < 14; i++) {
             typePet[i] = new Pets(countNo);
             typePet[i].setId(i);
-            typePet[i].setPic(images.getResourceId(i - 1, -1));
+            typePet[i].setPic(images.getResourceId(i, -1));
             arrId[countNo] = i;
             countNo *= 2;
         }

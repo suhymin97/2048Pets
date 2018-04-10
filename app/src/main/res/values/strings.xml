@@ -19,6 +19,7 @@
     </array>
 
     <array name="arrImage">
+        <item>@raw/no0</item>
         <item>@raw/no2</item>
         <item>@raw/no4</item>
         <item>@raw/no8</item>

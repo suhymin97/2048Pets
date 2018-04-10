@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="d_item">190dp</dimen>
-    <dimen name="d_grid">900dp</dimen>
+    <dimen name="d_item">200dp</dimen>
+    <dimen name="d_grid">930dp</dimen>
     <dimen name="d_over">500dp</dimen>
     <dimen name="d_textDialog">25dp</dimen>
     <dimen name="d_fbicon">100dp</dimen>
     <dimen name="d_textScore">40dp</dimen>
+    <dimen name="d_ctnScore">200dp</dimen>
+    <dimen name="d_txtScore">40dp</dimen>
+    <dimen name="d_marginFBtnPlay">20dp</dimen>
 
 </resources>

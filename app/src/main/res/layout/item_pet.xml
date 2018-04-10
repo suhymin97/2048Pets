@@ -6,7 +6,7 @@
             android:id="@+id/ivItem"
             android:layout_width="@dimen/d_item"
             android:layout_height="@dimen/d_item"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:scaleType="fitXY"

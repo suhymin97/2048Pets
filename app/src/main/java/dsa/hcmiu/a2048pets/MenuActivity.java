@@ -26,6 +26,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -58,6 +59,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     LinearLayout layMenu;
     String email,name,fname;
     private TextView tvTotalScore;
+    ProfileTracker mProfileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,40 +118,57 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                             ivAva.setVisibility(View.VISIBLE);
                             tvNick.setVisibility(View.VISIBLE);
                             btnLogout.setVisibility(View.VISIBLE);
-
-                            GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                                    new GraphRequest.GraphJSONObjectCallback() {
-                                        @Override
-                                        public void onCompleted(JSONObject object, GraphResponse response) {
-                                            Log.d("JSON", response.getJSONObject().toString());
-                                            try {
-                                                email = object.getString("email");
-                                                name = object.getString("name");
-                                                fname = object.getString("first_name");
-                                                tvNick.setText(name);
-                                                String userID = Profile.getCurrentProfile().getId();
-                                                ivAva.setProfileId(userID);
-                                                Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
-                                            } catch (JSONException e) {
-                                                Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
-                                                e.printStackTrace();
+                            Profile profile = Profile.getCurrentProfile();
+                            if(profile == null) {
+                                mProfileTracker = new ProfileTracker() {
+                                    @Override
+                                    protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                                        Log.v("facebook - profile", currentProfile.getId());
+                                        String userID = Profile.getCurrentProfile().getId();
+                                        ivAva.setProfileId(userID);
+                                        Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
+                                        Log.v("facebook - profile", currentProfile.getFirstName());
+                                        tvNick.setText(currentProfile.getFirstName());
+                                        mProfileTracker.stopTracking();
+                                    }
+                                };
+                                // no need to call startTracking() on mProfileTracker
+                                // because it is called by its constructor, internally.
+                            } else {
+                                Log.v("facebook - profile", profile.getFirstName());
+                                GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                                        new GraphRequest.GraphJSONObjectCallback() {
+                                            @Override
+                                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                                Log.d("JSON", response.getJSONObject().toString());
+                                                try {
+                                                    email = object.getString("email");
+                                                    name = object.getString("name");
+                                                    fname = object.getString("first_name");
+                                                    tvNick.setText(name);
+                                                    String userID = Profile.getCurrentProfile().getId();
+                                                    ivAva.setProfileId(userID);
+                                                    Picasso.get().load("https://graph.facebook.com/" + userID + "/picture?type=large").into(imgFb);
+                                                } catch (JSONException e) {
+                                                    Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
+                                                    e.printStackTrace();
+                                                }
                                             }
-                                        }
-                                    });
-                            Bundle parameters = new Bundle();
-                            parameters.putString("fields", "name,email,first_name,picture");
-                            graphRequest.setParameters(parameters);
-                            graphRequest.executeAsync();
+                                        });
+                                Bundle parameters = new Bundle();
+                                parameters.putString("fields", "name,email,first_name,picture");
+                                graphRequest.setParameters(parameters);
+                                graphRequest.executeAsync();
+                            }
                         }
 
                         @Override
                         public void onCancel() {
-                            // App code
+                            Log.v("facebook - onCancel", "cancelled");
                         }
 
                         @Override
                         public void onError(FacebookException exception) {
-                            // App code
                         }
 
                     });

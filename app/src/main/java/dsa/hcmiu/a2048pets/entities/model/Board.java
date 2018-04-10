@@ -91,6 +91,7 @@ public class Board {
 
     public boolean fullBoard(){
         int pass = 3;
+        if (matrix.get(max*max-1).getValue()==0) return false;
         for(int i=0; i<max*max-1;i++) {
             if (matrix.get(i).getValue()==0) return false;
             if (pass<max*(max-1))

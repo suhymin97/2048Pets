@@ -7,13 +7,17 @@
     android:background="@drawable/menu_background"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
+    <!-- SOUND BUTTON -->
     <Button
         android:id="@+id/btnSound"
-        android:background="@drawable/sound"
-        android:layout_margin="@dimen/d_textDialog"
-        android:layout_width="@dimen/d_fbicon"
-        android:layout_height="@dimen/d_fbicon" />
+        android:layout_width="222dp"
+        android:layout_height="249dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="725dp"
+        android:background="@drawable/cat_up" />
 
+    <!-- FB BUTTON -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,44 +48,75 @@
             android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
+    <!-- PLAY BUTTON -->
+    <Button
+        android:id="@+id/bMenuPlay"
+        android:layout_width="443dp"
 
+        android:layout_height="233dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="724dp"
+        android:background="@drawable/b_play"
+        android:onClick="playIT" />
+
+    <!-- other BUTTONs -->
     <LinearLayout
         android:id="@+id/layMenu"
-        android:layout_width="600px"
-        android:layout_height="600px"
-        android:paddingRight="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="true"
+        android:layout_width="439dp"
+        android:layout_height="536dp"
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="243dp"
+        android:layout_marginEnd="143dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <Button
-            android:onClick="playIT"
-            android:id="@+id/bMenuPlay"
+            android:id="@+id/bRule"
             android:layout_width="match_parent"
+
             android:layout_height="0dp"
             android:layout_marginBottom="13dp"
-            android:background="@drawable/b_play"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/b_how"
+            android:onClick="playIT" />
 
         <Button
             android:id="@+id/bStore"
             android:layout_width="match_parent"
+
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_alignStart="@+id/layMenu"
             android:layout_marginBottom="13dp"
+            android:layout_weight="1"
             android:background="@drawable/b_store"
-            android:onClick="settingIT" />
+            android:onClick="storeIT" />
 
         <Button
-            android:id="@+id/bRule"
+            android:id="@+id/bQuit"
             android:layout_width="match_parent"
+
             android:layout_height="0dp"
             android:layout_marginBottom="13dp"
             android:layout_weight="1"
-            android:background="@drawable/b_rule"
-            android:onClick="storeIT" />
+            android:background="@drawable/b_quit" />
     </LinearLayout>
+
+
+    <!-- CUP of CATS -->
+    <Button
+        android:layout_width="606dp"
+        android:layout_height="765dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginBottom="54dp"
+        android:background="@drawable/cupcat" />
+
+
+
 </RelativeLayout>
