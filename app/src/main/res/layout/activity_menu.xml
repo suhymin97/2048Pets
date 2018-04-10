@@ -78,7 +78,6 @@
         <Button
             android:id="@+id/bRule"
             android:layout_width="match_parent"
-
             android:layout_height="0dp"
             android:layout_marginBottom="13dp"
             android:layout_weight="1"
@@ -88,7 +87,6 @@
         <Button
             android:id="@+id/bStore"
             android:layout_width="match_parent"
-
             android:layout_height="0dp"
             android:layout_alignStart="@+id/layMenu"
             android:layout_marginBottom="13dp"
@@ -99,7 +97,6 @@
         <Button
             android:id="@+id/bQuit"
             android:layout_width="match_parent"
-
             android:layout_height="0dp"
             android:layout_marginBottom="13dp"
             android:layout_weight="1"
@@ -108,14 +105,16 @@
 
 
     <!-- CUP of CATS -->
-    <Button
+    <ImageView
+        android:id="@+id/ivCupCat"
         android:layout_width="606dp"
         android:layout_height="765dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="38dp"
         android:layout_marginBottom="54dp"
-        android:background="@drawable/cupcat" />
+        android:src="@drawable/cupcat"
+        android:onClick="MoewIT"/>
 
 
 

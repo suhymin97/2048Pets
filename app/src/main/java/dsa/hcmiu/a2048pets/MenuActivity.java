@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,12 +35,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 
-import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
 import dsa.hcmiu.a2048pets.entities.model.Features;
 
 import static android.widget.Toast.LENGTH_SHORT;
@@ -51,33 +46,37 @@ import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
 
-    Button bMenuPlay, bStore, bMenuSetting;
+    Button btnPlay, btnStore, btnRule;
     MediaPlayer myClick;
-    Button btnPlay, btnStore, btnRule, btnSound, btnProfile;
+    Button btnSound, btnProfile,btnQuit;
     Animation uptodown,downtoup;
-    ImageView imgFb;
+    ImageView imgFb,ivCupCat;
     LinearLayout layMenu;
     String email,name,fname;
     private TextView tvTotalScore;
     ProfileTracker mProfileTracker;
+    MediaPlayer snd_singleKitty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        bMenuPlay = (Button) findViewById(R.id.bMenuPlay);
-        bMenuSetting = (Button) findViewById(R.id.bRule);
-        bStore = (Button) findViewById(R.id.bStore);
+        btnPlay = (Button) findViewById(R.id.bMenuPlay);
+        btnRule = (Button) findViewById(R.id.bRule);
+        btnStore = (Button) findViewById(R.id.bStore);
+        btnQuit = (Button) findViewById(R.id.bQuit);
         btnSound = (Button) findViewById(R.id.btnSound);
         btnProfile = (Button) findViewById(R.id.btnProfile);
         imgFb = (ImageView) findViewById(R.id.ivAvaFb);
+        ivCupCat = (ImageView) findViewById(R.id.ivCupCat);
         tvTotalScore = (TextView) findViewById(R.id.tvTotalScore);
 
         update();
-        bMenuSetting.setOnClickListener(this);
-        bMenuPlay.setOnClickListener(this);
-        bStore.setOnClickListener(this);
+        btnRule.setOnClickListener(this);
+        btnPlay.setOnClickListener(this);
+        btnStore.setOnClickListener(this);
+        btnQuit.setOnClickListener(this);
 
         btnSound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,100 +86,34 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 sound= !(sound || sound);
             }
         });
-
+        cupCatSetup();
         soundSetup();
-
-        //login Fb - Dialog
-        if (Features.Loggedfb = (AccessToken.getCurrentAccessToken() == null)) {
-            btnProfile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MenuActivity.this,"Login facebook!",LENGTH_SHORT).show();
-                    final Dialog MyDialog = new Dialog(MenuActivity.this, R.style.FullHeightDialog);
-                    LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
-                    MyDialog.setContentView(R.layout.login_facebook);
-                    final LoginButton btnlogin = (LoginButton) MyDialog.findViewById(R.id.btnLogin);
-                    final TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
-                    final ProfilePictureView ivAva = (ProfilePictureView) MyDialog.findViewById(R.id.ivAvaFb);
-                    final Button btnLogout = (Button) MyDialog.findViewById(R.id.btnLogout);
-
-                    //VISIBLE = Hiện; INVISIBLE = Tàng hình; GONE = Mất tích
-                    btnlogin.setReadPermissions(Arrays.asList("public_profile", "email"));
-                    ivAva.setVisibility(View.VISIBLE);
-                    btnlogin.setVisibility(View.VISIBLE);
-                    tvNick.setVisibility(View.GONE);
-                    btnLogout.setVisibility(View.GONE);
-
-                    btnlogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                        @Override
-                        public void onSuccess(LoginResult loginResult) {
-                            btnlogin.setVisibility(View.GONE);
-                            ivAva.setVisibility(View.VISIBLE);
-                            tvNick.setVisibility(View.VISIBLE);
-                            btnLogout.setVisibility(View.VISIBLE);
-                            Profile profile = Profile.getCurrentProfile();
-                            if(profile == null) {
-                                mProfileTracker = new ProfileTracker() {
-                                    @Override
-                                    protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                                        Log.v("facebook - profile", currentProfile.getId());
-                                        String userID = Profile.getCurrentProfile().getId();
-                                        ivAva.setProfileId(userID);
-                                        Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
-                                        Log.v("facebook - profile", currentProfile.getFirstName());
-                                        tvNick.setText(currentProfile.getFirstName());
-                                        mProfileTracker.stopTracking();
-                                    }
-                                };
-                                // no need to call startTracking() on mProfileTracker
-                                // because it is called by its constructor, internally.
-                            } else {
-                                Log.v("facebook - profile", profile.getFirstName());
-                                GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                                        new GraphRequest.GraphJSONObjectCallback() {
-                                            @Override
-                                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                                Log.d("JSON", response.getJSONObject().toString());
-                                                try {
-                                                    email = object.getString("email");
-                                                    name = object.getString("name");
-                                                    fname = object.getString("first_name");
-                                                    tvNick.setText(name);
-                                                    String userID = Profile.getCurrentProfile().getId();
-                                                    ivAva.setProfileId(userID);
-                                                    Picasso.get().load("https://graph.facebook.com/" + userID + "/picture?type=large").into(imgFb);
-                                                } catch (JSONException e) {
-                                                    Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        });
-                                Bundle parameters = new Bundle();
-                                parameters.putString("fields", "name,email,first_name,picture");
-                                graphRequest.setParameters(parameters);
-                                graphRequest.executeAsync();
-                            }
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            Log.v("facebook - onCancel", "cancelled");
-                        }
-
-                        @Override
-                        public void onError(FacebookException exception) {
-                        }
-
-                    });
-                    MyDialog.show();
-                }
-            });
+        showProfile();
         }
-        //if (Features.AVA!= null) imgFb.setImageBitmap(Features.AVA);
+
+    private void cupCatSetup() {
+        Animation wobble = AnimationUtils.loadAnimation(this, R.anim.wobble);
+        ivCupCat.setAnimation(wobble);
+        final MediaPlayer snd_Cats = MediaPlayer.create(MenuActivity.this, R.raw.bunch_cat);
+        final MediaPlayer snd_singleKitty = MediaPlayer.create(MenuActivity.this, R.raw.single_kitty);
+        ivCupCat.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        snd_Cats.start();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        snd_Cats.pause();
+                        break;
+                }
+                return true;
+            }
+        });
     }
-
-
-
+    public void MoewIT(View view){
+        snd_singleKitty.start();
+    }
     public void playIT(View view){
         myClick.start();
     }
@@ -206,6 +139,10 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
+        quit();
+    }
+
+    private void quit() {
         final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
         MyDialog.setContentView(R.layout.dialog);
@@ -258,6 +195,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 Intent iRule = new Intent(this, RulesActivity.class);
                 startActivity(iRule);
                 break;
+            case R.id.bQuit:
+                quit();
+                break;
         }
     }
     private void soundSetup() {
@@ -297,6 +237,95 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
     private void update() {
         tvTotalScore.setText(String.valueOf(Features.totalScore));
+    }
+
+    //login Fb - Dialog
+    private void showProfile() {
+        //if (Features.Loggedfb = (AccessToken.getCurrentAccessToken() == null)) {
+        Features.Loggedfb = (AccessToken.getCurrentAccessToken() == null);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MenuActivity.this,"Login facebook!",LENGTH_SHORT).show();
+                final Dialog MyDialog = new Dialog(MenuActivity.this, R.style.FullHeightDialog);
+                LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
+                MyDialog.setContentView(R.layout.login_facebook);
+                final LoginButton btnlogin = (LoginButton) MyDialog.findViewById(R.id.btnLogin);
+                final TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
+                final ProfilePictureView ivAva = (ProfilePictureView) MyDialog.findViewById(R.id.ivAvaFb);
+                final Button btnLogout = (Button) MyDialog.findViewById(R.id.btnLogout);
+
+                //VISIBLE = Hiện; INVISIBLE = Tàng hình; GONE = Mất tích
+                btnlogin.setReadPermissions(Arrays.asList("public_profile", "email"));
+                ivAva.setVisibility(View.VISIBLE);
+                btnlogin.setVisibility(View.VISIBLE);
+                tvNick.setVisibility(View.GONE);
+                btnLogout.setVisibility(View.GONE);
+
+                btnlogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        btnlogin.setVisibility(View.GONE);
+                        ivAva.setVisibility(View.VISIBLE);
+                        tvNick.setVisibility(View.VISIBLE);
+                        btnLogout.setVisibility(View.VISIBLE);
+                        Profile profile = Profile.getCurrentProfile();
+                        if(profile == null) {
+                            mProfileTracker = new ProfileTracker() {
+                                @Override
+                                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                                    Log.v("facebook - profile", currentProfile.getId());
+                                    String userID = Profile.getCurrentProfile().getId();
+                                    ivAva.setProfileId(userID);
+                                    Picasso.get().load("https://graph.facebook.com/" + userID+ "/picture?type=large").into(imgFb);
+                                    tvNick.setText(currentProfile.getName());
+                                    mProfileTracker.stopTracking();
+                                }
+                            };
+                            // no need to call startTracking() on mProfileTracker
+                            // because it is called by its constructor, internally.
+                        } else {
+                            Log.v("facebook - profile", profile.getFirstName());
+                            GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                                    new GraphRequest.GraphJSONObjectCallback() {
+                                        @Override
+                                        public void onCompleted(JSONObject object, GraphResponse response) {
+                                            Log.d("JSON", response.getJSONObject().toString());
+                                            try {
+                                                email = object.getString("email");
+                                                name = object.getString("name");
+                                                fname = object.getString("first_name");
+                                                tvNick.setText(name);
+                                                String userID = Profile.getCurrentProfile().getId();
+                                                ivAva.setProfileId(userID);
+                                                Picasso.get().load("https://graph.facebook.com/" + userID + "/picture?type=large").into(imgFb);
+                                            } catch (JSONException e) {
+                                                Toast.makeText(MenuActivity.this, "Error JSON", LENGTH_SHORT).show();
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                            Bundle parameters = new Bundle();
+                            parameters.putString("fields", "name,email,first_name,picture");
+                            graphRequest.setParameters(parameters);
+                            graphRequest.executeAsync();
+                        }
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.v("facebook - onCancel", "cancelled");
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                    }
+
+                });
+                MyDialog.show();
+            }
+        });
+        //}
     }
 
 }
