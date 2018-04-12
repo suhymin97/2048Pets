@@ -1,6 +1,7 @@
 package dsa.hcmiu.a2048pets.entities.handle;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,8 +14,7 @@ import dsa.hcmiu.a2048pets.PlayActivity;
  */
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
-    private float x1;
-    private float y1;
+    private float x1,x2,y1,y2;
     private Context context;
 
     public OnSwipeTouchListener(Context context) {
@@ -32,7 +32,11 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_UP: //thả ra
                 float x2 = event.getX();
                 float y2 = event.getY();
-                if (Math.abs(x2-x1) > Math.abs(y2-y1)) { //horizontal
+                float diffX = Math.abs(x2-x1);
+                float diffY = Math.abs(y2-y1);
+                Log.d("Swipe","diff X / Y " + String.valueOf(diffX) +" / " + diffY);
+                if (diffX < 20 && diffY < 20) return true;
+                if (diffX > diffY) { //horizontal
                     if (x2 > x1) onSwipeRight();
                     else onSwipeLeft();
                 }

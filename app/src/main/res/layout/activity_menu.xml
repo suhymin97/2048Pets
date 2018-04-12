@@ -9,6 +9,7 @@
 
     <!-- FB BUTTON -->
     <RelativeLayout
+        android:id="@+id/Profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true">
@@ -114,16 +115,17 @@
         android:layout_height="146dp"
         android:layout_alignStart="@+id/ivCupCat"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="62dp"
         android:layout_marginBottom="62dp"
         android:src="@drawable/cupcatshadow" />
     <ImageView
         android:id="@+id/ivCupCat"
         android:layout_width="wrap_content"
-        android:layout_height="878dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="58dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/Profile"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="5dp"
         android:onClick="moewIT"
         android:scaleType="fitCenter"
         android:src="@drawable/cupcat" />

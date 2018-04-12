@@ -1,5 +1,7 @@
 package dsa.hcmiu.a2048pets.entities.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
@@ -11,7 +13,7 @@ import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
  */
 
 public class Board {
-    private int scoreBoard;
+    private long scoreBoard;
     public static int max = 4;
     private ArrayList<Pets> matrix;
     int row,col;
@@ -77,11 +79,11 @@ public class Board {
         matrix.set(index,typePet[arrId[value]]);
     }
 
-    public int getScoreBoard() {
+    public long getScoreBoard() {
         return scoreBoard;
     }
 
-    public void setScoreBoard(int scoreBoard) {
+    public void setScoreBoard(long scoreBoard) {
         this.scoreBoard = scoreBoard;
     }
 
@@ -102,6 +104,7 @@ public class Board {
             }
             if (matrix.get(i) == matrix.get(i+1)) return false;
         }
+        Log.d("HANDLE GAME","Game Over");
         return true;
     }
 

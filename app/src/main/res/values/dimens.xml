@@ -2,7 +2,7 @@
 <resources>
     <dimen name="d_item">200dp</dimen>
     <dimen name="d_grid">930dp</dimen>
-    <dimen name="d_over">900dp</dimen>
+    <dimen name="d_over">700dp</dimen>
     <dimen name="d_textDialog">25dp</dimen>
     <dimen name="d_fbicon">120dp</dimen>
     <dimen name="d_avaProfile">300dp</dimen>

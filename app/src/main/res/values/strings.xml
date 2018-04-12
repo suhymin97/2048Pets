@@ -37,5 +37,7 @@
 
     <string name="facebook_app_id">219749715275024</string>
     <string name="fb_login_protocol_scheme">fb219749715275024</string>
+    <string name="default_name">Anonymous</string>
+    <string name="facebook">Sign in with facecbook</string>
 
 </resources>

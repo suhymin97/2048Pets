@@ -17,9 +17,9 @@ public class HandleSound {
     private float volume_fadein = 0; //The volume will increase from 0 to 1
     private float volume_fadeout = 1;
 
-    final int FADE_DURATION = 2000; //The duration of the fade
+    final int FADE_DURATION = 3000; //The duration of the fade
     //The amount of time between volume changes. The smaller this is, the smoother the fade
-    final int FADE_INTERVAL = 250;
+    final int FADE_INTERVAL = 100;
     final int MAX_VOLUME = 1;
     int numberOfSteps = FADE_DURATION/FADE_INTERVAL; //Calculate the number of fade steps
     //Calculate by how much the volume changes each step
@@ -34,7 +34,7 @@ public class HandleSound {
     }
 
     public void startFadeIn(){
-        song.start();
+        start();
         //Create a new Timer and Timer task to run the fading outside the main UI thread
         final Timer timer = new Timer(true);
         TimerTask timerTask = new TimerTask() {
@@ -68,17 +68,28 @@ public class HandleSound {
                 if(volume_fadeout<=0f){
                     timer.cancel();
                     timer.purge();
-                    song.pause();
+                    pause();
                 }
             }
         };
         timer.schedule(timerTask,FADE_INTERVAL,FADE_INTERVAL);
         volume_fadeout = 1;
-
     }
 
     private void fadeOutStep(float deltaVolume){
         song.setVolume(volume_fadeout, volume_fadeout);
         volume_fadeout -= deltaVolume;
+    }
+
+    public void start() {
+        song.start();
+    }
+
+    public void seekTo(int msec) {
+        song.seekTo(msec);
+    }
+
+    public void pause() {
+        song. pause();
     }
 }
