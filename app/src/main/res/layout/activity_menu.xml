@@ -7,115 +7,134 @@
     android:background="@drawable/menu_background"
     tools:context="dsa.hcmiu.a2048pets.MenuActivity">
 
-    <!-- SOUND BUTTON -->
-    <Button
-        android:id="@+id/btnSound"
-        android:layout_width="222dp"
-        android:layout_height="249dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="725dp"
-        android:background="@drawable/cat_up" />
-
     <!-- FB BUTTON -->
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true">
-
+        android:layout_alignParentLeft="true">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivAvaFb"
-            android:src="@drawable/fbicom"
             android:layout_width="@dimen/d_fbicon"
             android:layout_height="@dimen/d_fbicon"
             android:layout_margin="20dp"
+            android:src="@drawable/fbicom"
             app:civ_border_color="#fff"
-            app:civ_border_width="2dp"/>
+            app:civ_border_width="2dp" />
         <Button
             android:id="@+id/btnProfile"
             android:layout_width="@dimen/d_fbicon"
             android:layout_height="@dimen/d_fbicon"
-            android:alpha="0"
-            android:layout_margin="20dp"/>
+            android:layout_margin="20dp"
+            android:alpha="0" />
         <TextView
             android:id="@+id/tvTotalScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivAvaFb"
+            android:layout_toRightOf="@+id/ivAvaFb"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/comicbd"
             android:textColor="#000"
-            android:textSize="@dimen/d_textScore"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="@dimen/d_textScore" />
     </RelativeLayout>
 
-    <!-- PLAY BUTTON -->
-    <Button
-        android:id="@+id/bMenuPlay"
-        android:layout_width="443dp"
+    <Space
+        android:id="@+id/Spacce_Menu"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_alignParentBottom="true"/>
 
-        android:layout_height="233dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="380dp"
-        android:layout_marginEnd="724dp"
-        android:background="@drawable/b_play"
-        android:onClick="playIT" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Spacce_Menu">
 
-    <!-- other BUTTONs -->
-    <LinearLayout
-        android:id="@+id/layMenu"
-        android:layout_width="439dp"
-        android:layout_height="536dp"
-        android:layout_alignParentTop="true"
-
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="243dp"
-        android:layout_marginEnd="143dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
-        <Button
-            android:id="@+id/bRule"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="13dp"
-            android:layout_weight="1"
-            android:background="@drawable/b_how"
+        <!-- SOUND BUTTON -->
+        <ImageButton
+            android:id="@+id/btnSound"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/d_menuButton"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/cat_up"
+            android:background="@null"
+            android:scaleType="fitCenter"/>
+        <!-- PLAY BUTTON -->
+        <ImageButton
+            android:id="@+id/bMenuPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/b_play"
+            android:background="@null"
+            android:scaleType="fitCenter"
             android:onClick="playIT" />
+        <!-- other BUTTONs -->
+        <LinearLayout
+            android:id="@+id/layMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/d_paddingMenuBtn"
+            android:layout_marginEnd="93dp"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/bStore"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignStart="@+id/layMenu"
-            android:layout_marginBottom="13dp"
-            android:layout_weight="1"
-            android:background="@drawable/b_store"
-            android:onClick="storeIT" />
+            <ImageButton
+                android:id="@+id/bRule"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/b_how"
+                android:background="@null"
+                android:onClick="playIT"/>
 
-        <Button
-            android:id="@+id/bQuit"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="13dp"
-            android:layout_weight="1"
-            android:background="@drawable/b_quit" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/bStore"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignStart="@+id/layMenu"
+                android:layout_weight="1"
+                android:src="@drawable/b_store"
+                android:background="@null"
+                android:onClick="storeIT" />
 
+            <ImageButton
+                android:id="@+id/bQuit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/b_quit"
+                android:background="@null"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <!-- CUP of CATS -->
     <ImageView
-        android:id="@+id/ivCupCat"
-        android:layout_width="606dp"
-        android:layout_height="765dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/ivCupCatShadow"
+        android:layout_width="531dp"
+        android:layout_height="146dp"
+        android:layout_alignStart="@+id/ivCupCat"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="38dp"
-        android:layout_marginBottom="54dp"
-        android:src="@drawable/cupcat"
-        android:onClick="MoewIT"/>
-
-
+        android:layout_marginStart="84dp"
+        android:layout_marginBottom="62dp"
+        android:src="@drawable/cupcatshadow" />
+    <ImageView
+        android:id="@+id/ivCupCat"
+        android:layout_width="wrap_content"
+        android:layout_height="878dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginBottom="58dp"
+        android:onClick="moewIT"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cupcat" />
+    <ImageButton
+        android:id="@+id/btnAbout"
+        android:layout_width="@dimen/d_menuButton"
+        android:layout_height="@dimen/d_menuButton"
+        android:src="@drawable/b_about"
+        android:scaleType="fitXY"
+        android:background="@null"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
