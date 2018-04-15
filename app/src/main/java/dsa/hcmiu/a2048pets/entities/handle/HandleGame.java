@@ -1,15 +1,13 @@
 package dsa.hcmiu.a2048pets.entities.handle;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-import dsa.hcmiu.a2048pets.PlayActivity;
 import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.entities.model.Board;
 import dsa.hcmiu.a2048pets.entities.model.Features;
@@ -79,6 +77,7 @@ public class HandleGame { //singleton
     public void newGame() {
         Features.totalScore+=curBoard.getScoreBoard();
         init();
+        log("New game");
     }
 
     private void initData() {
@@ -136,6 +135,7 @@ public class HandleGame { //singleton
         if (u == 0||boardStack.isEmpty()) return false;
         curBoard.setBoard(undoSaveHis());
         Features.setMaxUndo(--u);
+        log("undo count" + String.valueOf(u));
         return true;
     }
 
@@ -166,8 +166,8 @@ public class HandleGame { //singleton
                 if (t == curBoard.getEValue(row - 1, col) && t!=0) {
                     curBoard.setElement(row - 1, col, t * 2);
                     curBoard.setElement(row, col, 0);
-                    t = curBoard.getScoreBoard() + curBoard.getEValue(row - 1, col);
-                    curBoard.setScoreBoard(t);
+                    long score = curBoard.getScoreBoard() + curBoard.getEValue(row - 1, col);
+                    curBoard.setScoreBoard(score);
                     countMove++;
                 }
             }
@@ -208,8 +208,8 @@ public class HandleGame { //singleton
                 if (t>0 && t == curBoard.getEValue(row + 1, col)) {
                     curBoard.setElement(row + 1, col, t * 2);
                     curBoard.setElement(row, col, 0);
-                    t = curBoard.getScoreBoard() + curBoard.getEValue(row + 1, col);
-                    curBoard.setScoreBoard(t);
+                    long score = curBoard.getScoreBoard() + curBoard.getEValue(row + 1, col);
+                    curBoard.setScoreBoard(score);
                     countMove++;
                 }
             }
@@ -248,8 +248,8 @@ public class HandleGame { //singleton
                 if (t>0 && t == curBoard.getEValue(row, col + 1)) {
                     curBoard.setElement(row, col + 1, t * 2);
                     curBoard.setElement(row, col, 0);
-                    t = curBoard.getScoreBoard() + curBoard.getEValue(row, col + 1);
-                    curBoard.setScoreBoard(t);
+                    long score = curBoard.getScoreBoard() + curBoard.getEValue(row, col + 1);
+                    curBoard.setScoreBoard(score);
                     countMove++;
                 }
             }
@@ -288,8 +288,8 @@ public class HandleGame { //singleton
                 if (t>0 && t == curBoard.getEValue(row, col - 1)) {
                     curBoard.setElement(row, col - 1, t * 2);
                     curBoard.setElement(row, col, 0);
-                    t = curBoard.getScoreBoard() + curBoard.getEValue(row, col - 1);
-                    curBoard.setScoreBoard(t);
+                    long score = curBoard.getScoreBoard() + curBoard.getEValue(row, col - 1);
+                    curBoard.setScoreBoard(score);
                     countMove++;
                 }
             }
@@ -304,7 +304,7 @@ public class HandleGame { //singleton
     public boolean gameOver() {
         return curBoard.fullBoard();
     }
-
+/*
     public void saveBest() {
         ListHighScore = new ArrayList<Integer>();
         if (curBoard.getScoreBoard() > best) {
@@ -318,14 +318,19 @@ public class HandleGame { //singleton
 
     }
 
-    public int getBest() {
+    public long getBest() {
         ListHighScore = HandleFile.readFile();
         for (int i = 0; i < ListHighScore.size(); i++) {
             if (ListHighScore.get(i) > best) {
                 best = ListHighScore.get(i);
             }
         }
+        log("get best" + String.valueOf(best));
         return best;
+    }
+*/
+    private void log(String msg) {
+        Log.d("HANDLE GAME",msg);
     }
 
 }
