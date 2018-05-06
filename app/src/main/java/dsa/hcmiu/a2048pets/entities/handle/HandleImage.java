@@ -6,16 +6,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
-
-import com.facebook.ProfileTracker;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import dsa.hcmiu.a2048pets.R;
 
 public class HandleImage {
 
@@ -89,9 +85,10 @@ public class HandleImage {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                /*
                 new Thread(new Runnable() {
                     @Override
-                    public void run() {
+                    public void run() { */
                         final File myImageFile = new File(directory, imageName); // Create image file
                         FileOutputStream fos = null;
                         try {
@@ -108,8 +105,8 @@ public class HandleImage {
                         }
                         log("image saved to >>>" + myImageFile.getAbsolutePath());
                     }
-                }).start();
-            }
+                /*}).start();
+            }*/
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
