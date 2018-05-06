@@ -4,6 +4,8 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.squareup.picasso.Picasso;
@@ -20,58 +22,99 @@ import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.MyApplication;
 
 
-public class User {
+public class User implements Parcelable {
     private long UID = 0;
-    private String name = "";
-    private String email = "";
-    private String IDFacebook = "";
-    private Bitmap avatar;
+    private String name = null;
+    private String email = null;
+    private String IDFacebook = null;
+    private String profilePic;
+    private int avatar;
     private Long Score;
     private int Undo;
     private int Key;
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+
+        @Override
+        public User createFromParcel(Parcel parcel) {
+            return new User(parcel);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public User() {
         name = MyApplication.getContext().getResources().getString(R.string.default_name);
         UID = ++Features.uidCount;
         Log.d("Add user", String.valueOf(UID));
-        setAvatar(R.drawable.default_ava);
+        //setAvatar(R.drawable.default_ava);
+        avatar = R.drawable.default_ava;
+    }
+
+    private User(Parcel parcel) {
+        name = parcel.readString();
+        email = parcel.readString();
+        profilePic = parcel.readString();
     }
 
     public boolean isDefault() {
         return UID == 0 && name.equals(MyApplication.getContext().getResources().getString(R.string.default_name));
     }
 
-    public Bitmap getAvatar() {
-        return avatar;
+    @Override
+    public void writeToParcel(Parcel parcel, int flag) {
+        parcel.writeString(name);
+        parcel.writeString(email);
+        parcel.writeString(profilePic);
+    }
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setAvatar(Bitmap avatar) {
-        this.avatar = avatar;
+    public String getProfilePic() {
+        return profilePic;
     }
 
-    public void setAvatar(int id) {
-        avatar = BitmapFactory.decodeResource(MyApplication.getContext().getResources(), id);
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
-    public void setAvatar(String link) {
-        Picasso.get().load(link).into(new com.squareup.picasso.Target() {
-            @Override
-            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                Log.d("USER","downloaded bitmap " + String.valueOf(bitmap == null));
-                avatar = bitmap;
-            }
+    /*
+        public Bitmap getAvatar() {
+            return avatar;
+        }
 
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                Log.d("USER","Failed download image");
-            }
+        public void setAvatar(Bitmap avatar) {
+            this.avatar = avatar;
+        }
 
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-            }
-        });
-    }
+        public void setAvatar(int id) {
+            avatar = BitmapFactory.decodeResource(MyApplication.getContext().getResources(), id);
+        }
 
+        public void setAvatar(String link) {
+            Picasso.get().load(link).into(new com.squareup.picasso.Target() {
+                @Override
+                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                    Log.d("USER","downloaded bitmap " + String.valueOf(bitmap == null));
+                    avatar = bitmap;
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    Log.d("USER","Failed download image");
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                }
+            });
+        }
+    */
     public String getName() {
         return name;
     }

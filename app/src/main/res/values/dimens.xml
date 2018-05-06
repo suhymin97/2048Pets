@@ -12,5 +12,8 @@
     <dimen name="d_marginFBtnPlay">20dp</dimen>
     <dimen name="d_menuButton">290dp</dimen>
     <dimen name="d_paddingMenuBtn">55dp</dimen>
+    <dimen name="d_achivement">85dp</dimen>
+    <dimen name="d_itemshop">350dp</dimen>
+    <dimen name="d_gold">60dp</dimen>
 
 </resources>

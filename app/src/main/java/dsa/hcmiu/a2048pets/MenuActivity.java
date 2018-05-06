@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.facebook.login.LoginManager;
+import com.facebook.login.widget.ProfilePictureView;
 
 import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
 import dsa.hcmiu.a2048pets.entities.handle.HandleSound;
@@ -161,12 +162,8 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 startActivity(iPlay);
                 break;
             case R.id.bStore:
-                AlertDialog.Builder a_builder = new AlertDialog.Builder(MenuActivity.this);
-                a_builder.setMessage("Coming Soon!!!")
-                        .setCancelable(true);
-                AlertDialog alert = a_builder.create();
-                alert.setTitle("2048 Pets Features");
-                alert.show();
+                Intent iProfile = new Intent(this, ProfileActivity.class);
+                startActivity(iProfile);
                 break;
             case R.id.bRule:
                 Intent iRule = new Intent(this, RulesActivity.class);

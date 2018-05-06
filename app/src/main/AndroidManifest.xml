@@ -55,5 +55,4 @@
         <activity android:name=".ProfileActivity"
             android:screenOrientation="sensorLandscape"></activity>
     </application>
-
 </manifest>
