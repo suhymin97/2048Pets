@@ -3,12 +3,12 @@ package dsa.hcmiu.a2048pets.entities.model;
 public class ShopItem {
 
     private String name;
-    private long id;
+    private int id;
     private int picture;
     private long price;
     private boolean purchase;
 
-    public ShopItem(String name, long id, int picture, long price, boolean purchase) {
+    public ShopItem(String name, int id, int picture, long price, boolean purchase) {
         this.name = name;
         this.id = id;
         this.picture = picture;
@@ -32,11 +32,11 @@ public class ShopItem {
         this.picture = picture;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

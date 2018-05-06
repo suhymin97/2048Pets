@@ -1,29 +1,29 @@
 package dsa.hcmiu.a2048pets;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.facebook.GraphResponse;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
+import dsa.hcmiu.a2048pets.profile_shop.FragmentProfile;
+import dsa.hcmiu.a2048pets.profile_shop.SendData;
 
-import dsa.hcmiu.a2048pets.entities.handle.FbConnectHelper;
-import dsa.hcmiu.a2048pets.entities.handle.HandleFile;
-import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
+import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
+import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
 
-public class ProfileActivity extends Activity{
+public class ProfileActivity extends Activity implements SendData {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (sound) mySong.start();
         setContentView(R.layout.activity_profile);
+    }
+
+    @Override
+    public void data(boolean update, int ava) {
+        FragmentProfile fragmentProfile = (FragmentProfile) getFragmentManager().
+                findFragmentById(R.id.fragmentProfile);
+        if (update) fragmentProfile.update();
+        if (ava != -1) fragmentProfile.setIvAva(ava);
     }
 }

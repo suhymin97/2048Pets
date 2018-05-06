@@ -1,17 +1,15 @@
 package dsa.hcmiu.a2048pets.entities.model;
 
-import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-import android.telecom.RemoteConnection;
 import android.widget.ImageView;
 
 import com.facebook.CallbackManager;
 
 public class Features { //store biến static
     public static long uidCount = 0;
-    public static int totalScore=0;
+    public static int totalScore=2000;
     public static int maxUndo=5;
-    public static int maxKey=1;
+    public static int maxHammer =5;
     public static CallbackManager callbackManager;
     public static boolean Loggedfb;
     public static MediaPlayer mySong;
@@ -27,11 +25,11 @@ public class Features { //store biến static
         Features.maxUndo = maxUndo;
     }
 
-    public static int getMaxKey() {
-        return maxKey;
+    public static int getMaxHammer() {
+        return maxHammer;
     }
 
-    public static void setMaxKey(int maxKey) {
-        Features.maxKey = maxKey;
+    public static void setMaxHammer(int maxHammer) {
+        Features.maxHammer = maxHammer;
     }
 }

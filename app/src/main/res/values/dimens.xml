@@ -16,5 +16,6 @@
     <dimen name="d_itemshop">250dp</dimen>
     <dimen name="d_gold">60dp</dimen>
     <dimen name="d_marginitemshop">20dp</dimen>
+    <dimen name="d_cardview">335dp</dimen>
 
 </resources>

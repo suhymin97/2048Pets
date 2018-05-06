@@ -22,9 +22,6 @@ import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
-import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.arrId;
-import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
-import static dsa.hcmiu.a2048pets.entities.model.Board.max;
 import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
 
 
@@ -33,8 +30,9 @@ public class PlayActivity extends Activity {
     private GridView gvMatrix;
     private ItemAdapter adapter;
     private View layout;
-    private TextView tvScore, tvUndo, tvKey;
+    private TextView tvScore, tvUndo, tvHammer;
     private Button btnUndo, btnNew,btnSoundPlay;
+    private Button btnHammer;
 
     @Override
     public void onBackPressed() {
@@ -73,9 +71,10 @@ public class PlayActivity extends Activity {
         if (sound) mySong.start();
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvUndo = (TextView) findViewById(R.id.tvUndo);
-        tvKey = (TextView) findViewById(R.id.tvKey);
+        tvHammer = (TextView) findViewById(R.id.tvHammer);
 
         btnUndo = (Button) findViewById(R.id.btnUndo);
+        btnHammer = (Button) findViewById(R.id.btnHammer);
         btnNew = (Button) findViewById(R.id.btnNewGame);
         btnSoundPlay = (Button) findViewById(R.id.btnSoundPlay);
         create();
@@ -84,7 +83,7 @@ public class PlayActivity extends Activity {
         btnUndo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HandleGame.getInstance(PlayActivity.this).Undo();
+                HandleGame.getInstance().Undo();
                 update();
             }
         });
@@ -92,7 +91,7 @@ public class PlayActivity extends Activity {
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HandleGame.getInstance(PlayActivity.this).newGame();
+                HandleGame.getInstance().newGame();
                 update();
             }
         });
@@ -105,24 +104,32 @@ public class PlayActivity extends Activity {
                 sound= !(sound || sound);
             }
         });
+
+        btnHammer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HandleGame.getInstance().hammer();
+                update();
+            }
+        });
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) { //extend class OnswipeTouch
             public void onSwipeUp() {
-                HandleGame.getInstance(PlayActivity.this).moveUp();
+                HandleGame.getInstance().moveUp();
                 check();
             }
 
             public void onSwipeRight() {
-                HandleGame.getInstance(PlayActivity.this).moveRight();
+                HandleGame.getInstance().moveRight();
                 check();
             }
 
             public void onSwipeLeft() {
-                HandleGame.getInstance(PlayActivity.this).moveLeft();
+                HandleGame.getInstance().moveLeft();
                 check();
             }
 
             public void onSwipeDown() {
-                HandleGame.getInstance(PlayActivity.this).moveDown();
+                HandleGame.getInstance().moveDown();
                 check();
             }
         });
@@ -135,14 +142,14 @@ public class PlayActivity extends Activity {
 
     private void setData() {
         adapter = new ItemAdapter(this, R.layout.item_pet,
-                HandleGame.getInstance(PlayActivity.this).curBoard.getMatrix());
+                HandleGame.getInstance().curBoard.getMatrix());
         gvMatrix.setAdapter(adapter);
         update();
     }
 
     private void check() {
         update();
-        if (HandleGame.getInstance(PlayActivity.this).gameOver()) {
+        if (HandleGame.getInstance().gameOver()) {
             final Dialog MyDialog = new Dialog(PlayActivity.this, R.style.FullHeightDialog);
             LayoutInflater inflater = PlayActivity.this.getLayoutInflater();
             MyDialog.setContentView(R.layout.dialog_gameover);
@@ -152,7 +159,7 @@ public class PlayActivity extends Activity {
             btnyes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    HandleGame.getInstance(PlayActivity.this).newGame();
+                    HandleGame.getInstance().newGame();
                     update();
                     MyDialog.cancel();
                 }
@@ -164,15 +171,15 @@ public class PlayActivity extends Activity {
 
     private void update() {
         adapter.notifyDataSetChanged();
-        tvScore.setText(String.valueOf(HandleGame.getInstance(this).curBoard.getScoreBoard()));
+        tvScore.setText(String.valueOf(HandleGame.getInstance().curBoard.getScoreBoard()));
         tvUndo.setText(String.valueOf(Features.getMaxUndo()));
-        tvKey.setText(String.valueOf(Features.getMaxKey()));
+        tvHammer.setText(String.valueOf(Features.getMaxHammer()));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        HandleGame.getInstance(this).newGame();
+        HandleGame.getInstance().newGame();
         update();
     }
 }

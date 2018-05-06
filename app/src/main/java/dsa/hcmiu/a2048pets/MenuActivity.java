@@ -1,13 +1,11 @@
 package dsa.hcmiu.a2048pets;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,8 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.facebook.login.LoginManager;
-import com.facebook.login.widget.ProfilePictureView;
 
 import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
 import dsa.hcmiu.a2048pets.entities.handle.HandleSound;
@@ -214,7 +210,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         TextView tvHammer = (TextView) MyDialog.findViewById(R.id.tvAchiveHammer);
         tvHighscore.setText(String.valueOf(Features.totalScore));
         tvUndo.setText(String.valueOf(Features.getMaxUndo()));
-        tvHammer.setText(String.valueOf(Features.getMaxKey()));
+        tvHammer.setText(String.valueOf(Features.getMaxHammer()));
         MyDialog.show();
     }
 }

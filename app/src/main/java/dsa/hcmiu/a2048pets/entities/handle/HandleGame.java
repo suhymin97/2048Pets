@@ -1,6 +1,5 @@
 package dsa.hcmiu.a2048pets.entities.handle;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.Log;
 
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+import dsa.hcmiu.a2048pets.MyApplication;
 import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.entities.model.Board;
 import dsa.hcmiu.a2048pets.entities.model.Features;
@@ -37,20 +37,11 @@ public class HandleGame { //singleton
     int row;
     int col;
     int countMove;
-    private static Context context;
 
 
     private Random random = new Random();
 
     public static HandleGame getInstance() {
-        if (instance == null) {
-            instance = new HandleGame();
-        }
-        return instance;
-    }
-
-    public static HandleGame getInstance(Context ct) {
-        context = ct;
         if (instance == null) {
             instance = new HandleGame();
         }
@@ -72,6 +63,7 @@ public class HandleGame { //singleton
         }
         curBoard.setElement(pos1, 2);
         curBoard.setElement(pos2, (random.nextInt(1) + 1) * 2);
+        countEmpty=max*max - 3  ;
     }
 
     public void newGame() {
@@ -82,7 +74,7 @@ public class HandleGame { //singleton
 
     private void initData() {
         //get resources
-        TypedArray images = context.getResources().obtainTypedArray(R.array.arrImage);
+        TypedArray images = MyApplication.getContext().getResources().obtainTypedArray(R.array.arrImage);
         int countNo = 2;
         typePet[0] = new Pets(0);
         typePet[0].setId(0);
@@ -128,6 +120,21 @@ public class HandleGame { //singleton
                 }
             }
         }
+    }
+
+    public void hammer() {
+        if (Features.maxHammer ==0 || countEmpty== max*max -3) return;
+        int del = random.nextInt(max*max-countEmpty);
+        for (int i = 0; i<max*max; i++) {
+            if(curBoard.getEValue(i)>0) {
+                if (del == 0) {
+                    curBoard.setElement(i, 0);
+                    break;
+                }
+                else del--;
+            }
+        }
+        Features.maxHammer--;
     }
 
     public boolean Undo() {

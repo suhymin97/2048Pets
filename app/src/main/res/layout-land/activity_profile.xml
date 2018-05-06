@@ -8,14 +8,14 @@
 
     <fragment
         android:id="@+id/fragmentProfile"
-        android:name="dsa.hcmiu.a2048pets.FragmentProfile"
+        android:name="dsa.hcmiu.a2048pets.profile_shop.FragmentProfile"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3" />
 
     <fragment
-        android:id="@+id/fragment"
-        android:name="dsa.hcmiu.a2048pets.FragmentShopping"
+        android:id="@+id/fragmentShop"
+        android:name="dsa.hcmiu.a2048pets.profile_shop.FragmentShopping"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="7" />

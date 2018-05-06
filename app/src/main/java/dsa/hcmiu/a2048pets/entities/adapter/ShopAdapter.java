@@ -34,12 +34,15 @@ public class ShopAdapter extends ArrayAdapter<ShopItem> {
     private class ViewHolder{
         ImageView ivItem;
         TextView tvPrice;
-        ImageButton btn;
 
         public ViewHolder(View view) {
             ivItem = (ImageView) view.findViewById(R.id.ivShopItem);
             tvPrice = (TextView) view.findViewById(R.id.tvPrice);
-            btn = (ImageButton) view.findViewById(R.id.btnPurchase);
+        }
+
+        public void setData(String price, int imageId) {
+            tvPrice.setText(price);
+            ivItem.setImageResource(imageId);
         }
     }
 
@@ -59,10 +62,7 @@ public class ShopAdapter extends ArrayAdapter<ShopItem> {
         }
 
         ShopItem item = array.get(position);
-        holder.ivItem.setImageResource(R.drawable.poke);
-        holder.tvPrice.setText(String.valueOf(item.getPrice()));
-        if (item.isPurchase()) holder.btn.setImageResource(R.drawable.equip);
-            else holder.btn.setImageResource(R.drawable.purchase);
+        holder.setData( String.valueOf(item.getPrice()) , item.getPicture());
         return convertView;
     }
 }
