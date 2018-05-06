@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/d_textScore"
+        android:padding="20dp"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/ivShopItem"
@@ -20,7 +20,7 @@
             android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/d_achivement"
+            android:textSize="@dimen/d_textScore"
             android:textColor="@color/black"
             android:layout_toEndOf="@id/ivShopItem"
             android:fontFamily="@font/comic"
@@ -29,7 +29,7 @@
         <ImageButton
             android:id="@+id/btnPurchase"
             android:layout_width="500dp"
-            android:layout_height="150dp"
+            android:layout_height="50dp"
             android:layout_alignStart="@id/tvPrice"
             android:layout_below="@+id/tvPrice"
             android:layout_alignBottom="@id/ivShopItem"

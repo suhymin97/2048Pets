@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,10 +14,12 @@ import java.util.ArrayList;
 import dsa.hcmiu.a2048pets.entities.adapter.ShopAdapter;
 import dsa.hcmiu.a2048pets.entities.model.ShopItem;
 
+import static dsa.hcmiu.a2048pets.entities.model.Features.totalScore;
+
 public class FragmentShopping extends Fragment {
     private ArrayList<ShopItem> array;
     ShopAdapter adapter;
-    TextView tvGold, tvHighscore, tvUndo, tvKey;
+    TextView tvGold;
     ListView listItem;
     View view;
 
@@ -32,10 +33,7 @@ public class FragmentShopping extends Fragment {
 
         listItem = (ListView) view.findViewById(R.id.lvShopping);
         tvGold = (TextView) view.findViewById(R.id.tvAchiveGold);
-        tvHighscore = (TextView) view.findViewById(R.id.tvAchiveHighscore);
-        tvUndo = (TextView) view.findViewById(R.id.tvAchiveUndo);
-        tvKey = (TextView) view.findViewById(R.id.tvAchiveKey);
-
+        tvGold.setText(String.valueOf(totalScore));
         listItem.setAdapter(adapter);
         return view;
     }

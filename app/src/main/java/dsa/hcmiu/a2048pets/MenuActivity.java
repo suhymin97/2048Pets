@@ -178,8 +178,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 sound= !(sound || sound);
                 break;
             case R.id.btnProfile:
-                Intent iPro5 = new Intent(this, ProfileActivity.class);
-                startActivity(iPro5);
+                diaglogUnlogin();
         }
     }
     private void soundSetup() {
@@ -204,5 +203,18 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         tvTotalScore.setText(String.valueOf(Features.totalScore));
         if (HandleImage.get().checkIfImageExist(this))
             HandleImage.get().loadImageFromDisk(this,imgFb);
+    }
+
+    private void diaglogUnlogin() {
+        final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
+        LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
+        MyDialog.setContentView(R.layout.fragment_profile);
+        TextView tvHighscore = (TextView) MyDialog.findViewById(R.id.tvAchiveHighscore);
+        TextView tvUndo = (TextView) MyDialog.findViewById(R.id.tvAchiveUndo);
+        TextView tvHammer = (TextView) MyDialog.findViewById(R.id.tvAchiveHammer);
+        tvHighscore.setText(String.valueOf(Features.totalScore));
+        tvUndo.setText(String.valueOf(Features.getMaxUndo()));
+        tvHammer.setText(String.valueOf(Features.getMaxKey()));
+        MyDialog.show();
     }
 }
