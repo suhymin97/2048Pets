@@ -30,6 +30,7 @@ import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.User;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.callbackManager;
+import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 
 public class ProfileActivity extends Activity {
 
@@ -37,14 +38,11 @@ public class ProfileActivity extends Activity {
     private TextView tvNick;
     private ImageView ivAva;
     private ProfileTracker mProfileTracker;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        user = new User();
         btnlogin = (LoginButton) findViewById(R.id.btnLogin);
         tvNick = (TextView) findViewById(R.id.tvNick);
         ivAva = (ImageView) findViewById(R.id.ivAvaFb);

@@ -17,6 +17,7 @@ public class Features { //store biến static
     public static MediaPlayer mySong;
     public static boolean sound = true;
     public static ImageView AVA;
+    public static User user = new User();
 
     public static int getMaxUndo() {
         return maxUndo;

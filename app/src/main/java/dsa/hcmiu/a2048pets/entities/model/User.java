@@ -20,11 +20,11 @@ import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.MyApplication;
 
 
-public class User extends Features {
+public class User {
     private long UID = 0;
-    private String name = null;
-    private String email = null;
-    private String IDFacebook = null;
+    private String name = "";
+    private String email = "";
+    private String IDFacebook = "";
     private Bitmap avatar;
     private Long Score;
     private int Undo;

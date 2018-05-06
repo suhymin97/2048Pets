@@ -1,6 +1,7 @@
 package dsa.hcmiu.a2048pets;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import dsa.hcmiu.a2048pets.entities.model.Features;
 public class WelcomeActivity extends Activity {
 
     private  int WelcomeInteval = 2000;
+    private static Context context;
 
 
     @Override
