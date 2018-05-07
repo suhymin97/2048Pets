@@ -8,12 +8,12 @@ public class ShopItem {
     private long price;
     private boolean purchase;
 
-    public ShopItem(String name, int id, int picture, long price, boolean purchase) {
+    public ShopItem(String name, int id, int picture, long price) {
         this.name = name;
         this.id = id;
         this.picture = picture;
         this.price = price;
-        this.purchase = purchase;
+        purchase = false;
     }
 
     public String getName() {
@@ -50,6 +50,11 @@ public class ShopItem {
 
     public boolean isPurchase() {
         return purchase;
+    }
+
+    public void setPurchased() {
+        purchase = true;
+        price = 0;
     }
 
     public void setPurchase(boolean purchase) {

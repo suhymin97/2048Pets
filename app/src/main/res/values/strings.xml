@@ -18,7 +18,24 @@
         <item>no8192</item>
     </array>
 
-    <array name="arrImage">
+    <array name="arrImage1">
+        <item>@raw/no0</item>
+        <item>@raw/no2_1</item>
+        <item>@raw/no4_1</item>
+        <item>@raw/no8_1</item>
+        <item>@raw/no16_1</item>
+        <item>@raw/no32_1</item>
+        <item>@raw/no64_1</item>
+        <item>@raw/no128_1</item>
+        <item>@raw/no256_1</item>
+        <item>@raw/no512</item>
+        <item>@raw/no1024</item>
+        <item>@raw/no2048</item>
+        <item>@raw/no4096</item>
+        <item>@raw/no8192</item>
+    </array>
+
+    <array name="arrImage2">
         <item>@raw/no0</item>
         <item>@raw/no2</item>
         <item>@raw/no4</item>

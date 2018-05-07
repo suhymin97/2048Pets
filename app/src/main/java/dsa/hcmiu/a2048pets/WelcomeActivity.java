@@ -21,12 +21,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import dsa.hcmiu.a2048pets.entities.model.Features;
+import dsa.hcmiu.a2048pets.entities.model.User;
 
 public class WelcomeActivity extends Activity {
 
     private  int WelcomeInteval = 2000;
-    private static Context context;
-
 
     @Override
     public void onBackPressed() {
@@ -38,13 +37,5 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        Features.callbackManager = CallbackManager.Factory.create();
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Features.callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

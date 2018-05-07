@@ -3,7 +3,9 @@ package dsa.hcmiu.a2048pets;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,22 +19,26 @@ import java.util.ArrayList;
 
 import dsa.hcmiu.a2048pets.entities.adapter.ItemAdapter;
 import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
+import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
 import dsa.hcmiu.a2048pets.entities.handle.OnSwipeTouchListener;
 import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
+import dsa.hcmiu.a2048pets.profile_shop.FragmentShopping;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
 import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
+import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 
 
-public class PlayActivity extends Activity {
+public class PlayActivity extends Activity implements View.OnClickListener {
     private ArrayList<Pets> matrixPet;
     private GridView gvMatrix;
     private ItemAdapter adapter;
     private View layout;
-    private TextView tvScore, tvUndo, tvHammer;
-    private Button btnUndo, btnNew,btnSoundPlay;
+    private TextView tvScore, tvUndo, tvHammer, tvHighScore;
+    private Button btnUndo, btnNew, btnSoundPlay;
     private Button btnHammer;
+    private Button btnShop;
 
     @Override
     public void onBackPressed() {
@@ -72,46 +78,20 @@ public class PlayActivity extends Activity {
         tvScore = (TextView) findViewById(R.id.tvScore);
         tvUndo = (TextView) findViewById(R.id.tvUndo);
         tvHammer = (TextView) findViewById(R.id.tvHammer);
+        tvHighScore = (TextView) findViewById(R.id.tvHighscore);
 
         btnUndo = (Button) findViewById(R.id.btnUndo);
         btnHammer = (Button) findViewById(R.id.btnHammer);
         btnNew = (Button) findViewById(R.id.btnNewGame);
         btnSoundPlay = (Button) findViewById(R.id.btnSoundPlay);
+        btnShop = (Button) findViewById(R.id.btnShopPA);
         create();
         setData();
 
-        btnUndo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HandleGame.getInstance().Undo();
-                update();
-            }
-        });
-
-        btnNew.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HandleGame.getInstance().newGame();
-                update();
-            }
-        });
-
-        btnSoundPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sound) mySong.pause();
-                else mySong.start();
-                sound= !(sound || sound);
-            }
-        });
-
-        btnHammer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HandleGame.getInstance().hammer();
-                update();
-            }
-        });
+        btnUndo.setOnClickListener(this) ;
+        btnNew.setOnClickListener(this);
+        btnSoundPlay.setOnClickListener(this);
+        btnHammer.setOnClickListener(this);
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) { //extend class OnswipeTouch
             public void onSwipeUp() {
                 HandleGame.getInstance().moveUp();
@@ -172,14 +152,51 @@ public class PlayActivity extends Activity {
     private void update() {
         adapter.notifyDataSetChanged();
         tvScore.setText(String.valueOf(HandleGame.getInstance().curBoard.getScoreBoard()));
-        tvUndo.setText(String.valueOf(Features.getMaxUndo()));
-        tvHammer.setText(String.valueOf(Features.getMaxHammer()));
+        tvUndo.setText(String.valueOf(user.undo));
+        tvHammer.setText(String.valueOf(user.hammer));
+        tvHighScore.setText(String.valueOf(user.highScore));
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
         HandleGame.getInstance().newGame();
         update();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        HandleGame.getInstance().newGame();
+        update();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnUndo:
+                HandleGame.getInstance().Undo();
+                update();
+                break;
+            case R.id.btnNewGame:
+                HandleGame.getInstance().newGame();
+                update();
+                break;
+            case R.id.btnSoundPlay:
+                if (sound) mySong.pause();
+                else mySong.start();
+                sound = !(sound || sound);
+                break;
+            case R.id.btnHammer:
+                HandleGame.getInstance().hammer();
+                update();
+                break;
+            case R.id.btnShopPA:
+                Log.d("PlayActivity", "ShopBTNonClick: ");
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

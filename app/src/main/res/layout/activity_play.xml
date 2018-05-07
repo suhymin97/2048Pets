@@ -129,6 +129,13 @@
                 android:text="Sound"
                 android:background="@drawable/squircle_button"/>
         </LinearLayout>
+        <Button
+            android:id="@+id/btnShopPA"
+            android:layout_width="@dimen/d_fbicon"
+            android:layout_height="@dimen/d_fbicon"
+            android:background="@drawable/shop_button"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 
     <GridView

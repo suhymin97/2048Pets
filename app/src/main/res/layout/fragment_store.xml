@@ -10,7 +10,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="100dp"
+        android:paddingRight="100dp"
+        android:paddingLeft="100dp"
+        android:paddingTop="80dp"
+        android:paddingBottom="80dp"
         android:background="@drawable/squircle_store">
         <TextView
             android:id="@+id/tvAchiveGold"
@@ -32,7 +35,7 @@
             android:id="@+id/ctn_show"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="30dp"
+            android:paddingBottom="30dp"
             android:orientation="horizontal"
             android:layout_below="@+id/tvAchiveGold">
             <ImageView
@@ -63,16 +66,20 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/purchase" />
         </RelativeLayout>
-
+        <TextView
+            android:id="@+id/ctn_space"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="@color/gray"
+            android:layout_below="@+id/ctn_show"/>
         <GridView
             android:id="@+id/lvShopping"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/ctn_show"
+            android:layout_below="@+id/ctn_space"
             android:orientation="horizontal"
             android:numColumns="3"
             android:listSelector="@null">
-
         </GridView>
     </RelativeLayout>
 </LinearLayout>

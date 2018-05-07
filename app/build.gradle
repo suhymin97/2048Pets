@@ -32,9 +32,10 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    //round image
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //image from internet
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.4.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 }

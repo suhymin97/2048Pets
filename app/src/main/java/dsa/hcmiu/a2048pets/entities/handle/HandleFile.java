@@ -11,18 +11,12 @@ import java.util.ArrayList;
 
 import dsa.hcmiu.a2048pets.entities.model.User;
 
-/**
- * Created by Admin on 3/25/2018.
- */
-
 public class HandleFile {
 
     private static HandleFile instance;
     private static String url = "highscore.txt";
-    private User user;
 
     private HandleFile() {
-        user = new User();
     }
 
     public static HandleFile get() {
@@ -30,13 +24,6 @@ public class HandleFile {
             instance = new HandleFile();
         }
         return instance;
-    }
-
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public static <ListScore> void writeFile(ArrayList<ListScore> listscore){

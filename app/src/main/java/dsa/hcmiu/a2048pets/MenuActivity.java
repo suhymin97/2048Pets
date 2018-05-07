@@ -23,6 +23,7 @@ import dsa.hcmiu.a2048pets.entities.model.Features;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
 import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
+import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
 
@@ -174,7 +175,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 sound= !(sound || sound);
                 break;
             case R.id.btnProfile:
-                diaglogUnlogin();
+                diaglogPro5();
         }
     }
     private void soundSetup() {
@@ -196,21 +197,37 @@ public class MenuActivity extends Activity implements View.OnClickListener {
     }
 
     private void update() {
-        tvTotalScore.setText(String.valueOf(Features.totalScore));
-        if (HandleImage.get().checkIfImageExist(this))
-            HandleImage.get().loadImageFromDisk(this,imgFb);
+        tvTotalScore.setText(String.valueOf(user.totalGold));
+        if (user.getAvatar() == 0) HandleImage.get().loadImageFromDisk(imgFb);
+        else imgFb.setImageResource(user.getAvatar());
     }
 
-    private void diaglogUnlogin() {
+    private void diaglogPro5() {
         final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
         MyDialog.setContentView(R.layout.fragment_profile);
         TextView tvHighscore = (TextView) MyDialog.findViewById(R.id.tvAchiveHighscore);
         TextView tvUndo = (TextView) MyDialog.findViewById(R.id.tvAchiveUndo);
         TextView tvHammer = (TextView) MyDialog.findViewById(R.id.tvAchiveHammer);
-        tvHighscore.setText(String.valueOf(Features.totalScore));
-        tvUndo.setText(String.valueOf(Features.getMaxUndo()));
-        tvHammer.setText(String.valueOf(Features.getMaxHammer()));
+        TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
+        Button btnLogin = (Button) MyDialog.findViewById(R.id.btnLogin);
+
+        tvHighscore.setText(String.valueOf(user.highScore));
+        tvUndo.setText(String.valueOf(user.undo));
+        tvHammer.setText(String.valueOf(user.hammer));
+        tvNick.setText(user.getName());
+        btnLogin.setVisibility(View.GONE);
+        if (!user.isLoggedFb()) {
+            btnLogin.setVisibility(View.VISIBLE);
+            btnLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent iPro5 = new Intent(getApplicationContext(), ProfileActivity.class);
+                    iPro5.putExtra("Facebook","Log");
+                    startActivity(iPro5);
+                }
+            });
+        }
         MyDialog.show();
     }
 }

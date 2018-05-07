@@ -10,10 +10,10 @@ import java.util.Stack;
 import dsa.hcmiu.a2048pets.MyApplication;
 import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.entities.model.Board;
-import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 
 import static dsa.hcmiu.a2048pets.entities.model.Board.max;
+import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 
 
 /**
@@ -49,7 +49,7 @@ public class HandleGame { //singleton
     }
 
     private HandleGame() {
-        initData();
+        setTheme(0);
         init();
     }
 
@@ -63,18 +63,22 @@ public class HandleGame { //singleton
         }
         curBoard.setElement(pos1, 2);
         curBoard.setElement(pos2, (random.nextInt(1) + 1) * 2);
-        countEmpty=max*max - 3  ;
+        countEmpty=max*max - 1;
     }
 
     public void newGame() {
-        Features.totalScore+=curBoard.getScoreBoard();
+        user.totalGold +=curBoard.getScoreBoard();
+        if (user.highScore <curBoard.getScoreBoard()) user.highScore = curBoard.getScoreBoard();
         init();
         log("New game");
     }
 
-    private void initData() {
+    public void setTheme(int choice) {
         //get resources
-        TypedArray images = MyApplication.getContext().getResources().obtainTypedArray(R.array.arrImage);
+        int resid;
+        if (choice == 0) resid= R.array.arrImage1;
+        else resid = R.array.arrImage2;
+        TypedArray images = MyApplication.getContext().getResources().obtainTypedArray(resid);
         int countNo = 2;
         typePet[0] = new Pets(0);
         typePet[0].setId(0);
@@ -87,10 +91,6 @@ public class HandleGame { //singleton
             arrId[countNo] = i;
             countNo *= 2;
         }
-        /*
-        i=1: countNo = 2; arrID[2]=1;
-        i=2: countNo = 4; arrID[4]=2
-        */
     }
 
     public void saveHis() {
@@ -120,11 +120,13 @@ public class HandleGame { //singleton
                 }
             }
         }
+        countEmpty--;
     }
 
-    public void hammer() {
-        if (Features.maxHammer ==0 || countEmpty== max*max -3) return;
-        int del = random.nextInt(max*max-countEmpty);
+    public boolean hammer() {
+        if (user.hammer ==0 || countEmpty > max*max - 2) return false;
+        log(String.valueOf(countEmpty));
+        int del = random.nextInt(max*max-countEmpty)+1;
         for (int i = 0; i<max*max; i++) {
             if(curBoard.getEValue(i)>0) {
                 if (del == 0) {
@@ -134,14 +136,16 @@ public class HandleGame { //singleton
                 else del--;
             }
         }
-        Features.maxHammer--;
+        user.hammer--;
+        countEmpty++;
+        return true;
     }
 
     public boolean Undo() {
-        int u = Features.getMaxUndo();
+        int u = user.undo;
         if (u == 0||boardStack.isEmpty()) return false;
         curBoard.setBoard(undoSaveHis());
-        Features.setMaxUndo(--u);
+        user.undo=--u;
         log("undo count" + String.valueOf(u));
         return true;
     }
@@ -309,33 +313,10 @@ public class HandleGame { //singleton
     }
 
     public boolean gameOver() {
-        return curBoard.fullBoard();
-    }
-/*
-    public void saveBest() {
-        ListHighScore = new ArrayList<Integer>();
-        if (curBoard.getScoreBoard() > best) {
-            highScore = curBoard.getScoreBoard();
-            best = curBoard.getScoreBoard();
-        } else {
-            highScore = best;
-        }
-        ListHighScore.add(highScore);
-        HandleFile.writeFile(ListHighScore);
-
+        if(countEmpty==0) return curBoard.fullBoard();
+        return false;
     }
 
-    public long getBest() {
-        ListHighScore = HandleFile.readFile();
-        for (int i = 0; i < ListHighScore.size(); i++) {
-            if (ListHighScore.get(i) > best) {
-                best = ListHighScore.get(i);
-            }
-        }
-        log("get best" + String.valueOf(best));
-        return best;
-    }
-*/
     private void log(String msg) {
         Log.d("HANDLE GAME",msg);
     }

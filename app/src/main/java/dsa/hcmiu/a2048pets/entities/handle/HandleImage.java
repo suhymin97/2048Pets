@@ -13,13 +13,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import dsa.hcmiu.a2048pets.MyApplication;
+
 public class HandleImage {
 
     private String imageDir = "imageDir";
     private String imageName = "userAva.png";
     private static HandleImage instance;
+    private Context context;
 
     private HandleImage() {
+        context = MyApplication.getContext();
     }
 
     public static HandleImage get() {
@@ -33,16 +37,16 @@ public class HandleImage {
         Log.d("Handle image", logStr);
     }
 
-    public void loadImageFromUrl(Context context,String imageUrl, ImageView ivImage) {
+    public void loadImageFromUrl(String imageUrl, ImageView ivImage) {
         log("Load image from url");
         Picasso.get().load(imageUrl).into(ivImage);
     }
-    public void downloadSaveImageFromUrl(Context context,String imageUrl) {
+    public void downloadSaveImageFromUrl(String imageUrl) {
         log("Load image from url and save it to disk through Picasso");
-        Picasso.get().load(imageUrl).into(picassoImageTarget(context, imageDir, imageName));
+        Picasso.get().load(imageUrl).into(picassoImageTarget(imageDir, imageName));
     }
 
-    public boolean loadImageFromDisk(Context context,ImageView ivImage) {
+    public boolean loadImageFromDisk(ImageView ivImage) {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir(imageDir, Context.MODE_APPEND);
         File myImageFile = new File(directory, imageName);
@@ -57,7 +61,7 @@ public class HandleImage {
         }
     }
 
-    public void deleteImageFromDisk(Context context) {
+    public void deleteImageFromDisk() {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir(imageDir, Context.MODE_PRIVATE);
         File myImageFile = new File(directory, imageName);
@@ -70,7 +74,7 @@ public class HandleImage {
         }
     }
 
-    public boolean checkIfImageExist(Context context) {
+    public boolean checkIfImageExist() {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir(imageDir, Context.MODE_PRIVATE);
         File myImageFile = new File(directory, imageName);
@@ -78,7 +82,7 @@ public class HandleImage {
         return myImageFile.exists();
     }
      // Target class for saving image bitmap returned from Picassoư
-    private Target picassoImageTarget(final Context context, String imageDir, final String imageName) {
+    private Target picassoImageTarget(String imageDir, final String imageName) {
         Log.d("picassoImageTarget", " picassoImageTarget");
         ContextWrapper cw = new ContextWrapper(context);
         final File directory = cw.getDir(imageDir, Context.MODE_PRIVATE); // path to /data/data/yourapp/app_imageDir

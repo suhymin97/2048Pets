@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +20,8 @@
             android:layout_height="@dimen/d_avaProfile"
             android:layout_gravity="center"
             android:src="@drawable/fbicom"
-            app:civ_border_width="3dp"
-            app:civ_border_color="@color/white">
+            app:civ_border_width="7dp"
+            app:civ_border_color="@color/black">
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <TextView

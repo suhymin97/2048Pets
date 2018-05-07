@@ -45,32 +45,22 @@ public class FbConnectHelper {
         void OnFbError(String errorMessage);
     }
 
-    private FbConnectHelper(Activity activity, OnFbSignInListener fbSignInListener) {
+    public FbConnectHelper(Activity activity, OnFbSignInListener fbSignInListener) {
         this.activity = activity;
         this.fbSignInListener = fbSignInListener;
     }
 
-    private FbConnectHelper(Fragment fragment, OnFbSignInListener fbSignInListener) {
+    public FbConnectHelper(Fragment fragment, OnFbSignInListener fbSignInListener) {
         this.fragment = fragment;
         this.fbSignInListener = fbSignInListener;
     }
 
-    private FbConnectHelper(Activity activity) {
+    public FbConnectHelper(Activity activity) {
         shareDialog = new ShareDialog(activity);
     }
 
-    private FbConnectHelper(Fragment fragment) {
+    public FbConnectHelper(Fragment fragment) {
         shareDialog = new ShareDialog(fragment);
-    }
-
-    public static FbConnectHelper with(Activity activity) {
-        if (instance==null) instance = new FbConnectHelper(activity);
-        return instance;
-    }
-
-    public static FbConnectHelper with(Fragment fragment) {
-        if (instance==null) instance = new FbConnectHelper(fragment);
-        return instance;
     }
 
     public void connect() {
