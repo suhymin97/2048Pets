@@ -17,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.IOException;
+
+import dsa.hcmiu.a2048pets.entities.handle.HandleFile;
 import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
 import dsa.hcmiu.a2048pets.entities.handle.HandleSound;
 import dsa.hcmiu.a2048pets.entities.model.Features;
@@ -64,10 +67,12 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         }
 
     private void cupCatSetup() {
-        Animation wobble = AnimationUtils.loadAnimation(this, R.anim.wobble);
+        Animation wobbleCup = AnimationUtils.loadAnimation(this, R.anim.wobble_cup_cats);
+        Animation wobbleCatUp = AnimationUtils.loadAnimation(this, R.anim.wobble_cat_up);
         Animation linear = AnimationUtils.loadAnimation(this, R.anim.linear_move);
-        ivCupCat.setAnimation(wobble);
+        ivCupCat.setAnimation(wobbleCup);
         ivShadow.setAnimation(linear);
+        btnSound.setAnimation(wobbleCatUp);
         final HandleSound snd_Cats = new HandleSound(this, R.raw.bunch_cat);
         final MediaPlayer snd_singleKitty = MediaPlayer.create(this, R.raw.single_kitty);
         ivCupCat.setOnTouchListener(new View.OnTouchListener() {
@@ -114,10 +119,15 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-        quit();
+        try {
+            quit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void quit() {
+    private void quit() throws IOException {
+        HandleFile.get().writeToFile();
         final Dialog MyDialog = new Dialog(MenuActivity.this,R.style.FullHeightDialog);
         LayoutInflater inflater = MenuActivity.this.getLayoutInflater();
         MyDialog.setContentView(R.layout.dialog);
@@ -167,7 +177,11 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 startActivity(iRule);
                 break;
             case R.id.bQuit:
-                quit();
+                try {
+                    quit();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btnSound:
                 if (sound) mySong.pause();

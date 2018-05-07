@@ -11,15 +11,22 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import dsa.hcmiu.a2048pets.entities.handle.HandleFile;
 import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.User;
 
@@ -37,5 +44,14 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        try {
+            StringWriter output = new StringWriter();
+            HandleFile.get().readFeaturesJSONFile(output);
+            Log.d("Welcome", "onCreate: ReadJson");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

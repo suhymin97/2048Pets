@@ -11,7 +11,7 @@ import dsa.hcmiu.a2048pets.MyApplication;
 
 
 public class User {
-    public int totalGold = 4000;
+    public long totalGold = 4000;
     private long UID = 0;
     private String name = null;
     private String email = null;

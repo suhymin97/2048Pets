@@ -11,4 +11,6 @@ public class Features { //store biến static
     public static boolean sound = true;
     public static User user = new User();
 
+
+
 }
