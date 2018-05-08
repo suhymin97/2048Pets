@@ -30,7 +30,7 @@ public class HandleFile {
     private static String url = "highscore.txt";
     private Context context;
     private String file = "feature.json";
-    private StringWriter output = new StringWriter();
+    private StringWriter output;
 
     private HandleFile() {
         context = MyApplication.getContext();
@@ -42,14 +42,14 @@ public class HandleFile {
         }
         return instance;
     }
-    public void readFeaturesJSONFile(Writer text) throws IOException, JSONException {
+    public void readFeaturesJSONFile() throws IOException, JSONException {
 
         // Đọc nội dung text của file company.json
         String jsonText = readText();
 
         // Đối tượng JSONObject gốc mô tả toàn bộ tài liệu JSON.
         JSONObject jsonRoot = new JSONObject(jsonText);
-        text.write(jsonText);
+        //text.write(jsonText); //show
         Log.d("HandleFile", "readFeaturesJSONFile: " + jsonText);
         Features.sound = jsonRoot.getBoolean("sound");
 
@@ -68,8 +68,8 @@ public class HandleFile {
         JSONArray jsonArray = jsonUser.getJSONArray("purchasedIdItem");
         int[] id = new int[jsonArray.length()];
         user.purchasedIdItem = new ArrayList<>();
-        for (int i: id) {
-            user.purchasedIdItem.add(i);
+        for (int i = 0 ; i< jsonArray.length(); i++) {
+            user.purchasedIdItem.add(jsonArray.getInt(i));
         }
     }
 
@@ -88,6 +88,7 @@ public class HandleFile {
     }
 
     public void convertToJSON() throws IOException {
+        output = new StringWriter();
         JsonWriter jsonWriter = new JsonWriter(output);
 
         jsonWriter.beginObject();// begin root
@@ -105,7 +106,6 @@ public class HandleFile {
         jsonWriter.name("undo").value(user.undo);
         jsonWriter.name("hammer").value(user.hammer);
         jsonWriter.name("totalGold").value(user.totalGold);
-        jsonWriter.endObject();// end user
 
         // "purchase array": [ ....]
         jsonWriter.name("purchasedIdItem").beginArray(); // begin purchase array
@@ -113,7 +113,7 @@ public class HandleFile {
             jsonWriter.value(id);
         }
         jsonWriter.endArray();// end purchase array
-
+        jsonWriter.endObject();// end user
         // end root
         jsonWriter.endObject();
     }

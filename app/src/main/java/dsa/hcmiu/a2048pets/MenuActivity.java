@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import dsa.hcmiu.a2048pets.entities.handle.HandleFile;
 import dsa.hcmiu.a2048pets.entities.handle.HandleImage;
 import dsa.hcmiu.a2048pets.entities.handle.HandleSound;
@@ -225,11 +226,14 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         TextView tvHammer = (TextView) MyDialog.findViewById(R.id.tvAchiveHammer);
         TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
         Button btnLogin = (Button) MyDialog.findViewById(R.id.btnLogin);
+        CircleImageView ivAva = (CircleImageView) MyDialog.findViewById(R.id.ivAvaFb);
 
         tvHighscore.setText(String.valueOf(user.highScore));
         tvUndo.setText(String.valueOf(user.undo));
         tvHammer.setText(String.valueOf(user.hammer));
         tvNick.setText(user.getName());
+        if (user.getAvatar() != 0) ivAva.setImageResource(user.getAvatar());
+        else HandleImage.get().loadImageFromDisk(ivAva);
         btnLogin.setVisibility(View.GONE);
         if (!user.isLoggedFb()) {
             btnLogin.setVisibility(View.VISIBLE);

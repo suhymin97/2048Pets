@@ -44,9 +44,9 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        Features.user = new User();
         try {
-            StringWriter output = new StringWriter();
-            HandleFile.get().readFeaturesJSONFile(output);
+            HandleFile.get().readFeaturesJSONFile();
             Log.d("Welcome", "onCreate: ReadJson");
         } catch (IOException e) {
             e.printStackTrace();

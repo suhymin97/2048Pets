@@ -3,6 +3,7 @@ package dsa.hcmiu.a2048pets.profile_shop;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,12 @@ import dsa.hcmiu.a2048pets.MyApplication;
 import dsa.hcmiu.a2048pets.R;
 import dsa.hcmiu.a2048pets.entities.adapter.ShopAdapter;
 import dsa.hcmiu.a2048pets.entities.handle.HandleGame;
-import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.ShopItem;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 
 public class FragmentShopping extends Fragment {
-    private ArrayList<ShopItem> array;
+    private ArrayList<ShopItem> arrayShopItem;
     ShopAdapter adapter;
     TextView tvGold,tvPrice;
     GridView listItem;
@@ -42,8 +42,8 @@ public class FragmentShopping extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_store,container,false);
         init();
-        selectItem = array.get(0);
-        adapter = new ShopAdapter(getActivity(), R.layout.item_shop, array);
+        selectItem = arrayShopItem.get(0);
+        adapter = new ShopAdapter(getActivity(), R.layout.item_shop, arrayShopItem);
 
         listItem = (GridView) view.findViewById(R.id.lvShopping);
         tvGold = (TextView) view.findViewById(R.id.tvAchiveGold);
@@ -60,7 +60,7 @@ public class FragmentShopping extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RelativeLayout relativeLayout= (RelativeLayout) view;
                 relativeLayout.setBackgroundColor(MyApplication.getContext().getResources().getColor(R.color.white));
-                selectItem = array.get(position);
+                selectItem = arrayShopItem.get(position);
                 showItem();
             }
         });
@@ -71,7 +71,6 @@ public class FragmentShopping extends Fragment {
                     Toast.makeText(getActivity(),"Not enough gold. Play 2048 to earn more.",Toast.LENGTH_LONG).show();
                     return;
                 }
-                int ava = -1;
                 user.totalGold -= selectItem.getPrice();
                 switch((int) selectItem.getId()/100) {
                     case 0: //undo
@@ -82,12 +81,11 @@ public class FragmentShopping extends Fragment {
                         break;
                     case 2: //ava
                         if (selectItem.isPurchase()) {
-                            ava = selectItem.getPicture();
+                            user.setAvatar(selectItem.getPicture());
                             break;
                         }
                         selectItem.setPurchased();
                         user.purchasedIdItem.add(selectItem.getId());
-                        showItem();
                         break;
                     case 3: //theme
                         if (selectItem.isPurchase()) {
@@ -96,7 +94,6 @@ public class FragmentShopping extends Fragment {
                         }
                         selectItem.setPurchased();
                         user.purchasedIdItem.add(selectItem.getId());
-                        showItem();
                         break;
                     case 4: //fb ava
                         if (!user.isLoggedFb()) {
@@ -105,17 +102,18 @@ public class FragmentShopping extends Fragment {
                             break;
                         }
                         if (selectItem.isPurchase()) {
-                            ava = 0;
+                            user.setAvatar(0);
                             selectItem.setPurchase(false);
-                            showItem();
+                            user.unPurcahsedIdItem(selectItem.getId());
+                            user.totalGold += selectItem.getPrice();
                             break;
                         }
                         selectItem.setPurchase(true);
-                        showItem();
+                        user.purchasedIdItem.add(selectItem.getId());
                         break;
                 }
-                sendData.data(true, ava);
-                update();
+                showItem();
+                sendData.data(true);
             }
         });
 
@@ -123,11 +121,11 @@ public class FragmentShopping extends Fragment {
     }
 
     private void addItem(String name, int id, int picture, long price) {
-        array.add(new ShopItem(name, id, picture, price));
+        arrayShopItem.add(new ShopItem(name, id, picture, price));
     }
 
     private void init() {
-        array = new ArrayList<>();
+        arrayShopItem = new ArrayList<>();
         addItem("undo", 000, R.drawable.undo, 100);
         addItem("hammer", 100, R.drawable.hammer, 1000);
         addItem("avaDefault", 200, R.drawable.default_ava, 0);
@@ -148,11 +146,13 @@ public class FragmentShopping extends Fragment {
     }
 
     public void update() {
-        for(ShopItem item:array) {
+
+        for(ShopItem item: arrayShopItem) {
             for(int idPurchased: user.purchasedIdItem) {
                 if (idPurchased != item.getId()) continue;
-                item.setPurchased();
-                break;
+                Log.d("Shop", "update: itemid " + item.getId() + " idPurchased" + idPurchased);
+                if (item.getId() == 400) item.setPurchase(true);
+                else item.setPurchased();
             }
         }
         tvGold.setText(String.valueOf(user.totalGold));

@@ -9,8 +9,6 @@ public class Features { //store biến static
     public static long uidCount = 0;
     public static MediaPlayer mySong;
     public static boolean sound = true;
-    public static User user = new User();
-
-
+    public static User user;
 
 }

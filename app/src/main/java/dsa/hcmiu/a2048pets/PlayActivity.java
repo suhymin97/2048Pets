@@ -173,6 +173,12 @@ public class PlayActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        HandleGame.getInstance().newGame();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnUndo:

@@ -26,12 +26,8 @@ public class ProfileActivity extends Activity implements SendData {
     }
 
     @Override
-    public void data(boolean update, int ava) {
+    public void data(boolean update) {
         if (update) fragmentProfile.update();
-        if (ava != -1) {
-            fragmentProfile.setIvAva(ava);
-            user.setAvatar(ava);
-        }
     }
 
     @Override

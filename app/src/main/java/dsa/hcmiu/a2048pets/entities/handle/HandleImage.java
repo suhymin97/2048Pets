@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -41,6 +42,7 @@ public class HandleImage {
         log("Load image from url");
         Picasso.get().load(imageUrl).into(ivImage);
     }
+
     public void downloadSaveImageFromUrl(String imageUrl) {
         log("Load image from url and save it to disk through Picasso");
         Picasso.get().load(imageUrl).into(picassoImageTarget(imageDir, imageName));
@@ -81,7 +83,8 @@ public class HandleImage {
 
         return myImageFile.exists();
     }
-     // Target class for saving image bitmap returned from Picassoư
+
+    // Target class for saving image bitmap returned from Picasso
     private Target picassoImageTarget(String imageDir, final String imageName) {
         Log.d("picassoImageTarget", " picassoImageTarget");
         ContextWrapper cw = new ContextWrapper(context);
@@ -89,35 +92,31 @@ public class HandleImage {
         return new Target() {
             @Override
             public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                /*
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() { */
-                        final File myImageFile = new File(directory, imageName); // Create image file
-                        FileOutputStream fos = null;
-                        try {
-                            fos = new FileOutputStream(myImageFile);
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        log("image saved to >>>" + myImageFile.getAbsolutePath());
+                final File myImageFile = new File(directory, imageName); // Create image file
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream(myImageFile);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                /*}).start();
-            }*/
+                }
+                log("image saved to >>>" + myImageFile.getAbsolutePath());
+            }
 
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
             }
+
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
-                if (placeHolderDrawable != null) {}
+                if (placeHolderDrawable != null) {
+                }
             }
         };
     }

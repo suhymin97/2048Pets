@@ -77,11 +77,7 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
         tvHighscore.setText(String.valueOf(user.highScore));
         tvUndo.setText(String.valueOf(user.undo));
         tvHammer.setText(String.valueOf(user.hammer));
-    }
-
-    public void setIvAva(int resid) {
-        if (resid!=0) ivAva.setImageResource(resid);
-        else HandleImage.get().loadImageFromUrl(user.getProfilePic(),ivAva);;
+        setAva();
     }
 
     public void loginwithFacebook() {
@@ -120,11 +116,14 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
 
     public void updateDataUser() {
         if (user.isLoggedFb()) btnlogin.setVisibility(View.GONE);
-        if (user.getAvatar() == 0) HandleImage.get().loadImageFromDisk(ivAva);
-        else  ivAva.setImageResource(user.getAvatar());
+        setAva();
         tvNick.setText(user.getName());
     }
 
+    private void setAva() {
+        if (user.getAvatar() == 0) HandleImage.get().loadImageFromDisk(ivAva);
+        else  ivAva.setImageResource(user.getAvatar());
+    }
     @Override
     public void onResume() {
         super.onResume();

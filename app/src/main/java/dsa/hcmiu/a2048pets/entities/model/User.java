@@ -83,4 +83,12 @@ public class User {
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
     }
+
+    public void unPurcahsedIdItem(int id) {
+        for (int i=0; i< purchasedIdItem.size();i++) {
+            if (purchasedIdItem.get(i) != id ) continue;
+            purchasedIdItem.remove(i);
+            break;
+        }
+    }
 }
