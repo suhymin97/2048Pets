@@ -30,7 +30,6 @@ public class FragmentShopping extends Fragment {
     ShopAdapter adapter;
     TextView tvGold,tvPrice;
     GridView listItem;
-    View view;
     ImageView ivShopItem;
     ImageButton btnPurchase;
     ShopItem selectItem;
@@ -39,8 +38,7 @@ public class FragmentShopping extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
-        view = inflater.inflate(R.layout.fragment_store,container,false);
+        View view = inflater.inflate(R.layout.fragment_store,container,false);
         init();
         selectItem = arrayShopItem.get(0);
         adapter = new ShopAdapter(getActivity(), R.layout.item_shop, arrayShopItem);

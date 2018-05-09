@@ -89,6 +89,12 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         setData();
 
         btnUndo.setOnClickListener(this) ;
+        btnUndo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TO DO
+            }
+        });
         btnNew.setOnClickListener(this);
         btnSoundPlay.setOnClickListener(this);
         btnHammer.setOnClickListener(this);
