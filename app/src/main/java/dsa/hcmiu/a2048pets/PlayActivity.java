@@ -24,6 +24,7 @@ import dsa.hcmiu.a2048pets.entities.handle.OnSwipeTouchListener;
 import dsa.hcmiu.a2048pets.entities.model.Features;
 import dsa.hcmiu.a2048pets.entities.model.Pets;
 import dsa.hcmiu.a2048pets.profile_shop.FragmentShopping;
+import dsa.hcmiu.a2048pets.profile_shop.SendData;
 
 import static dsa.hcmiu.a2048pets.entities.model.Features.mySong;
 import static dsa.hcmiu.a2048pets.entities.model.Features.sound;
@@ -85,19 +86,15 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         btnNew = (Button) findViewById(R.id.btnNewGame);
         btnSoundPlay = (Button) findViewById(R.id.btnSoundPlay);
         btnShop = (Button) findViewById(R.id.btnShopPA);
+
         create();
         setData();
 
         btnUndo.setOnClickListener(this) ;
-        btnUndo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TO DO
-            }
-        });
         btnNew.setOnClickListener(this);
         btnSoundPlay.setOnClickListener(this);
         btnHammer.setOnClickListener(this);
+        btnShop.setOnClickListener(this);
         gvMatrix.setOnTouchListener(new OnSwipeTouchListener(PlayActivity.this) { //extend class OnswipeTouch
             public void onSwipeUp() {
                 HandleGame.getInstance().moveUp();
@@ -175,7 +172,6 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         super.onStart();
         HandleGame.getInstance().newGame();
         update();
-
     }
 
     @Override
@@ -188,24 +184,27 @@ public class PlayActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnUndo:
+                Log.d("Play", "onClick: Undo");
                 HandleGame.getInstance().Undo();
                 update();
                 break;
             case R.id.btnNewGame:
+                Log.d("Play", "onClick: New");
                 HandleGame.getInstance().newGame();
                 update();
                 break;
             case R.id.btnSoundPlay:
+                Log.d("Play", "onClick: Sound");
                 if (sound) mySong.pause();
                 else mySong.start();
                 sound = !(sound || sound);
                 break;
             case R.id.btnHammer:
+                Log.d("Play", "onClick: Hammer");
                 HandleGame.getInstance().hammer();
                 update();
                 break;
             case R.id.btnShopPA:
-                Log.d("PlayActivity", "ShopBTNonClick: ");
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
                 break;
