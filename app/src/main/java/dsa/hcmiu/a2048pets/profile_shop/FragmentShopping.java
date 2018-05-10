@@ -65,7 +65,7 @@ public class FragmentShopping extends Fragment {
         btnPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user.totalGold < selectItem.getPrice()) {
+                if ((user.totalGold < selectItem.getPrice() ) && (!selectItem.isPurchase())) {
                     Toast.makeText(getActivity(),"Not enough gold. Play 2048 to earn more.",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -112,6 +112,7 @@ public class FragmentShopping extends Fragment {
                 }
                 showItem();
                 sendData.data(true);
+                update();
             }
         });
 

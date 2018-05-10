@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -196,7 +197,10 @@ public class PlayActivity extends Activity implements View.OnClickListener {
             case R.id.btnSoundPlay:
                 Log.d("Play", "onClick: Sound");
                 if (sound) mySong.pause();
-                else mySong.start();
+                else {
+                    if (mySong.isPlaying()) mySong.stop();
+                    mySong.start();
+                }
                 sound = !(sound || sound);
                 break;
             case R.id.btnHammer:

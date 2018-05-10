@@ -27,7 +27,6 @@ public class HandleGame { //singleton
     public static final Pets[] typePet = new Pets[numCount + 1];
     public static final int[] arrId = new int[maxValue + 1];
 
-    ArrayList<Integer> ListHighScore;
     private static HandleGame instance;
     public static int highScore = 0;
     public static int best = 0;

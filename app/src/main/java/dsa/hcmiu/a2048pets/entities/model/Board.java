@@ -14,8 +14,8 @@ import static dsa.hcmiu.a2048pets.entities.handle.HandleGame.typePet;
 
 public class Board {
     private long scoreBoard;
-    public static int max = 4;
     private ArrayList<Pets> matrix;
+    public static int max = 4;
     int row,col;
 
     private ArrayList<Pets> initBoard() {
