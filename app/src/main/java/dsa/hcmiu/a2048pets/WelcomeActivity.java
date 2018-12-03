@@ -1,30 +1,19 @@
 package dsa.hcmiu.a2048pets;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import dsa.hcmiu.a2048pets.entities.handle.HandleFile;
 import dsa.hcmiu.a2048pets.entities.model.Features;
@@ -32,18 +21,54 @@ import dsa.hcmiu.a2048pets.entities.model.User;
 
 public class WelcomeActivity extends Activity {
 
-    private  int WelcomeInteval = 2000;
-
-    @Override
-    public void onBackPressed() {
-        Intent i= new Intent(WelcomeActivity.this,MenuActivity.class);
-        startActivity(i);
-    }
+    private  int timeDelay = 1000, status = 0, stepDelay = 10;
+    private ProgressBar progressBar;
+    Handler setDelay;
+    Runnable startDelay;
+    TextView tvTouchMess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        tvTouchMess = (TextView) findViewById(R.id.tvTouchMess);
+        setDelay = new Handler();
+        status+= initData();
+        tvTouchMess.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setProgress(status);
+        init();
+    }
+
+    public void init() {
+        startDelay = new Runnable() {
+            @Override
+            public void run() {
+                status+=stepDelay;
+                progressBar.setProgress(status);
+                if (status!=100) setDelay.postDelayed(this,timeDelay);
+                else interactive();
+            }
+        };
+        startDelay.run();
+    }
+
+    private void interactive() {
+        setDelay.removeCallbacks(startDelay);
+        progressBar.setVisibility(View.GONE);
+        tvTouchMess.setVisibility(View.VISIBLE);
+        RelativeLayout main = (RelativeLayout) findViewById(R.id.mainWelcome);
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iMenu = new Intent(WelcomeActivity.this, MenuActivity.class);
+                startActivity(iMenu);
+            }
+        });
+    }
+
+    public int initData() {
         Features.user = new User();
         try {
             HandleFile.get().readFeaturesJSONFile();
@@ -53,5 +78,6 @@ public class WelcomeActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return 50;
     }
 }

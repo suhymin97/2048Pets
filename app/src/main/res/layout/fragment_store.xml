@@ -46,12 +46,23 @@
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/poke"/>
             <TextView
+                android:id="@+id/tvNameItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="60dp"
+                android:textColor="@color/black"
+                android:layout_toEndOf="@id/ivShopItem"
+                android:fontFamily="@font/comicbd"
+                android:text="Avatar Pokemon"/>
+            <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/d_textScore"
                 android:textColor="@color/black"
                 android:layout_toEndOf="@id/ivShopItem"
+                android:layout_below="@+id/tvNameItem"
+                android:layout_alignBottom="@id/ivShopItem"
                 android:fontFamily="@font/comic"
                 android:text="$100"/>
 
@@ -59,8 +70,8 @@
                 android:id="@+id/btnPurchase"
                 android:layout_width="500dp"
                 android:layout_height="50dp"
-                android:layout_alignStart="@id/tvPrice"
-                android:layout_below="@+id/tvPrice"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvNameItem"
                 android:layout_alignBottom="@id/ivShopItem"
                 android:background="@null"
                 android:scaleType="fitCenter"

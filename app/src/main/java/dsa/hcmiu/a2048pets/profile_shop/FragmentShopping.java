@@ -28,7 +28,7 @@ import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 public class FragmentShopping extends Fragment {
     private ArrayList<ShopItem> arrayShopItem;
     ShopAdapter adapter;
-    TextView tvGold,tvPrice;
+    TextView tvGold,tvPrice, tvItemName;
     GridView listItem;
     ImageView ivShopItem;
     ImageButton btnPurchase;
@@ -46,6 +46,7 @@ public class FragmentShopping extends Fragment {
         listItem = (GridView) view.findViewById(R.id.lvShopping);
         tvGold = (TextView) view.findViewById(R.id.tvAchiveGold);
         tvPrice = (TextView) view.findViewById(R.id.tvPrice) ;
+        tvItemName = (TextView) view.findViewById(R.id.tvNameItem) ;
         ivShopItem = (ImageView) view.findViewById(R.id.ivShopItem);
         btnPurchase = (ImageButton) view.findViewById(R.id.btnPurchase);
         sendData = (SendData) getActivity();
@@ -127,18 +128,19 @@ public class FragmentShopping extends Fragment {
         arrayShopItem = new ArrayList<>();
         addItem("undo", 000, R.drawable.undo, 100);
         addItem("hammer", 100, R.drawable.hammer, 1000);
-        addItem("avaDefault", 200, R.drawable.default_ava, 0);
-        addItem("avaPika", 201, R.drawable.pikachu2, 200);
-        addItem("avaPoke", 202, R.drawable.poke, 300);
-        addItem("avaDog", 203, R.drawable.ic_round, 300);
-        addItem("Facebook", 400, R.drawable.facebook, 1000);
-        addItem("theme1", 300, R.raw.no2_1, 0);
-        addItem("theme2", 301, R.drawable.theme2, 2000);
+        addItem("Avatar Default", 200, R.drawable.default_ava, 0);
+        addItem("Avatar Pikachu", 201, R.drawable.pikachu2, 200);
+        addItem("Avatar Meowth", 202, R.drawable.poke, 300);
+        addItem("Avatar Dog", 203, R.drawable.ic_round, 300);
+        addItem("Avatar Profile Facebook", 400, R.drawable.facebook, 1000);
+        addItem("Theme Classic", 300, R.raw.no2_1, 0);
+        addItem("Theme Cat Items", 301, R.drawable.theme2, 2000);
     }
 
     public void showItem() {
         tvPrice.setText(String.valueOf(selectItem.getPrice()));
         ivShopItem.setImageResource(selectItem.getPicture());
+        tvItemName.setText(String.valueOf(selectItem.getName()));
         if (selectItem.isPurchase()) btnPurchase.setImageResource(R.drawable.equip);
         else btnPurchase.setImageResource(R.drawable.purchase);
         adapter.notifyDataSetChanged();
