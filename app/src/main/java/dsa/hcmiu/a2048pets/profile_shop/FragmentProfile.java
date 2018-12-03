@@ -121,7 +121,10 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
     }
 
     private void setAva() {
-        if (user.getAvatar() == 0) HandleImage.get().loadImageFromDisk(ivAva);
+        if (user.getAvatar() == 0) {
+            HandleImage.get().downloadSaveImageFromUrl(user.getProfilePic());
+            HandleImage.get().loadImageFromUrl(user.getProfilePic(),ivAva);
+        }
         else  ivAva.setImageResource(user.getAvatar());
     }
     @Override
