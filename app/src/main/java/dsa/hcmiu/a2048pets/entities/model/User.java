@@ -91,4 +91,10 @@ public class User {
             break;
         }
     }
+    public void returnDef() {
+        name = MyApplication.getContext().getResources().getString(R.string.default_name);
+        IDFacebook = null;
+        avatar = R.drawable.default_ava;
+        loggedFb =false;
+    }
 }

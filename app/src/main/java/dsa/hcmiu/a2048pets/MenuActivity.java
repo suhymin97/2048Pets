@@ -224,8 +224,9 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         TextView tvHighscore = (TextView) MyDialog.findViewById(R.id.tvAchiveHighscore);
         TextView tvUndo = (TextView) MyDialog.findViewById(R.id.tvAchiveUndo);
         TextView tvHammer = (TextView) MyDialog.findViewById(R.id.tvAchiveHammer);
-        TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
-        Button btnLogin = (Button) MyDialog.findViewById(R.id.btnLogin);
+        final TextView tvNick = (TextView) MyDialog.findViewById(R.id.tvNick);
+        final Button btnLogin = (Button) MyDialog.findViewById(R.id.btnLogin);
+        final Button btnLogout = (Button) MyDialog.findViewById(R.id.btnLogout);
         CircleImageView ivAva = (CircleImageView) MyDialog.findViewById(R.id.ivAvaFb);
 
         tvHighscore.setText(String.valueOf(user.highScore));
@@ -234,18 +235,29 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         tvNick.setText(user.getName());
         if (user.getAvatar() != 0) ivAva.setImageResource(user.getAvatar());
         else HandleImage.get().loadImageFromDisk(ivAva);
-        btnLogin.setVisibility(View.GONE);
-        if (!user.isLoggedFb()) {
-            btnLogin.setVisibility(View.VISIBLE);
+        btnLogout.setVisibility(View.GONE);
+        btnLogin.setVisibility(View.VISIBLE);
+        if (user.isLoggedFb()) {
+            btnLogout.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
+            btnLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    user.returnDef();
+                    btnLogout.setVisibility(View.GONE);
+                    btnLogin.setVisibility(View.VISIBLE);
+                    tvNick.setText(user.getName());
+                }
+            });
+        }
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent iPro5 = new Intent(getApplicationContext(), ProfileActivity.class);
-                    iPro5.putExtra("Facebook","Log");
+                    iPro5.putExtra("Facebook", "Log");
                     startActivity(iPro5);
                 }
             });
-        }
         MyDialog.show();
     }
 }

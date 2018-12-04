@@ -40,13 +40,12 @@
             android:layout_margin="@dimen/d_textDialog"
             android:layout_width="300dp"
             android:layout_height="70dp"
-            android:text="@string/facebook"
+            android:text="@string/facebookin"
             android:layout_marginTop="10dp"
             android:textSize="20dp"
             android:background="@color/com_facebook_blue"
             android:textColor="@android:color/white"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onFacebookClicked"/>
+            android:layout_gravity="center_horizontal"/>
         <LinearLayout
             android:id="@+id/ctn_textView"
             android:layout_width="match_parent"
@@ -119,6 +118,17 @@
                 android:fontFamily="@font/comic"
                 android:text="Key"/>
         </LinearLayout>
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_margin="@dimen/d_textDialog"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="@string/facebookout"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:background="@color/com_facebook_blue"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 </RelativeLayout>

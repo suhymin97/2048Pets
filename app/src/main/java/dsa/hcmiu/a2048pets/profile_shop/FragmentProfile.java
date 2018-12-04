@@ -30,7 +30,7 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
 
     TextView tvHighscore, tvUndo, tvHammer;
     CircleImageView ivAva;
-    private Button btnlogin;
+    private Button btnlogin,btnlogout;
     private TextView tvNick;
     private ProfileTracker mProfileTracker;
     private FbConnectHelper fbConnectHelper;
@@ -45,9 +45,12 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
         ivAva = (CircleImageView) view.findViewById(R.id.ivAvaFb);
         update();
         btnlogin = (Button) view.findViewById(R.id.btnLogin);
+        btnlogout = (Button) view.findViewById(R.id.btnLogout);
         tvNick = (TextView) view.findViewById(R.id.tvNick);
         fbConnectHelper = new FbConnectHelper(this,this);
         updateDataUser();
+
+        btnlogout.setVisibility(View.GONE);
 
         Intent intent = getActivity().getIntent();
         if (intent.getStringExtra("Facebook") == "Log") loginwithFacebook();
