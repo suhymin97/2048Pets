@@ -50,8 +50,6 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
         fbConnectHelper = new FbConnectHelper(this,this);
         updateDataUser();
 
-        btnlogout.setVisibility(View.GONE);
-
         Intent intent = getActivity().getIntent();
         if (intent.getStringExtra("Facebook") == "Log") loginwithFacebook();
         if (!user.isLoggedFb()) unlogin();
@@ -62,12 +60,22 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
 
     private void loggedFb() {
         btnlogin.setVisibility(View.GONE);
+        btnlogout.setVisibility(View.VISIBLE);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.returnDef();
+                updateDataUser();
+
+            }
+        });
     }
 
     private void unlogin() {
         //VISIBLE = Hiện; INVISIBLE = Tàng hình; GONE = Mất tích
         //btnlogin.setReadPermissions(Arrays.asList("public_profile", "email"));
         btnlogin.setVisibility(View.VISIBLE);
+        btnlogout.setVisibility(View.GONE);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,9 +109,8 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        btnlogin.setVisibility(View.GONE);
-        updateDataUser();
         user.setLoggedFb(true);
+        updateDataUser();
     }
 
     @Override
@@ -118,7 +125,26 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
     }
 
     public void updateDataUser() {
-        if (user.isLoggedFb()) btnlogin.setVisibility(View.GONE);
+        if (user.isLoggedFb()) {
+            btnlogin.setVisibility(View.GONE);
+            btnlogout.setVisibility(View.VISIBLE);
+            btnlogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loggedFb();
+                }
+            });
+        }
+        else {
+            btnlogin.setVisibility(View.VISIBLE);
+            btnlogout.setVisibility(View.GONE);
+            btnlogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    unlogin();
+                }
+            });
+        }
         setAva();
         tvNick.setText(user.getName());
     }
