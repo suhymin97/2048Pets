@@ -37,7 +37,7 @@ public class PlayActivity extends Activity implements View.OnClickListener {
     private GridView gvMatrix;
     private ItemAdapter adapter;
     private View layout;
-    private TextView tvScore, tvUndo, tvHammer, tvHighScore;
+    private TextView tvScore, tvUndo, tvHammer, tvHighScore, tvNameHS;
     private Button btnUndo, btnNew, btnSoundPlay;
     private Button btnHammer;
     private Button btnShop;
@@ -81,6 +81,7 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         tvUndo = (TextView) findViewById(R.id.tvUndo);
         tvHammer = (TextView) findViewById(R.id.tvHammer);
         tvHighScore = (TextView) findViewById(R.id.tvHighscore);
+        tvNameHS = (TextView) findViewById(R.id.tvNameHighscore);
 
         btnUndo = (Button) findViewById(R.id.btnUndo);
         btnHammer = (Button) findViewById(R.id.btnHammer);
@@ -159,6 +160,7 @@ public class PlayActivity extends Activity implements View.OnClickListener {
         tvUndo.setText(String.valueOf(user.undo));
         tvHammer.setText(String.valueOf(user.hammer));
         tvHighScore.setText(String.valueOf(user.highScore));
+        tvNameHS.setText(user.UserHighScore);
     }
 
     @Override

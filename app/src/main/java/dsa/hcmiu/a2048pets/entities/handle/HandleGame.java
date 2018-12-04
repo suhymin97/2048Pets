@@ -28,8 +28,6 @@ public class HandleGame { //singleton
     public static final int[] arrId = new int[maxValue + 1];
 
     private static HandleGame instance;
-    public static int highScore = 0;
-    public static int best = 0;
     private int countEmpty = 0;
     public static Board curBoard = new Board(0);
     private Stack<Board> boardStack;
@@ -67,7 +65,10 @@ public class HandleGame { //singleton
 
     public void newGame() {
         user.totalGold +=curBoard.getScoreBoard();
-        if (user.highScore <curBoard.getScoreBoard()) user.highScore = curBoard.getScoreBoard();
+        if (user.highScore <curBoard.getScoreBoard()) {
+            user.highScore = curBoard.getScoreBoard();
+            user.UserHighScore = user.getName();
+        }
         init();
         log("New game");
     }
