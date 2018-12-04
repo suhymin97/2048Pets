@@ -1,7 +1,4 @@
 package dsa.hcmiu.a2048pets.entities.model;
-
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ public class User {
     private String profilePic;
     private boolean loggedFb;
     private int avatar;
+    public String UserHighScore = "Bot";
     public long highScore = 0;
     public int undo = 5;
     public int hammer = 5;

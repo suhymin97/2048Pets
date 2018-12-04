@@ -19,9 +19,7 @@
             android:layout_width="@dimen/d_avaProfile"
             android:layout_height="@dimen/d_avaProfile"
             android:layout_gravity="center"
-            android:src="@drawable/fbicom"
-            app:civ_border_width="7dp"
-            app:civ_border_color="@color/black">
+            android:src="@drawable/fbicom">
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <TextView

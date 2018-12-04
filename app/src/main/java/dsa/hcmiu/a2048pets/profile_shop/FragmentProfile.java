@@ -52,15 +52,13 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
 
         Intent intent = getActivity().getIntent();
         if (intent.getStringExtra("Facebook") == "Log") loginwithFacebook();
-        if (!user.isLoggedFb()) unlogin();
-        else loggedFb();
+        updateDataUser();
+        update();
 
         return view;
     }
 
     private void loggedFb() {
-        btnlogin.setVisibility(View.GONE);
-        btnlogout.setVisibility(View.VISIBLE);
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,8 +72,6 @@ public class FragmentProfile extends Fragment implements FbConnectHelper.OnFbSig
     private void unlogin() {
         //VISIBLE = Hiện; INVISIBLE = Tàng hình; GONE = Mất tích
         //btnlogin.setReadPermissions(Arrays.asList("public_profile", "email"));
-        btnlogin.setVisibility(View.VISIBLE);
-        btnlogout.setVisibility(View.GONE);
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
