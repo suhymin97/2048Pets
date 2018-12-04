@@ -32,7 +32,7 @@ import static dsa.hcmiu.a2048pets.entities.model.Features.user;
 public class MenuActivity extends Activity implements View.OnClickListener {
 
     MediaPlayer myClick;
-    private ImageButton btnSound,btnQuit,btnPlay, btnStore, btnRule;
+    private ImageButton btnSound,btnQuit,btnPlay, btnStore, btnRule,btnAbout;
     Animation uptodown,downtoup;
     ImageView imgFb,ivCupCat,ivShadow;
     LinearLayout layMenu;
@@ -51,6 +51,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         btnQuit = (ImageButton) findViewById(R.id.bQuit);
         btnSound = (ImageButton) findViewById(R.id.btnSound);
         btnProfile = (Button) findViewById(R.id.btnProfile);
+        btnAbout = (ImageButton) findViewById(R.id.btnAbout);
         imgFb = (ImageView) findViewById(R.id.ivAvaFb);
         ivCupCat = (ImageView) findViewById(R.id.ivCupCat);
         ivShadow = (ImageView) findViewById(R.id.ivCupCatShadow);
@@ -63,6 +64,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
         btnQuit.setOnClickListener(this);
         btnSound.setOnClickListener(this);
         btnProfile.setOnClickListener(this);
+        btnAbout.setOnClickListener(this);
         cupCatSetup();
         soundSetup();
         }
@@ -191,6 +193,11 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btnProfile:
                 diaglogPro5();
+                break;
+            case R.id.btnAbout:
+                Intent iAbout = new Intent(this, AboutActivity.class);
+                startActivity(iAbout);
+                break;
         }
     }
     private void soundSetup() {
