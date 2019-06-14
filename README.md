@@ -8,7 +8,7 @@ This is our Data Structure Algorithm project.
 
  - [Tu Anh](https://github.com/suhymin97/) is the maintainer for this repository, and main support for this project.
  - [Thanh Hien](https://github.com/thanhhien191097) design UI for whole game and support adapter for game
- - [Hai Nguyen](https://github.com/NguyenHoHai) added custom code for swipe handling on mobile, support handling play activity, added calculate function
+ - [Hai Nguyen](https://github.com/NguyenHoHai) added custom code for swipe handling on mobile, support handling play activity.
  - [Tuan Hung](https://github.com/Hiroyughi) support shop activity
 
 Many thanks to prof.Tran Thanh Tung for many useful advise.
